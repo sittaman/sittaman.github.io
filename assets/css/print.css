@@ -1,0 +1,81 @@
+/* Print: the page doubles as a paper CV. Loaded with media="print" so it costs nothing
+   on screen. The important rule is forcing the light palette — without it, a visitor in
+   dark mode prints a black slab. */
+
+@page { margin: 12mm; }
+
+/* Override the tokens that styles.css defines with light-dark(), for every theme state.
+   Matching [data-theme] specificity and loading later is what makes these win. */
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --fg: #000000;
+  --muted: #333333;
+  --border: #999999;
+  --accent: #0b6b61;
+  --accent-strong: #0b5a52;
+  --secondary: #4b2f9e;
+  --chip-bg: #ffffff;
+  --chip-border: #999999;
+  --chip-fg: #000000;
+  --btn-bg: #ffffff;
+  --btn-fg: #000000;
+  --focus: #000000;
+
+  font-size: 11pt;
+}
+
+body { background: #fff; display: block; }
+
+/* Chrome: strip every interactive and decorative affordance. */
+.site-header,
+.skip-link,
+.hero-actions,
+.cv-actions,
+.card-links,
+[data-lang-announcer] { display: none !important; }
+
+.hero::after,
+h2::after,
+.timeline > li::before,
+.timeline > li::after { display: none; }
+
+.availability .dot {
+  display: inline-block;
+  box-shadow: none;
+  background: #000;
+}
+
+/* A CV reads linearly — collapse every grid to one column. */
+.skills-grid, .cards, .contact-list { display: block; }
+.skills-grid > *, .cards > * { margin-bottom: 0.8rem; break-inside: avoid; }
+.chips { margin-top: 0.2rem; }
+.chips li { border-color: #999; }
+
+.timeline { display: block; }
+.timeline > li { padding-left: 0; margin-bottom: 1rem; }
+
+/* Headings must never strand at the foot of a page. */
+h1, h2, h3, h4 { break-after: avoid; }
+.job, .stack-list li, .compact-list li, .card { break-inside: avoid; }
+
+/* Expand only the contact block's URLs; expanding every link makes it unreadable. */
+.contact-list a[href^="https://"]::after {
+  content: " (" attr(href) ")";
+  font-size: 0.85em;
+  color: #333;
+  word-break: break-all;
+}
+.contact-list .label { min-width: 0; }
+
+/* A paper copy should still reach the online version. */
+.site-footer::after {
+  content: "sittaman.github.io";
+  display: block;
+  margin-top: 0.4rem;
+  color: #333;
+}

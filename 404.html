@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Página não encontrada — Felipe Sitta</title>
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="stylesheet" href="/assets/css/styles.css?v=1">
+<style>
+  .notfound { padding-block: clamp(3rem, 10vw, 7rem); }
+  .notfound .code {
+    font-size: var(--step-4); font-weight: 700; letter-spacing: -0.03em;
+    background: linear-gradient(to right, var(--accent), var(--secondary));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  @media (forced-colors: active) { .notfound .code { color: CanvasText; -webkit-text-fill-color: CanvasText; } }
+  .notfound h1 { margin-top: var(--space-3); font-size: var(--step-3); }
+  .notfound .message { margin-top: var(--space-4); color: var(--muted); }
+  .notfound .actions { margin-top: var(--space-5); }
+</style>
+</head>
+<body>
+<main id="main" class="notfound">
+  <div class="shell">
+    <p class="code">404</p>
+    <h1>Página não encontrada</h1>
+    <p class="prose message">
+      O endereço acessado não existe neste site.
+      <span lang="en">The page you were looking for is not here.</span>
+    </p>
+    <p class="actions">
+      <a class="btn btn-primary" href="/">Voltar ao início <span lang="en">/ Back home</span></a>
+    </p>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,50 @@
+name: Deploy portfolio
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never cancel mid-deploy: an aborted Pages deployment can leave the environment stuck.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # Translation coverage: a key added to one language and forgotten in the other fails here.
+      - name: i18n coverage
+        run: node .github/scripts/check-i18n.mjs
+      # Broken internal links, missing assets, dead anchors. CV PDFs warn while absent.
+      - name: Internal links and assets
+        run: node .github/scripts/check-site.mjs --root . --allow-missing assets/cv/
+      # Markup validity: missing alt, duplicate ids, unlabelled controls, invalid nesting.
+      - name: Validate HTML
+        run: npx --yes html-validate@9 index.html 404.html
+
+  deploy:
+    needs: verify
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      # path defaults to _site/, which this repo does not use.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
