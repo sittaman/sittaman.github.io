@@ -63,7 +63,7 @@ for (const locale of LOCALES) {
         title: document.title,
         pending: document.documentElement.hasAttribute('data-i18n-pending'),
         navCurrent: document.querySelector('.site-nav a[aria-current="true"]')?.textContent || '—',
-        heroRole: document.querySelector('.hero h1 span')?.textContent || 'MISSING',
+        heroRole: document.querySelector('#hero-title')?.textContent?.trim() || 'MISSING',
         cards: document.querySelectorAll('.card').length,
         emptyNotes: Array.from(document.querySelectorAll('.empty-note')).filter((n) => !n.hidden).length,
         docWidth: document.documentElement.scrollWidth,

@@ -82,8 +82,7 @@
 <header class="site-header">
   <div class="shell header-inner">
     <a class="brand" href="#top" aria-label="Felipe Sitta — início" data-i18n-aria-label="a11y.brand">
-      <span class="brand-mark" aria-hidden="true">FS</span>
-      <span class="brand-name">Felipe Sitta</span>
+      <span class="brand-mark" aria-hidden="true">&gt;_</span>
     </a>
 
     <nav class="site-nav" aria-label="Seções" data-i18n-aria-label="a11y.navLabel">
@@ -130,18 +129,16 @@
   <!-- HERO -->
   <section class="hero" id="top" aria-labelledby="hero-title">
     <div class="shell">
-      <p class="eyebrow" data-i18n="hero.eyebrow">Santo André — SP, Brasil</p>
-      <h1 id="hero-title">
-        <span data-i18n="hero.role">Desenvolvedor Sênior Flutter</span>
-        <span class="hero-sub" data-i18n="hero.specialty">Design Systems e IA aplicada ao desenvolvimento</span>
-      </h1>
+      <h1 id="hero-title" data-i18n="hero.name">Felipe Sitta</h1>
+      <p class="hero-sub" data-i18n="hero.tagline">Desenvolvedor Sênior Flutter — Design Systems e IA aplicada</p>
       <p class="lede" data-i18n="hero.lede">14 anos de experiência em desenvolvimento de software, especialista em Flutter desde 2020. Atuação em projetos de alta complexidade nos setores financeiro e bancário — Carteira Digital, PIX e Cartões — para milhões de usuários.</p>
       <p class="availability">
         <span class="dot" aria-hidden="true"></span>
         <span data-i18n="hero.availability">Aberto a posições sênior — remoto, híbrido ou presencial, Brasil</span>
       </p>
       <p class="hero-actions">
-        <a class="btn btn-primary" href="#cv" data-i18n="hero.ctaCv">Ver currículo</a>
+        <a class="btn btn-primary" href="assets/cv/felipe-sitta-cv-pt-BR.pdf" download data-i18n-html="hero.cvPt">Currículo <span class="btn-note">PDF · PT</span></a>
+        <a class="btn btn-primary" href="assets/cv/felipe-sitta-cv-en.pdf" download data-i18n-html="hero.cvEn">Resume <span class="btn-note">PDF · EN</span></a>
         <a class="btn btn-ghost" href="#contact" data-i18n="hero.ctaContact">Entrar em contato</a>
       </p>
       <ul class="social" role="list" aria-label="Perfis" data-i18n-aria-label="a11y.socialLabel">
@@ -214,13 +211,15 @@
               <h3><span data-i18n="exp.spread.role">Desenvolvedor Sênior Flutter</span> — <span class="org">Spread Tecnologia</span></h3>
               <p class="period"><time datetime="2025-06" data-i18n="exp.spread.start">Jun 2025</time> — <time datetime="2026-06" data-i18n="exp.spread.end">Jun 2026</time></p>
             </header>
-            <p class="job-context" data-i18n="exp.spread.context">Consultoria de tecnologia, em projetos dos setores bancário e varejo, com arquitetura modular (mais de 150 módulos).</p>
             <ul class="bullets" role="list" data-i18n-list="exp.spread.bullets">
-              <li>Lançamento de novos produtos — Carteira Digital, PIX e Cartões — para mais de 1 milhão de usuários cadastrados.</li>
-              <li>Governança do Design System usado por cerca de 200 desenvolvedores e designers, com tokens, catálogo de componentes e documentação no Widgetbook.</li>
-              <li>Biblioteca de front-end atuando como contrato para telas e formulários dinâmicos, eliminando problemas de roteamento e dependências transversais entre módulos.</li>
-              <li>Componentes acessíveis com semântica e suporte a leitores de tela, além de observabilidade, analytics e feature toggles.</li>
-              <li>Elaboração de skills e prompts para ferramentas de IA, e apoio técnico em processos seletivos.</li>
+              <li>Construção de produtos de banco digital (Carteira Digital, PIX, Cartões de Crédito) para milhões de usuários em projetos Flutter com 150+ módulos.</li>
+              <li>Governança de Design System — tokens, catálogo de componentes e documentação cross-squad, para cerca de 200 desenvolvedores e designers.</li>
+              <li>Implementação de acessibilidade (WCAG) com semântica e suporte a leitores de tela em toda a biblioteca de componentes.</li>
+              <li>Fomento da cultura de TDD com testes unitários, de integração e automação com Maestro cobrindo jornadas críticas do usuário.</li>
+              <li>Desenvolvimento de uma biblioteca front-end que atua como contrato de API para geração dinâmica de telas/formulários, eliminando bugs de roteamento e dependências entre módulos.</li>
+              <li>Criação de skills de IA personalizados para acelerar os fluxos de desenvolvimento, code review e aumento na cobertura de testes e qualidade.</li>
+              <li>Clean Architecture, Integração de APIs REST, implementação de gerência de estado com BLoC, Cubit e ValueNotifier, RemoteConfig, Observabilidade com DataDog e Google Analytics, GitFlow, injeção de dependência com getIt, deep links, GoRouter.</li>
+              <li>Entrevistas técnicas e mentoria para novas contratações.</li>
             </ul>
           </article>
         </li>
@@ -231,12 +230,14 @@
               <h3><span data-i18n="exp.digio.role">Desenvolvedor Sênior Flutter</span> — <span class="org">Digio</span></h3>
               <p class="period"><time datetime="2024-03" data-i18n="exp.digio.start">Mar 2024</time> — <time datetime="2025-02" data-i18n="exp.digio.end">Fev 2025</time></p>
             </header>
-            <p class="job-context" data-i18n="exp.digio.context">Monolito Flutter Web em processo de modularização, com squad multidisciplinar e time mobile de 4 desenvolvedores.</p>
             <ul class="bullets" role="list" data-i18n-list="exp.digio.bullets">
-              <li>Cobertura de testes de 0% para mais de 70%, com implantação da cultura de TDD.</li>
-              <li>Feature toggles reduzindo o tempo de lançamento de funcionalidades de dias para poucos minutos, eliminando a dependência de GMUD semanal.</li>
-              <li>Modularização do sistema e gestão de dependências com Melos.</li>
-              <li>Design System padronizado com bibliotecas reutilizáveis de componentes e testes, documentado no Widgetbook.</li>
+              <li>Transformei um monólito Flutter Web com zero cobertura de testes e módulos duplicados e obsoletos em um sistema modularizado e testável.</li>
+              <li>Métrica principal: 0 → 70%+ de cobertura de testes com adoção de TDD em todo o squad.</li>
+              <li>Liderei o refinamento técnico e me tornei a ponte entre engenharia, produto, UX e QA.</li>
+              <li>Implementei feature toggles e remote config no Firebase para atualização em tempo real de parâmetros sem redeploy (antes, cada ajuste dependia de um processo complexo de GMUD).</li>
+              <li>Construí e documentei um Design System padronizado com Widgetbook.</li>
+              <li>Virada de jogo: squad saiu de atrasos recorrentes para entregas antecipadas. Relacionamento entre times (UX, produto, QA) melhorou de forma mensurável.</li>
+              <li>Clean Architecture, Integração de APIs REST, implementação de gerência de estado com Provider, RemoteConfig, Observabilidade com Datadog, GitFlow, injeção de dependência com getIt, GoRouter.</li>
             </ul>
           </article>
         </li>
@@ -245,14 +246,19 @@
           <article class="job">
             <header class="job-head">
               <h3><span data-i18n="exp.mobyan.role">Desenvolvedor Sênior Mobile</span> — <span class="org">Mobyan</span></h3>
-              <p class="period"><time datetime="2023-05" data-i18n="exp.mobyan.start">Mai 2023</time> — <time datetime="2024-02" data-i18n="exp.mobyan.end">Fev 2024</time></p>
+              <p class="period"><time datetime="2023-05" data-i18n="exp.mobyan.start">Mai 2023</time> — <time datetime="2024-03" data-i18n="exp.mobyan.end">Mar 2024</time></p>
             </header>
-            <p class="job-context" data-i18n="exp.mobyan.context">Aplicativo de ordens de serviço para manutenção de equipamentos de pagamento, com integrações nativas.</p>
             <ul class="bullets" role="list" data-i18n-list="exp.mobyan.bullets">
-              <li>Automação do processo de cancelamento de chamados, antes manual, gerando economia superior a R$ 300.000 anuais.</li>
-              <li>Arquitetura offline-first com SQLite e Isolates, resolvendo perdas de dados do aplicativo anterior.</li>
-              <li>Pipeline de CI/CD com Azure DevOps e Firebase, viabilizando o lançamento de novos produtos para cerca de 2.000 técnicos em campo.</li>
-              <li>Implementação de GitFlow, TDD, Design System e BFF.</li>
+              <li>Construí e mantive apps Flutter e Kotlin para manutenção de equipamentos de pagamento de campo (POS).</li>
+              <li>Implementei pipelines CI/CD (Azure DevOps, Firebase) para deploys automatizados em staging e produção na Play Store.</li>
+              <li>Arquitetura mobile offline-first com persistência local e sincronização em background utilizando banco de dados local SQLite e Hive (NoSQL) e Isolates — eliminou perda de dados.</li>
+              <li>Uso de Platform Channels (Method Channel, Event Channel) para integração com recursos nativos como GPS, Câmera e biometria.</li>
+              <li>Segurança com secure storage, device integrity, OAuth2 (JWT, refresh token).</li>
+              <li>Análise de performance com DevTools, Performance Overlay e Logcat.</li>
+              <li>Métrica principal: R$ 300K+ de economia anual com automação do cancelamento de chamados antes feito manualmente por uma central de atendimento.</li>
+              <li>Adoção: 2.000+ técnicos de campo transicionados com sucesso para o novo app.</li>
+              <li>Manutenção de ferramenta nativa Android (Kotlin) baseada em banco de dados local Room para checklist de manutenção.</li>
+              <li>Clean Architecture, Integração de APIs REST, implementação de gerência de estado com Provider e GetX, Firebase (RemoteConfig, App Distribution, Crashlytics), GitFlow, injeção de dependência com getIt.</li>
             </ul>
           </article>
         </li>
@@ -264,29 +270,22 @@
               <p class="period"><time datetime="2022-08" data-i18n="exp.bitz.start">Ago 2022</time> — <time datetime="2023-04" data-i18n="exp.bitz.end">Abr 2023</time></p>
             </header>
             <ul class="bullets" role="list" data-i18n-list="exp.bitz.bullets">
-              <li>Construção do Bytes, o Design System do Bitz em Flutter.</li>
-              <li>Migração para Flutter dos módulos de Voucher e Pix, principais produtos da empresa — 2 módulos, cerca de 30 telas.</li>
-              <li>Entrega do produto de empréstimos dentro do prazo, apesar de mudanças de regra de negócio e dependências de back-end externo.</li>
+              <li>Desenvolvimento mobile em Flutter (Android/iOS) com Clean Architecture, TDD e GitFlow. Equipe multidisciplinar, Agile, Scrum.</li>
+              <li>Entrega do produto de empréstimos no prazo, apesar de problemas de regra de negócio e de backend externo até o dia do lançamento.</li>
+              <li>Migração dos módulos Voucher e Pix para Flutter (2 módulos, cerca de 30 telas).</li>
+              <li>Criação da biblioteca Bytes, o Design System do Bitz.</li>
+              <li>Pipelines com GitHub Actions.</li>
+              <li>Testes unitários e de integração.</li>
+              <li>Integração de APIs REST, implementação de gerência de estado com BloC e Cubit, Firebase (RemoteConfig, Crashlytics), Observabilidade com Google Analytics, injeção de dependência com getIt.</li>
             </ul>
           </article>
         </li>
 
-        <li>
-          <article class="job">
-            <header class="job-head">
-              <h3><span data-i18n="exp.oruspay.role">Desenvolvedor Pleno</span> — <span class="org">Oruspay</span></h3>
-              <p class="period"><time datetime="2019-08" data-i18n="exp.oruspay.start">Ago 2019</time> — <time datetime="2022-08" data-i18n="exp.oruspay.end">Ago 2022</time></p>
-            </header>
-            <ul class="bullets" role="list" data-i18n-list="exp.oruspay.bullets">
-              <li>Atuação fullstack: Angular no front-end, Flutter no mobile e Java com Spring no back-end.</li>
-              <li>Serviços em AWS (Cognito, S3 e SQS), com Docker e Kubernetes.</li>
-            </ul>
-          </article>
-        </li>
       </ol>
 
       <h3 class="subsection-title" data-i18n="experience.earlierTitle">Experiência anterior</h3>
       <ul class="compact-list" role="list" data-i18n-list-html="experience.earlierList">
+        <li><strong>Oruspay</strong> — Desenvolvedor Pleno · Ago 2019 — Ago 2022<br><span>Atuação fullstack — Angular, Flutter e Java com Spring — e serviços em AWS (Cognito, S3 e SQS), com Docker e Kubernetes.</span></li>
         <li><strong>Felithi Professional</strong> — Desenvolvedor Júnior · Jul 2016 — Ago 2019<br><span>Manutenção de e-commerce, desenvolvimento de plugins e automação.</span></li>
         <li><strong>Porto Seguro</strong> — Desenvolvedor Júnior · Ago 2014 — Set 2015<br><span>Desenvolvimento de dashboards, relatórios e automação.</span></li>
         <li><strong>Universidade Federal do ABC</strong> — Estágio · Out 2012 — Dez 2013<br><span>Desenvolvimento de sistemas internos para registro acadêmico e auditoria.</span></li>
@@ -316,23 +315,23 @@
 
       <h3 class="subsection-title" data-i18n="education.degrees">Formação acadêmica</h3>
       <ul class="stack-list" role="list" data-i18n-list-html="education.degreeList">
-        <li><strong>Pós-graduação em Arquitetura de Sistemas</strong> — FIAP <span class="years">2025–2026</span></li>
-        <li><strong>Pós-graduação em Inteligência Artificial e Machine Learning</strong> — PUC-MG <span class="years">2023–2024</span></li>
-        <li><strong>Tecnólogo em Jogos Digitais</strong> — FATEC São Caetano do Sul <span class="years">2010–2013</span></li>
+        <li><span class="stack-main"><strong>Pós-graduação em Arquitetura de Sistemas</strong> — FIAP</span> <span class="years">2025–2026</span></li>
+        <li><span class="stack-main"><strong>Pós-graduação em Inteligência Artificial e Machine Learning</strong> — PUC-MG</span> <span class="years">2023–2024</span></li>
+        <li><span class="stack-main"><strong>Tecnólogo em Jogos Digitais</strong> — FATEC São Caetano do Sul</span> <span class="years">2010–2013</span></li>
       </ul>
 
       <h3 class="subsection-title" data-i18n="education.certs">Cursos e certificações</h3>
       <ul class="stack-list" role="list" data-i18n-list-html="education.certList">
-        <li><strong>Kotlin Training</strong> — Alura <span class="years">2024</span></li>
-        <li><strong>Flutter Training</strong> — Alura <span class="years">2021</span></li>
-        <li><strong>Java Academy</strong> — Caelum <span class="years">2020</span></li>
-        <li><strong>Android Development</strong> — Impacta <span class="years">2018</span></li>
+        <li><span class="stack-main"><strong>Kotlin Training</strong> — Alura</span> <span class="years">2024</span></li>
+        <li><span class="stack-main"><strong>Flutter Training</strong> — Alura</span> <span class="years">2021</span></li>
+        <li><span class="stack-main"><strong>Java Academy</strong> — Caelum</span> <span class="years">2020</span></li>
+        <li><span class="stack-main"><strong>Android Development</strong> — Impacta</span> <span class="years">2018</span></li>
       </ul>
 
       <h3 class="subsection-title" data-i18n="education.langs">Idiomas</h3>
       <ul class="stack-list" role="list" data-i18n-list-html="education.langList">
-        <li><strong>Português</strong> — nativo</li>
-        <li><strong>Inglês</strong> — C2 proficiente · EF SET, 86/100 <span class="years">2023</span></li>
+        <li><span class="stack-main"><strong>Português</strong> — nativo</span></li>
+        <li><span class="stack-main"><strong>Inglês</strong> — C2 proficiente · EF SET, 86/100</span> <span class="years">2023</span></li>
       </ul>
     </div>
   </section>

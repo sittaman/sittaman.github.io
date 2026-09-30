@@ -31,6 +31,7 @@
   --chip-fg: light-dark(hsl(187 74% 23%), hsl(187 60% 78%));
 
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   /* Fluid type: no type media queries anywhere in this sheet. */
   --step--1: 0.875rem;
@@ -144,13 +145,21 @@ a:hover { text-decoration-thickness: 2px; }
   color: var(--fg); text-decoration: none; font-weight: 650;
   letter-spacing: -0.01em;
 }
+/* Terminal prompt, not initials: the mark is a monospace ">_" so it reads as a shell
+   cursor rather than a monogram. Monospace keeps the two glyphs locked to the same
+   advance width, which is what makes the pair look deliberate at this size. */
 .brand-mark {
   display: inline-grid; place-items: center;
   width: 2rem; height: 2rem; border-radius: 8px;
   background: linear-gradient(135deg, var(--accent), var(--secondary));
-  color: #fff; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.02em;
+  /* --btn-fg, not a hard-coded white: the dark theme's gradient is light, and white on it
+     lands near 1.7:1. This token is already the "text on an accent fill" colour. */
+  color: var(--btn-fg);
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0;
+  /* The underscore sits on the baseline; nudging the pair up centres the ink, not the
+     line box, so the prompt looks optically centred in the tile. */
+  padding-bottom: 0.1rem;
 }
-.brand-name { display: none; }
 
 .controls { display: flex; align-items: center; gap: var(--space-3); margin-left: auto; }
 
@@ -216,7 +225,6 @@ a:hover { text-decoration-thickness: 2px; }
 }
 
 @media (min-width: 48rem) {
-  .brand-name { display: inline; }
   .site-nav { order: 0; width: auto; }
   .site-nav ul { mask-image: none; overflow: visible; }
 }
@@ -232,14 +240,9 @@ a:hover { text-decoration-thickness: 2px; }
   background: linear-gradient(to right, var(--accent), var(--secondary));
 }
 
-.eyebrow {
-  font-size: var(--step--1); font-weight: 650;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: var(--muted);
-}
-.hero h1 { font-size: var(--step-4); font-weight: 700; margin-top: var(--space-3); }
+.hero h1 { font-size: var(--step-4); font-weight: 700; }
 .hero-sub {
-  display: block; margin-top: var(--space-2);
+  margin-top: var(--space-2);
   font-size: var(--step-2); font-weight: 600; color: var(--accent-strong);
   letter-spacing: -0.015em;
 }
@@ -352,7 +355,6 @@ h2::after {
   font-size: var(--step--1); color: var(--muted);
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
-.job-context { margin-top: var(--space-2); color: var(--muted); }
 
 .bullets { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3); }
 .bullets li { position: relative; padding-left: var(--space-5); }
@@ -367,12 +369,17 @@ h2::after {
 /* ---------- education ---------- */
 
 .stack-list { display: flex; flex-direction: column; }
+/* A two-item row: .stack-main left, .years right. The title and its institution MUST stay
+   inside .stack-main. Left as bare inline runs they become separate ANONYMOUS flex items,
+   and space-between then hands each one an equal share of the row — which strands the
+   institution mid-line and shifts it every time the title changes length. */
 .stack-list li {
   display: flex; flex-wrap: wrap; align-items: baseline;
   justify-content: space-between; gap: var(--space-1) var(--space-4);
   padding-block: var(--space-3);
   border-bottom: 1px solid var(--border);
 }
+.stack-main { min-width: 0; }
 .stack-list li:last-child { border-bottom: 0; }
 .years { font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
