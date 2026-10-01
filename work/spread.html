@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
+
+<title data-i18n="case.spread.meta.title">Spread Tecnologia — estudo de caso — Felipe Sitta</title>
+<meta name="description" content="Estudo de caso: Desenvolvedor Sênior Flutter na Spread Tecnologia, de junho de 2025 a junho de 2026." data-i18n-content="case.spread.meta.description">
+<link rel="canonical" href="https://sittaman.github.io/work/spread.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Felipe Sitta">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://sittaman.github.io/work/spread.html">
+<meta property="og:title" content="Spread Tecnologia — estudo de caso — Felipe Sitta" data-i18n-content="case.spread.meta.title">
+<meta property="og:description" content="Estudo de caso: Desenvolvedor Sênior Flutter na Spread Tecnologia, de junho de 2025 a junho de 2026." data-i18n-content="case.spread.meta.description">
+<meta property="og:image" content="https://sittaman.github.io/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Felipe Sitta — Desenvolvedor Sênior Flutter, Design Systems e IA">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/css/styles.css?v=2">
+<link rel="stylesheet" href="../assets/css/print.css?v=2" media="print">
+
+<script>
+/* Resolve language + theme before first paint. Holds no policy: the ABSENCE of
+   data-theme means "follow the system", so CSS stays the single source of truth. */
+(function(){try{
+  var d=document.documentElement;
+  var q=new URLSearchParams(location.search);
+  var stored=null;try{stored=localStorage.getItem('site.lang')}catch(e){}
+  var langs=(navigator.languages||[navigator.language||'pt']).map(String);
+  var lang=q.get('lang')||stored||((langs.some(function(x){return /^en/i.test(x)})&&!langs.some(function(x){return /^pt/i.test(x)}))?'en':'pt-BR');
+  lang=/^en/i.test(lang)?'en':'pt-BR';
+  d.lang=lang;d.dataset.lang=lang;
+  if(lang!=='pt-BR')d.dataset.i18nPending='';
+  var t=q.get('theme');
+  if(t==='light'||t==='dark')d.dataset.theme=t;
+  else{var st=null;try{st=localStorage.getItem('site.theme')}catch(e){}
+       if(st==='light'||st==='dark')d.dataset.theme=st;}
+}catch(e){}})();
+</script>
+<style>html[data-i18n-pending] body{visibility:hidden}</style>
+<noscript><style>html[data-i18n-pending] body{visibility:visible}</style></noscript>
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="a11y.skip">Pular para o conteúdo</a>
+<p class="sr-only" role="status" aria-live="polite" data-lang-announcer></p>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="back-link" href="../#experience"><span aria-hidden="true">←</span> <span data-i18n="case.back">Voltar</span></a>
+
+    <div class="controls">
+      <fieldset class="lang-switch">
+        <legend class="sr-only" data-i18n="a11y.langLegend">Idioma da página</legend>
+        <label class="lang-opt">
+          <input type="radio" name="lang" value="pt-BR" data-action="set-lang">
+          <span lang="pt-BR">PT</span>
+        </label>
+        <label class="lang-opt">
+          <input type="radio" name="lang" value="en" data-action="set-lang">
+          <span lang="en">EN</span>
+        </label>
+      </fieldset>
+
+      <button type="button" class="icon-btn" data-action="set-theme" aria-pressed="false"
+              aria-label="Alternar tema escuro" data-i18n-aria-label="a11y.themeToggle">
+        <svg class="ico-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/>
+        </svg>
+        <svg class="ico-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+          <path d="M20 14.2A8.4 8.4 0 0 1 9.8 4a8.6 8.6 0 1 0 10.2 10.2Z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- Case study in preparation. Replace the notice with the real write-up when it exists;
+       the heading, role and period below already come from the same keys the home page uses. -->
+  <section class="section" aria-labelledby="case-title">
+    <div class="shell">
+      <p class="eyebrow" data-i18n="case.eyebrow">Estudo de caso</p>
+      <h1 id="case-title" class="page-title">Spread Tecnologia</h1>
+      <p class="case-meta">
+        <span data-i18n="exp.spread.role">Desenvolvedor Sênior Flutter</span> ·
+        <time datetime="2025-06" data-i18n="exp.spread.start">Jun 2025</time> —
+        <time datetime="2026-06" data-i18n="exp.spread.end">Jun 2026</time>
+      </p>
+
+      <p class="notice" data-i18n="case.pending">Estudo de caso em preparação.</p>
+
+      <p class="section-actions">
+        <a class="btn btn-ghost" href="../work/" data-i18n="case.allCases">Ver todos os estudos de caso</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <p><span data-i18n="footer.rights">© 2026 Felipe Sitta</span> · <span data-i18n="footer.built">Feito à mão em HTML, CSS e JavaScript</span></p>
+  </div>
+</footer>
+
+<script src="../assets/js/i18n.js?v=2"></script>
+<script src="../assets/js/main.js?v=2"></script>
+</body>
+</html>

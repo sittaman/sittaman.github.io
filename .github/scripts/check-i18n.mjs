@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 /* Translation coverage check.
  *
- * This is what makes the single-DOM i18n approach safe to maintain: a string added to
- * index.html but forgotten in one dictionary becomes a red build instead of a blank space
- * in production. Zero dependencies — the dictionary is evaluated in a vm sandbox that
- * provides only `window`.
+ * This is what makes the single-DOM i18n approach safe to maintain: a string added to a page
+ * but forgotten in one dictionary becomes a red build instead of a blank space in production.
+ * Every page in the tree is scanned and the keys are pooled, so a key used only on /work or on
+ * a case-study page is held to the same standard as one on the home page.
+ * Zero dependencies — the dictionary is evaluated in a vm sandbox that provides only `window`.
  */
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import vm from 'node:vm';
+import { discoverPages } from './pages.mjs';
 
-const ROOT = new URL('../../', import.meta.url);
-const HTML = fileURLToPath(new URL('index.html', ROOT));
-const DICT = fileURLToPath(new URL('assets/js/i18n.js', ROOT));
+const ROOT_URL = new URL('../../', import.meta.url);
+const ROOT = fileURLToPath(ROOT_URL);
+const DICT = fileURLToPath(new URL('assets/js/i18n.js', ROOT_URL));
 
 const LIST_ATTRS = ['data-i18n-list', 'data-i18n-list-html'];
 
@@ -44,14 +47,20 @@ const dict = loadDict();
 const langs = Object.keys(dict);
 if (langs.length < 2) errors.push(`expected at least 2 languages, found ${langs.length}`);
 
-const html = readFileSync(HTML, 'utf8');
-const used = keysUsedInHtml(html);
+const pages = discoverPages(ROOT);
+const used = new Map(); // key -> { attr, page }, the first place it was seen
+for (const page of pages) {
+  const html = readFileSync(join(ROOT, page), 'utf8');
+  for (const [key, attr] of keysUsedInHtml(html)) {
+    if (!used.has(key)) used.set(key, { attr, page });
+  }
+}
 
 // 1. Every key used in the HTML must exist in every language.
-for (const [key, attr] of used) {
+for (const [key, where] of used) {
   for (const lang of langs) {
     if (!Object.prototype.hasOwnProperty.call(dict[lang], key)) {
-      errors.push(`${lang}: missing key "${key}" (used by ${attr} in index.html)`);
+      errors.push(`${lang}: missing key "${key}" (used by ${where.attr} in ${where.page})`);
     }
   }
 }
@@ -82,8 +91,8 @@ for (const key of allKeys) {
 }
 
 // 4. A key used with a *-list attribute must actually be an array.
-for (const [key, attr] of used) {
-  if (!LIST_ATTRS.includes(attr)) continue;
+for (const [key, where] of used) {
+  if (!LIST_ATTRS.includes(where.attr)) continue;
   for (const lang of langs) {
     const v = dict[lang][key];
     if (v !== undefined && !Array.isArray(v)) {
@@ -92,14 +101,14 @@ for (const [key, attr] of used) {
   }
 }
 
-// 5. Unused keys are only a warning — they may be staged for content not yet in the HTML.
+// 5. Unused keys are only a warning — they may be staged for content not yet in any page.
 for (const key of allKeys) {
   if (!used.has(key) && !key.startsWith('meta.')) {
-    warnings.push(`unused key "${key}" (defined but not referenced in index.html)`);
+    warnings.push(`unused key "${key}" (defined but not referenced in any page)`);
   }
 }
 
-console.log(`i18n: ${langs.length} languages (${langs.join(', ')}), ${allKeys.size} keys, ${used.size} referenced in index.html`);
+console.log(`i18n: ${langs.length} languages (${langs.join(', ')}), ${allKeys.size} keys, ${used.size} referenced across ${pages.length} pages`);
 for (const w of warnings) console.warn(`  warn: ${w}`);
 if (errors.length) {
   console.error(`\n${errors.length} problem(s):`);

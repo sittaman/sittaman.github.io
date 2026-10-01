@@ -72,10 +72,12 @@
       if (Array.isArray(v)) replaceList(el, v, true);
     });
 
-    // Head metadata.
-    if (set['meta.title']) document.title = set['meta.title'];
+    // Head metadata. Subpages author their own <title data-i18n> and meta description, which the
+    // generic passes above already handle — so the home page's blanket override must stand down
+    // there, or every subpage would end up with the home page's title.
+    if (!document.querySelector('title[data-i18n]') && set['meta.title']) document.title = set['meta.title'];
     var desc = document.querySelector('meta[name="description"]');
-    if (desc && set['meta.description']) desc.setAttribute('content', set['meta.description']);
+    if (desc && !desc.hasAttribute('data-i18n-content') && set['meta.description']) desc.setAttribute('content', set['meta.description']);
 
     root.lang = lang;
     root.setAttribute('data-lang', lang);
@@ -106,6 +108,10 @@
     applyLanguage(lang);
     syncUrl(lang);
     renderProjects(lang);
+    // After syncUrl (so the URL carries the new lang) and after renderProjects (so the links it
+    // just created are rewritten too). Running it inside applyLanguage would be too early on the
+    // first toggle away from a bare URL, leaving the choice to localStorage alone.
+    propagateLang(lang);
     if (announce) {
       var live = document.querySelector('[data-lang-announcer]');
       var msg = get(lang, 'a11y.langChanged');
@@ -125,6 +131,44 @@
       url.searchParams.set('lang', lang);
       history.replaceState(null, '', url.toString());
     } catch (e) { /* file:// or sandboxed */ }
+  }
+
+  /* Carry ?lang= across internal links — but only when the current URL carries it explicitly.
+     A shared /?lang=en link has to still open in English after the visitor clicks through to
+     /work/, while a bare URL must keep producing bare URLs so crawlers and the sitemap only ever
+     see the canonical forms. localStorage already covers the everyday case, so this is strictly
+     the shared-link path.
+
+     Hrefs are rewritten in place rather than intercepted on click, so middle-click and
+     "open in new tab" behave exactly like a plain click. Rewriting is idempotent: an existing
+     lang= is replaced rather than appended to, which keeps a language switch from stacking them.
+
+     Called from init() and setLanguage(), never from applyLanguage() — it has to run after
+     syncUrl has written the parameter, or the first toggle away from a bare URL would be a no-op. */
+  function propagateLang(lang) {
+    var explicit = null;
+    try { explicit = new URLSearchParams(location.search).get('lang'); } catch (e) { return; }
+    if (!explicit) return;
+
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var raw = a.getAttribute('href');
+      if (!raw || raw.charAt(0) === '#' || raw.indexOf('//') === 0) return;   // fragment, protocol-relative
+      if (/^[a-z][a-z0-9+.-]*:/i.test(raw)) return;                           // http:, mailto:, tel:, data:
+
+      var cut = raw.indexOf('#');
+      var base = cut === -1 ? raw : raw.slice(0, cut);
+      var hash = cut === -1 ? '' : raw.slice(cut);
+      if (!base) return;
+
+      // Pages only. A ?lang= on a PDF or an image is noise that buys nothing.
+      var last = base.split('/').pop();
+      if (last && last.indexOf('.') !== -1 && !/\.html?$/i.test(last)) return;
+
+      if (/[?&]lang=/.test(base)) base = base.replace(/([?&]lang=)[^&]*/, '$1' + lang);
+      else base += (base.indexOf('?') === -1 ? '?' : '&') + 'lang=' + lang;
+
+      a.setAttribute('href', base + hash);
+    });
   }
 
   /* ---------- theme ---------- */
@@ -304,6 +348,7 @@
     var lang = /^en/i.test(root.lang) ? 'en' : 'pt-BR';
     applyLanguage(lang);
     renderProjects(lang);
+    propagateLang(lang);
     initActiveSection();
     root.removeAttribute('data-i18n-pending');
   }

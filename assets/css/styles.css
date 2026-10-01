@@ -304,7 +304,10 @@ h2::after {
   content: ""; display: block; width: 2.5rem; height: 2px; margin-top: var(--space-3);
   background: linear-gradient(to right, var(--accent), var(--secondary));
 }
-.section > .shell > h2 + * { margin-top: var(--space-5); }
+/* Whatever follows a section or page heading gets the same breathing room — the page-title's
+   gradient rule makes the default gap look cramped. */
+.section > .shell > h2 + *,
+.section > .shell > .page-title + * { margin-top: var(--space-5); }
 
 .subsection-title { margin-top: var(--space-6); margin-bottom: var(--space-3); font-size: var(--step-1); font-weight: 650; }
 .section > .shell > h2 + .cards,
@@ -363,8 +366,10 @@ h2::after {
   width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
 }
 
-.compact-list { display: flex; flex-direction: column; gap: var(--space-4); }
-.compact-list li span { display: block; margin-top: 0.1rem; font-size: var(--step--1); color: var(--muted); }
+/* The two-line summary and its case-study link belong to .job, not to the timeline: they sit
+   inside the same <article>, so .job's break-inside rule already covers printing them. */
+.job-summary { max-width: 68ch; margin-top: var(--space-3); }
+.job-link { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
 
 /* ---------- education ---------- */
 
@@ -395,15 +400,56 @@ h2::after {
   border: 1px solid var(--border); border-radius: var(--radius);
   background: var(--surface);
 }
-.card h4 { font-size: var(--step-0); font-weight: 650; }
+/* h2 as well as h4: /work nests its cards under a page-level h1, so the card heading there is
+   an h2 — which would otherwise inherit the section heading's size AND its gradient rule. */
+.card h2, .card h4 { font-size: var(--step-0); font-weight: 650; }
+.card h2::after { display: none; }
 .card-meta { margin-top: var(--space-1); font-size: var(--step--1); color: var(--muted); }
 .card-summary { margin-top: var(--space-2); }
 .card-links { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
 .empty-note { color: var(--muted); font-size: var(--step--1); }
 
+/* ---------- subpages (/work and the case studies) ---------- */
+
+/* The <h1> of a standalone page — sized and ruled like the section headings, so a subpage
+   reads as the same site without an <h2> that has no parent <h1>. */
+.page-title { font-size: var(--step-3); font-weight: 700; }
+.page-title::after {
+  content: ""; display: block; width: 2.5rem; height: 2px; margin-top: var(--space-3);
+  background: linear-gradient(to right, var(--accent), var(--secondary));
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2);
+  font-size: var(--step--1); font-weight: 650;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent-strong);
+}
+
+/* Spacing after the page title comes from the `+ *` rule above, not from here. */
+.case-meta { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Carries the page's only real content while a case study is unwritten, so it is styled as a
+   deliberate callout rather than the footnote treatment .empty-note gets on the home page. */
+.notice {
+  max-width: 68ch; margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface); color: var(--muted);
+}
+
+.back-link {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  color: var(--fg); font-size: var(--step--1); font-weight: 650;
+  text-decoration: none;
+}
+.back-link:hover { color: var(--accent-strong); }
+
 /* ---------- cv + contact ---------- */
 
-.cv-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+.cv-actions,
+.section-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
 
 .contact-list { display: grid; gap: var(--space-3); margin-top: var(--space-5); }
 .contact-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-4); }

@@ -26,17 +26,33 @@ dictionaries are inlined JavaScript rather than fetched JSON, and why scripts ar
 | I want to change… | Edit |
 |---|---|
 | Any visible text in either language | `assets/js/i18n.js` — the two dictionaries |
-| Structure, sections, markup | `index.html` (authored in pt-BR) |
+| Structure, sections, markup | the page itself (`index.html`, `work/index.html`, `work/<slug>.html`) |
 | Colours, spacing, type | `assets/css/styles.css` (all tokens are at the top) |
 | The printed/PDF layout | `assets/css/print.css` |
 | Projects | `assets/data/projects.js` (schema documented in the file) |
+| Case studies | `work/` — see "Adding a case study" below |
 | The CV PDFs | `assets/cv/` — see that folder's README |
 
-**`index.html` is the Portuguese page.** The dictionaries only ever transform *away* from it,
-so a visitor without JavaScript — and any crawler reading raw HTML — still gets a complete
-Portuguese page. When you add a string: put the Portuguese text in the HTML **and** in the
-`pt-BR` dictionary, then add the English to `en`. `check-i18n.mjs` fails the build if the two
+**Every page is authored in Portuguese.** The dictionaries only ever transform *away* from the
+markup, so a visitor without JavaScript — and any crawler reading raw HTML — still gets a
+complete Portuguese page. When you add a string: put the Portuguese text in the HTML **and** in
+the `pt-BR` dictionary, then add the English to `en`. `check-i18n.mjs` fails the build if the two
 dictionaries disagree, so a forgotten translation can't reach production.
+
+Every page is its own file — no directory ever exists just to hold one `index.html`:
+
+```
+index.html          /                  home — hero, about, skills, experience, projects, …
+work/index.html     /work/             every case study, as cards
+work/<slug>.html    /work/<slug>.html  one page per case study
+```
+
+`work/` is a directory because it holds `index.html` **and** the case pages beside it; a case page
+is flat, so `work/digio.html` is reachable at `/work/digio.html`. If one of them ever needs its own
+images, that is the moment to give it a directory — not before.
+
+Links between pages are **relative** (`../assets/…`, `../#experience`, `work/digio.html`), which is
+what keeps the site working from a `file://` origin. Do not introduce root-absolute paths.
 
 ### Adding a project
 
@@ -44,6 +60,24 @@ Open `assets/data/projects.js` and push an entry into `company` or `personal`. B
 sit side by side in one entry. The section renders its headings and a localized "coming soon"
 line while the arrays are empty; add an entry and the cards appear. Full schema with a worked
 example is in the comments at the top of that file.
+
+### Adding a case study
+
+The home page shows the **three most recent** jobs as a short line each; `/work/` lists **all** of
+them; each one links to its own page. A case study therefore lives in four places:
+
+1. **`work/<slug>.html`** — copy an existing one (`work/digio.html` is the plainest) and swap the
+   slug, the company name, the `exp.<slug>.*` keys and the two absolute URLs (`canonical`, `og:url`).
+   While the write-up does not exist, leave the `case.pending` notice in place rather than inventing
+   content — an honest placeholder beats a padded page.
+2. **`work/index.html`** — add a `<li class="card">` for it.
+3. **`index.html`** — add a `<li>` to the experience `<ol class="timeline">`, keeping the list to
+   the three most recent and dropping the oldest into /work only.
+4. **`assets/js/i18n.js`** — add `case.<slug>.meta.title` and `.meta.description` to **both**
+   dictionaries, plus the shared `exp.<slug>.role` / `.start` / `.end` / `.summary` keys.
+
+Role and period are defined once (`exp.<slug>.*`) and read by all three places, so they cannot
+drift apart. `sitemap.xml` is the fifth place: add the new URL there too.
 
 ## Deployment
 
@@ -79,11 +113,14 @@ nothing is blocked, but the gap is visible. Export rules are in `assets/cv/READM
 ```bash
 node .github/scripts/check-i18n.mjs                      # translation coverage
 node .github/scripts/check-site.mjs --root . --allow-missing assets/cv/
-npx --yes html-validate@9 index.html 404.html
+npx --yes html-validate@9 $(find . -name '*.html' -not -path './node_modules/*' -not -path './shots/*')
 
 python3 -m http.server 8080 --bind 127.0.0.1 &
 node .github/scripts/shots.mjs                           # screenshot matrix (needs Playwright)
 ```
+
+These are the same three commands CI runs, and both `.mjs` checks discover their pages rather
+than listing them — a new case study is covered the moment the file exists.
 
 `shots.mjs` writes desktop/mobile × light/dark × pt/en captures to `shots/` (gitignored) and
 fails if a page overflows horizontally or the no-flash flag is left on. It uses Playwright's
@@ -106,13 +143,20 @@ rather than the one the recipient last picked.
 - **`.htmlvalidate.json` turns off one rule on purpose.** `no-redundant-role` is disabled so the
   `<ul role="list">` attributes are allowed. The role *is* redundant per spec — the element
   already maps to it — but Safari drops list semantics from any list whose `list-style` is
-  `none`, which is every list on this page, so VoiceOver would stop announcing them as lists.
+  `none`, which is every list on this site, so VoiceOver would stop announcing them as lists.
   The rule has no allow-list; disabling it is the documented workaround.
+- **`check-site.mjs` follows links across pages.** It resolves a relative path against the page it
+  was written on, requires a directory target to actually contain an `index.html` (Pages 404s
+  otherwise), refuses a path that climbs out of the repo, and checks that a `#fragment` exists in
+  the document the link lands in — so `../../#experience` from a case page is verified against the
+  home page's ids, not just against the path.
 - **Storage keys are namespaced** (`site.lang`, `site.theme`). Every project page hosted under
   `sittaman.github.io` shares one origin, so unprefixed keys would collide.
 - **Cache-busting is manual.** GitHub Pages hard-codes `Cache-Control: max-age=600` and gives
   you no header control and no content hashes without a build. When you edit a CSS or JS file,
-  bump `?v=1` on its `<link>`/`<script>` in `index.html` (and on the CSS links in `404.html`).
+  bump the `?v=` on its `<link>`/`<script>` in **every** page that loads it — six files today
+  (`index.html`, `404.html`, `work/index.html` and the three case pages) — not just the one you
+  were editing, or some pages keep serving the old file.
 - **Never run `npm install` in this repo.** `upload-pages-artifact` drops dotfiles but *not*
   `node_modules`, so it would be published. The checks use `npx` and dependency-free `.mjs`.
 - The `<html>` element carries no `data-theme` attribute by default; its **absence** means

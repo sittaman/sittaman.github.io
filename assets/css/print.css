@@ -31,16 +31,20 @@
 
 body { background: #fff; display: block; }
 
-/* Chrome: strip every interactive and decorative affordance. */
+/* Chrome: strip every interactive and decorative affordance. The case-study links go too —
+   a printed copy reaches the site through the URL in the footer, not through a relative href. */
 .site-header,
 .skip-link,
 .hero-actions,
 .cv-actions,
 .card-links,
+.job-link,
+.section-actions,
 [data-lang-announcer] { display: none !important; }
 
 .hero::after,
 h2::after,
+.page-title::after,
 .timeline > li::before,
 .timeline > li::after { display: none; }
 
@@ -61,7 +65,7 @@ h2::after,
 
 /* Headings must never strand at the foot of a page. */
 h1, h2, h3, h4 { break-after: avoid; }
-.job, .stack-list li, .compact-list li, .card { break-inside: avoid; }
+.job, .stack-list li, .card { break-inside: avoid; }
 
 /* Expand only the contact block's URLs; expanding every link makes it unreadable. */
 .contact-list a[href^="https://"]::after {

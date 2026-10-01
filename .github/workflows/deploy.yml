@@ -30,8 +30,9 @@ jobs:
       - name: Internal links and assets
         run: node .github/scripts/check-site.mjs --root . --allow-missing assets/cv/
       # Markup validity: missing alt, duplicate ids, unlabelled controls, invalid nesting.
+      # Discovers every page rather than listing them, so a new case study cannot slip past.
       - name: Validate HTML
-        run: npx --yes html-validate@9 index.html 404.html
+        run: npx --yes html-validate@9 $(find . -name '*.html' -not -path './node_modules/*' -not -path './shots/*')
 
   deploy:
     needs: verify

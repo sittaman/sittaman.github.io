@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- One URL, one language-neutral page. ?lang=en is deliberately not listed: it is a
-     client-side view state, not a separate document. Bump <lastmod> when content changes. -->
+<!-- One URL per language-neutral page. ?lang=en is deliberately not listed on any of them: it
+     is a client-side view state, not a separate document. Bump <lastmod> when content changes. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sittaman.github.io/</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://sittaman.github.io/work/</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sittaman.github.io/work/spread.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://sittaman.github.io/work/digio.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://sittaman.github.io/work/mobyan.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
