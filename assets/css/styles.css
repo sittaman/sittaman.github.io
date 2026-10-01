@@ -371,23 +371,6 @@ h2::after {
 .job-summary { max-width: 68ch; margin-top: var(--space-3); }
 .job-link { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
 
-/* ---------- education ---------- */
-
-.stack-list { display: flex; flex-direction: column; }
-/* A two-item row: .stack-main left, .years right. The title and its institution MUST stay
-   inside .stack-main. Left as bare inline runs they become separate ANONYMOUS flex items,
-   and space-between then hands each one an equal share of the row — which strands the
-   institution mid-line and shifts it every time the title changes length. */
-.stack-list li {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  justify-content: space-between; gap: var(--space-1) var(--space-4);
-  padding-block: var(--space-3);
-  border-bottom: 1px solid var(--border);
-}
-.stack-main { min-width: 0; }
-.stack-list li:last-child { border-bottom: 0; }
-.years { font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-
 /* ---------- cards (projects) ---------- */
 
 .cards {
@@ -446,9 +429,8 @@ h2::after {
 }
 .back-link:hover { color: var(--accent-strong); }
 
-/* ---------- cv + contact ---------- */
+/* ---------- contact ---------- */
 
-.cv-actions,
 .section-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
 
 .contact-list { display: grid; gap: var(--space-3); margin-top: var(--space-5); }

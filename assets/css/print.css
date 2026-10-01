@@ -36,7 +36,6 @@ body { background: #fff; display: block; }
 .site-header,
 .skip-link,
 .hero-actions,
-.cv-actions,
 .card-links,
 .job-link,
 .section-actions,
@@ -65,7 +64,7 @@ h2::after,
 
 /* Headings must never strand at the foot of a page. */
 h1, h2, h3, h4 { break-after: avoid; }
-.job, .stack-list li, .card { break-inside: avoid; }
+.job, .card { break-inside: avoid; }
 
 /* Expand only the contact block's URLs; expanding every link makes it unreadable. */
 .contact-list a[href^="https://"]::after {

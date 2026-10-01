@@ -33,8 +33,6 @@ window.SITE_I18N = {
     'nav.skills': 'Skills',
     'nav.experience': 'Experiência',
     'nav.projects': 'Projetos',
-    'nav.education': 'Formação',
-    'nav.cv': 'Currículo',
     'nav.contact': 'Contato',
 
     'hero.name': 'Felipe Sitta',
@@ -102,31 +100,6 @@ window.SITE_I18N = {
     'projects.personalTitle': 'Projetos pessoais',
     'projects.personalEmpty': 'Projetos pessoais em preparação. Enquanto isso, veja os repositórios no <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
 
-    'education.title': 'Formação e certificações',
-    'education.degrees': 'Formação acadêmica',
-    'education.degreeList': [
-      '<span class="stack-main"><strong>Pós-graduação em Arquitetura de Sistemas</strong> — FIAP</span> <span class="years">2025–2026</span>',
-      '<span class="stack-main"><strong>Pós-graduação em Inteligência Artificial e Machine Learning</strong> — PUC-MG</span> <span class="years">2023–2024</span>',
-      '<span class="stack-main"><strong>Tecnólogo em Jogos Digitais</strong> — FATEC São Caetano do Sul</span> <span class="years">2010–2013</span>'
-    ],
-    'education.certs': 'Cursos e certificações',
-    'education.certList': [
-      '<span class="stack-main"><strong>Kotlin Training</strong> — Alura</span> <span class="years">2024</span>',
-      '<span class="stack-main"><strong>Flutter Training</strong> — Alura</span> <span class="years">2021</span>',
-      '<span class="stack-main"><strong>Java Academy</strong> — Caelum</span> <span class="years">2020</span>',
-      '<span class="stack-main"><strong>Android Development</strong> — Impacta</span> <span class="years">2018</span>'
-    ],
-    'education.langs': 'Idiomas',
-    'education.langList': [
-      '<span class="stack-main"><strong>Português</strong> — nativo</span>',
-      '<span class="stack-main"><strong>Inglês</strong> — C2 proficiente · EF SET, 86/100</span> <span class="years">2023</span>'
-    ],
-
-    'cv.title': 'Currículo',
-    'cv.lede': 'Currículo completo em PDF, nos dois idiomas. Escolha a versão que preferir.',
-    'cv.pt': 'Currículo em português <span class="btn-note">PDF</span>',
-    'cv.en': 'Currículo em inglês <span class="btn-note">PDF</span>',
-
     'contact.title': 'Contato',
     'contact.lede': 'Aberto a conversas sobre posições sênior em mobile e Flutter, no Brasil ou remotas.',
     'contact.emailLabel': 'E-mail',
@@ -155,8 +128,6 @@ window.SITE_I18N = {
     'nav.skills': 'Skills',
     'nav.experience': 'Experience',
     'nav.projects': 'Projects',
-    'nav.education': 'Education',
-    'nav.cv': 'Resume',
     'nav.contact': 'Contact',
 
     'hero.name': 'Felipe Sitta',
@@ -223,31 +194,6 @@ window.SITE_I18N = {
     'projects.companyEmpty': 'A selection of professional projects is being prepared.',
     'projects.personalTitle': 'Personal projects',
     'projects.personalEmpty': 'Personal projects are being prepared. In the meantime, see the repositories on <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
-
-    'education.title': 'Education and certifications',
-    'education.degrees': 'Academic background',
-    'education.degreeList': [
-      '<span class="stack-main"><strong>Postgraduate in Systems Architecture</strong> — FIAP</span> <span class="years">2025–2026</span>',
-      '<span class="stack-main"><strong>Postgraduate in Artificial Intelligence and Machine Learning</strong> — PUC-MG</span> <span class="years">2023–2024</span>',
-      '<span class="stack-main"><strong>Associate degree in Digital Games</strong> — FATEC São Caetano do Sul</span> <span class="years">2010–2013</span>'
-    ],
-    'education.certs': 'Courses and certifications',
-    'education.certList': [
-      '<span class="stack-main"><strong>Kotlin Training</strong> — Alura</span> <span class="years">2024</span>',
-      '<span class="stack-main"><strong>Flutter Training</strong> — Alura</span> <span class="years">2021</span>',
-      '<span class="stack-main"><strong>Java Academy</strong> — Caelum</span> <span class="years">2020</span>',
-      '<span class="stack-main"><strong>Android Development</strong> — Impacta</span> <span class="years">2018</span>'
-    ],
-    'education.langs': 'Languages',
-    'education.langList': [
-      '<span class="stack-main"><strong>Portuguese</strong> — native</span>',
-      '<span class="stack-main"><strong>English</strong> — C2 proficient · EF SET, 86/100</span> <span class="years">2023</span>'
-    ],
-
-    'cv.title': 'Resume',
-    'cv.lede': 'Full resume in PDF, in both languages. Pick whichever you prefer.',
-    'cv.pt': 'Portuguese resume <span class="btn-note">PDF</span>',
-    'cv.en': 'English resume <span class="btn-note">PDF</span>',
 
     'contact.title': 'Contact',
     'contact.lede': 'Open to conversations about senior mobile and Flutter roles, in Brazil or remote.',
