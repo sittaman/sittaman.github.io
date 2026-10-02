@@ -1,0 +1,10 @@
+{
+    // This site is hand-formatted: the compact HTML with its unwrapped attributes, the
+    // one-line CSS rules and the aligned i18n dictionary are the style, not an accident.
+    // VS Code's built-in formatters (no Prettier is installed here) rewrite all three on
+    // save, so format-on-save is off for exactly these languages — the global preference
+    // stays on, which is what Dart/Flutter projects want.
+    "[html]": { "editor.formatOnSave": false },
+    "[css]": { "editor.formatOnSave": false },
+    "[javascript]": { "editor.formatOnSave": false }
+}
