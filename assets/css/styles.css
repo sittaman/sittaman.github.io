@@ -248,18 +248,6 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .lede { max-width: 62ch; margin-top: var(--space-4); font-size: var(--step-1); line-height: 1.55; }
 
-.availability {
-  display: flex; align-items: flex-start; gap: var(--space-2);
-  margin-top: var(--space-5);
-  font-size: var(--step--1); color: var(--muted);
-}
-/* Sits on the first line rather than centring against a wrapped block. */
-.availability .dot {
-  flex: none; width: 8px; height: 8px; margin-top: 0.5em; border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 22%, transparent);
-}
-
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
 
 .btn {
@@ -279,15 +267,11 @@ a:hover { text-decoration-thickness: 2px; }
   opacity: 0.85;
 }
 
-.social { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-top: var(--space-5); font-size: var(--step--1); font-weight: 600; }
-
 @media (prefers-reduced-motion: no-preference) {
   .hero .shell > * { animation: rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both; }
   .hero .shell > *:nth-child(2) { animation-delay: 60ms; }
   .hero .shell > *:nth-child(3) { animation-delay: 110ms; }
   .hero .shell > *:nth-child(4) { animation-delay: 155ms; }
-  .hero .shell > *:nth-child(5) { animation-delay: 200ms; }
-  .hero .shell > *:nth-child(6) { animation-delay: 240ms; }
   @keyframes rise {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: none; }

@@ -16,12 +16,11 @@
 window.SITE_I18N = {
 
   'pt-BR': {
-    'meta.title': 'Felipe Sitta — Desenvolvedor Sênior Flutter | Design Systems e IA',
-    'meta.description': 'Desenvolvedor Sênior Flutter com 14 anos de experiência em mobile. Design Systems, arquitetura modular e IA aplicada ao desenvolvimento, em projetos financeiros para milhões de usuários.',
+    'meta.title': 'Felipe Sitta — Engenheiro Mobile',
+    'meta.description': 'Engenheiro mobile com 14 anos de experiência em software. Desenvolvo aplicativos Android e iOS e transformo requisitos e expectativas em soluções.',
 
     'a11y.skip': 'Pular para o conteúdo',
     'a11y.navLabel': 'Seções',
-    'a11y.socialLabel': 'Perfis',
     'a11y.langLegend': 'Idioma da página',
     'a11y.brand': 'Felipe Sitta — início',
     'a11y.themeToggle': 'Alternar tema',
@@ -37,16 +36,14 @@ window.SITE_I18N = {
     'nav.contact': 'Contato',
 
     'hero.name': 'Felipe Sitta',
-    'hero.tagline': 'Desenvolvedor Sênior Flutter — Design Systems e IA aplicada',
-    'hero.lede': '14 anos de experiência em desenvolvimento de software, especialista em Flutter desde 2020. Atuação em projetos de alta complexidade nos setores financeiro e bancário — Carteira Digital, PIX e Cartões — para milhões de usuários.',
-    'hero.availability': 'Aberto a posições sênior — remoto, híbrido ou presencial, Brasil',
+    'hero.tagline': 'Engenheiro mobile',
+    'hero.lede': 'Desenvolvo aplicativos Android e iOS. Transformo requisitos e expectativas em soluções.',
     'hero.cvPt': 'Currículo <span class="btn-note">PDF · PT</span>',
     'hero.cvEn': 'Resume <span class="btn-note">PDF · EN</span>',
     'hero.ctaContact': 'Entrar em contato',
 
     'about.title': 'Sobre',
     'about.p1': 'Desenvolvedor com 14 anos de experiência em software e especialista Flutter desde 2020, atuando em projetos de alta complexidade nos setores financeiro e bancário. Perfil hands-on: estruturo requisitos, backlogs e roadmaps com governança cross-squad, lidero a adoção de tecnologias e atuo como referência técnica.',
-    'about.p2': 'Meu trabalho se concentra em três frentes: arquitetura modular de aplicativos de grande porte, Design Systems com tokens e governança entre times, e a aplicação de IA ao próprio processo de desenvolvimento — skills customizados e integrações como o Figma MCP. Também sou responsável por cultura de testes, acessibilidade e pipelines de entrega contínua.',
 
     'skills.title': 'Competências',
     'skills.mobile': 'Mobile & Flutter',
@@ -83,7 +80,7 @@ window.SITE_I18N = {
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Apps Flutter e Kotlin offline-first para manutenção de POS em campo. R$ 300K+/ano de economia e 2.000+ técnicos migrados.',
 
-    'case.link': 'Leia o estudo de caso completo',
+    'case.link': 'Leia o estudo de caso',
     'case.eyebrow': 'Estudo de caso',
     'case.back': 'Voltar',
     'case.allCases': 'Ver todos os estudos de caso',
@@ -193,19 +190,17 @@ window.SITE_I18N = {
     'contact.title': 'Contato',
     'contact.lede': 'Aberto a conversas sobre posições sênior em mobile e Flutter, no Brasil ou remotas.',
     'contact.emailLabel': 'E-mail',
-    'contact.email': 'E-mail',
 
     'footer.rights': '© 2026 Felipe Sitta',
     'footer.built': 'Feito à mão em HTML, CSS e JavaScript'
   },
 
   'en': {
-    'meta.title': 'Felipe Sitta — Senior Flutter Developer | Design Systems & AI',
-    'meta.description': 'Senior Flutter Developer with 14 years of mobile experience. Design Systems, modular architecture and AI applied to development, on financial projects serving millions of users.',
+    'meta.title': 'Felipe Sitta — Mobile Engineer',
+    'meta.description': 'Mobile engineer with 14 years of software experience. I develop Android and iOS apps and turn requirements and expectations into solutions.',
 
     'a11y.skip': 'Skip to content',
     'a11y.navLabel': 'Sections',
-    'a11y.socialLabel': 'Profiles',
     'a11y.langLegend': 'Page language',
     'a11y.brand': 'Felipe Sitta — home',
     'a11y.themeToggle': 'Toggle theme',
@@ -221,16 +216,14 @@ window.SITE_I18N = {
     'nav.contact': 'Contact',
 
     'hero.name': 'Felipe Sitta',
-    'hero.tagline': 'Senior Flutter Developer — Design Systems and AI applied',
-    'hero.lede': '14 years of software development experience and a Flutter specialist since 2020, working on highly complex projects in the financial and banking sectors — Digital Wallet, PIX and Cards — for millions of users.',
-    'hero.availability': 'Open to senior roles — remote, hybrid or on-site, Brazil',
+    'hero.tagline': 'Mobile Engineer',
+    'hero.lede': 'I develop Android and iOS apps. I turn requirements and expectations into solutions.',
     'hero.cvPt': 'Resume in Portuguese <span class="btn-note">PDF · PT</span>',
     'hero.cvEn': 'Resume in English <span class="btn-note">PDF · EN</span>',
     'hero.ctaContact': 'Get in touch',
 
     'about.title': 'About',
     'about.p1': 'Software developer with 14 years of experience and a Flutter specialist since 2020, working on highly complex projects in the financial and banking sectors. Hands-on profile: I structure requirements, backlogs and roadmaps with cross-squad governance, lead technology adoption and act as a technical reference.',
-    'about.p2': 'My work focuses on three fronts: modular architecture for large-scale applications, Design Systems with tokens and cross-team governance, and applying AI to the development process itself — custom skills and integrations such as Figma MCP. I am also responsible for testing culture, accessibility and continuous delivery pipelines.',
 
     'skills.title': 'Skills',
     'skills.mobile': 'Mobile & Flutter',
@@ -267,7 +260,7 @@ window.SITE_I18N = {
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Offline-first Flutter and Kotlin apps for field POS maintenance. R$ 300K+/year in savings and 2,000+ technicians migrated.',
 
-    'case.link': 'Read the full case study',
+    'case.link': 'Read the case study',
     'case.eyebrow': 'Case study',
     'case.back': 'Back',
     'case.allCases': 'See all case studies',
@@ -377,7 +370,6 @@ window.SITE_I18N = {
     'contact.title': 'Contact',
     'contact.lede': 'Open to conversations about senior mobile and Flutter roles, in Brazil or remote.',
     'contact.emailLabel': 'Email',
-    'contact.email': 'Email',
 
     'footer.rights': '© 2026 Felipe Sitta',
     'footer.built': 'Hand-built with HTML, CSS and JavaScript'
