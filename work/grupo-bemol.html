@@ -7,17 +7,17 @@
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
 
-<title data-i18n="case.spread.meta.title">Spread Tecnologia — estudo de caso — Felipe Sitta</title>
-<meta name="description" content="Estudo de caso: Desenvolvedor Sênior Flutter na Spread Tecnologia, de junho de 2025 a junho de 2026." data-i18n-content="case.spread.meta.description">
-<link rel="canonical" href="https://sittaman.github.io/work/spread.html">
+<title data-i18n="case.grupo-bemol.meta.title">Grupo Bemol — estudo de caso — Felipe Sitta</title>
+<meta name="description" content="Estudo de caso: Grupo Bemol, de janeiro a julho de 2026 — Carteira Digital em Flutter." data-i18n-content="case.grupo-bemol.meta.description">
+<link rel="canonical" href="https://sittaman.github.io/work/grupo-bemol.html">
 
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Felipe Sitta">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:locale:alternate" content="en_US">
-<meta property="og:url" content="https://sittaman.github.io/work/spread.html">
-<meta property="og:title" content="Spread Tecnologia — estudo de caso — Felipe Sitta" data-i18n-content="case.spread.meta.title">
-<meta property="og:description" content="Estudo de caso: Desenvolvedor Sênior Flutter na Spread Tecnologia, de junho de 2025 a junho de 2026." data-i18n-content="case.spread.meta.description">
+<meta property="og:url" content="https://sittaman.github.io/work/grupo-bemol.html">
+<meta property="og:title" content="Grupo Bemol — estudo de caso — Felipe Sitta" data-i18n-content="case.grupo-bemol.meta.title">
+<meta property="og:description" content="Estudo de caso: Grupo Bemol, de janeiro a julho de 2026 — Carteira Digital em Flutter." data-i18n-content="case.grupo-bemol.meta.description">
 <meta property="og:image" content="https://sittaman.github.io/assets/img/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -27,7 +27,7 @@
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/styles.css?v=3">
+<link rel="stylesheet" href="../assets/css/styles.css?v=4">
 <link rel="stylesheet" href="../assets/css/print.css?v=3" media="print">
 
 <script>
@@ -59,6 +59,18 @@
   <div class="shell header-inner">
     <a class="back-link" href="../#experience"><span aria-hidden="true">←</span> <span data-i18n="case.back">Voltar</span></a>
 
+    <!-- The home page's menu, with ../ so it resolves from /work/. No data-action here: that
+         hook only highlights same-page anchors, and every one of these leaves the page. -->
+    <nav class="site-nav" aria-label="Seções" data-i18n-aria-label="a11y.navLabel">
+      <ul role="list">
+        <li><a href="../#about" data-i18n="nav.about">Sobre</a></li>
+        <li><a href="../#skills" data-i18n="nav.skills">Skills</a></li>
+        <li><a href="../#experience" data-i18n="nav.experience">Experiência</a></li>
+        <li><a href="../#projects" data-i18n="nav.projects">Projetos</a></li>
+        <li><a href="../#contact" data-i18n="nav.contact">Contato</a></li>
+      </ul>
+    </nav>
+
     <div class="controls">
       <fieldset class="lang-switch">
         <legend class="sr-only" data-i18n="a11y.langLegend">Idioma da página</legend>
@@ -87,20 +99,40 @@
 </header>
 
 <main id="main" tabindex="-1">
-
-  <!-- Case study in preparation. Replace the notice with the real write-up when it exists;
-       the heading, role and period below already come from the same keys the home page uses. -->
-  <section class="section" aria-labelledby="case-title">
+  <!-- Case study. The write-up is sourced from ~/Documents/cv/Project showcase {PT,EN}.md;
+       section headings are shared across every case page, the body keys are per project. -->
+  <section class="section case-study" aria-labelledby="case-title">
     <div class="shell">
       <p class="eyebrow" data-i18n="case.eyebrow">Estudo de caso</p>
-      <h1 id="case-title" class="page-title">Spread Tecnologia</h1>
+      <h1 id="case-title" class="page-title">Grupo Bemol</h1>
       <p class="case-meta">
-        <span data-i18n="exp.spread.role">Desenvolvedor Sênior Flutter</span> ·
-        <time datetime="2025-06" data-i18n="exp.spread.start">Jun 2025</time> —
-        <time datetime="2026-06" data-i18n="exp.spread.end">Jun 2026</time>
+        <span data-i18n="exp.grupo-bemol.role">Desenvolvedor Sênior Flutter</span> ·
+        <time datetime="2026-01" data-i18n="exp.grupo-bemol.start">Jan 2026</time> —
+        <time datetime="2026-07" data-i18n="exp.grupo-bemol.end">Jul 2026</time>
       </p>
+      <h2 data-i18n="case.context">Contexto</h2>
+      <ul class="bullets" role="list" data-i18n-list="case.grupo-bemol.context">
+        <li>Projeto desenvolvido em Flutter.</li>
+        <li>Lançamento do produto Carteira Digital.</li>
+        <li>Projeto legado robusto em processo de refatoração.</li>
+        <li>Presença de muita duplicidade.</li>
+        <li>Mudanças de regra de negócio e impedimentos relacionados ao novo produto ocorriam com frequência e demandavam rápida adaptação.</li>
+        <li>Existiam limitações por parte de fornecedores externos.</li>
+        <li>Uso intenso de ferramentas de IA (GitHub Copilot) para explicação de código e skills para novas funcionalidades, code review, testes unitários e commits.</li>
+      </ul>
 
-      <p class="notice" data-i18n="case.pending">Estudo de caso em preparação.</p>
+      <h2 data-i18n="case.scope">Escopo técnico</h2>
+      <ul class="bullets" role="list" data-i18n-list="case.grupo-bemol.scope">
+        <li>O projeto consistia no desenvolvimento de um produto de Carteira Digital dentro do aplicativo já existente do cliente. A funcionalidade englobava o cadastro de cartões de crédito como forma de pagamento.</li>
+        <li>Havia diversas questões de segurança e de uso de serviços externos, como Cielo, no que se refere à manipulação e ao armazenamento de dados de cartão de crédito, e esses pontos precisavam ser contemplados no desenvolvimento.</li>
+        <li>O time de produto entregou um roadmap bastante superficial, que foi sendo ajustado quase diariamente à medida que novas demandas eram descobertas.</li>
+      </ul>
+
+      <h2 data-i18n="case.results">Resultados alcançados</h2>
+      <ul class="bullets" role="list" data-i18n-list="case.grupo-bemol.results">
+        <li>Entrega do produto, com resposta rápida às mudanças e demandas conforme surgiam.</li>
+        <li>Criação de uma biblioteca que encapsulava de forma transparente um processo importante com exigências específicas de um fornecedor.</li>
+      </ul>
 
       <p class="section-actions">
         <a class="btn btn-ghost" href="../work/" data-i18n="case.allCases">Ver todos os estudos de caso</a>
@@ -115,7 +147,7 @@
   </div>
 </footer>
 
-<script src="../assets/js/i18n.js?v=3"></script>
+<script src="../assets/js/i18n.js?v=5"></script>
 <script src="../assets/js/main.js?v=2"></script>
 </body>
 </html>

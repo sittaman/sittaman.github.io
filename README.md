@@ -63,21 +63,33 @@ example is in the comments at the top of that file.
 
 ### Adding a case study
 
-The home page shows the **three most recent** jobs as a short line each; `/work/` lists **all** of
-them; each one links to its own page. A case study therefore lives in four places:
+**A case study is a project, not a job.** The home page's timeline is the employment history —
+employers, three of them — while `/work/` holds one page per *project*. The two do not have to
+line up: Spread Tecnologia is one timeline entry covering two projects, `work/banco-bv.html` and
+`work/grupo-bemol.html`, and its `.job-link` points at `/work/` rather than at either one.
+
+The write-ups are transcribed from `~/Documents/cv/Project showcase PT.md` and
+`Project showcase EN.md` — the two files are the source of truth for this content, and they are
+in **ascending** order while every listing on the site is **descending** (newest first). Keep
+that reversal when you add one.
+
+A case study lives in four places:
 
 1. **`work/<slug>.html`** — copy an existing one (`work/digio.html` is the plainest) and swap the
-   slug, the company name, the `exp.<slug>.*` keys and the two absolute URLs (`canonical`, `og:url`).
-   While the write-up does not exist, leave the `case.pending` notice in place rather than inventing
-   content — an honest placeholder beats a padded page.
-2. **`work/index.html`** — add a `<li class="card">` for it.
-3. **`index.html`** — add a `<li>` to the experience `<ol class="timeline">`, keeping the list to
-   the three most recent and dropping the oldest into /work only.
-4. **`assets/js/i18n.js`** — add `case.<slug>.meta.title` and `.meta.description` to **both**
-   dictionaries, plus the shared `exp.<slug>.role` / `.start` / `.end` / `.summary` keys.
+   slug, the project name, the `<slug>` in every key and the two absolute URLs (`canonical`,
+   `og:url`). Section headings (`case.context`, `case.scope`, …) are shared by every case page;
+   only the body keys carry the slug. Use `<ul class="bullets">` where the source uses bullets and
+   `.prose` with `data-i18n-html` where it uses paragraphs, and do not add a section the source
+   does not have — an honest short page beats a padded one.
+2. **`work/index.html`** — add a `<li class="card">`, newest first.
+3. **`index.html`** — only if the project's **employer** is new: add a `<li>` to the experience
+   `<ol class="timeline">`, keeping the three most recent.
+4. **`assets/js/i18n.js`** — add the `case.<slug>.*` body keys and `case.<slug>.meta.title` /
+   `.meta.description` to **both** dictionaries, plus `exp.<slug>.role` / `.start` / `.end` /
+   `.summary` if the project also appears as a card.
 
-Role and period are defined once (`exp.<slug>.*`) and read by all three places, so they cannot
-drift apart. `sitemap.xml` is the fifth place: add the new URL there too.
+Role and period are defined once (`exp.<slug>.*`) and read by both the card and the case page, so
+they cannot drift apart. `sitemap.xml` is the fifth place: add the new URL there too.
 
 ## Deployment
 
@@ -154,8 +166,8 @@ rather than the one the recipient last picked.
   `sittaman.github.io` shares one origin, so unprefixed keys would collide.
 - **Cache-busting is manual.** GitHub Pages hard-codes `Cache-Control: max-age=600` and gives
   you no header control and no content hashes without a build. When you edit a CSS or JS file,
-  bump the `?v=` on its `<link>`/`<script>` in **every** page that loads it — six files today
-  (`index.html`, `404.html`, `work/index.html` and the three case pages) — not just the one you
+  bump the `?v=` on its `<link>`/`<script>` in **every** page that loads it — seven files today
+  (`index.html`, `404.html`, `work/index.html` and the four case pages) — not just the one you
   were editing, or some pages keep serving the old file.
 - **Never run `npm install` in this repo.** `upload-pages-artifact` drops dotfiles but *not*
   `node_modules`, so it would be published. The checks use `npx` and dependency-free `.mjs`.

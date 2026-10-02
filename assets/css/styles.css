@@ -412,15 +412,11 @@ h2::after {
 /* Spacing after the page title comes from the `+ *` rule above, not from here. */
 .case-meta { color: var(--muted); font-variant-numeric: tabular-nums; }
 
-/* Carries the page's only real content while a case study is unwritten, so it is styled as a
-   deliberate callout rather than the footnote treatment .empty-note gets on the home page. */
-.notice {
-  max-width: 68ch; margin-top: var(--space-5);
-  padding: var(--space-4);
-  border: 1px solid var(--border); border-left: 3px solid var(--accent);
-  border-radius: var(--radius);
-  background: var(--surface); color: var(--muted);
-}
+/* Section headings inside a write-up. The page title above them already carries the gradient
+   rule; repeating it under every section turns the page into a stack of underlines, so these
+   are sized as subsections and left unruled. Space below each comes from the `h2 + *` rule. */
+.case-study h2 { margin-top: var(--space-6); font-size: var(--step-1); font-weight: 650; }
+.case-study h2::after { display: none; }
 
 .back-link {
   display: inline-flex; align-items: center; gap: var(--space-2);

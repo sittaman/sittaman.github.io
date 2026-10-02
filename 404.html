@@ -8,7 +8,7 @@
 <title>Página não encontrada — Felipe Sitta</title>
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="stylesheet" href="/assets/css/styles.css?v=3">
+<link rel="stylesheet" href="/assets/css/styles.css?v=4">
 <style>
   .notfound { padding-block: clamp(3rem, 10vw, 7rem); }
   .notfound .code {
@@ -23,6 +23,25 @@
 </style>
 </head>
 <body>
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label="Felipe Sitta — início"><span class="brand-mark" aria-hidden="true">&gt;_</span></a>
+
+    <!-- Root-absolute, unlike the rest of the site: a 404 answers an unknown path at any depth,
+         so ../ would resolve against a directory that need not exist. The labels carry both
+         languages inline because this page loads no i18n script. -->
+    <nav class="site-nav" aria-label="Seções / Sections">
+      <ul role="list">
+        <li><a href="/#about">Sobre <span lang="en">/ About</span></a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#experience">Experiência <span lang="en">/ Experience</span></a></li>
+        <li><a href="/#projects">Projetos <span lang="en">/ Projects</span></a></li>
+        <li><a href="/#contact">Contato <span lang="en">/ Contact</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
 <main id="main" class="notfound">
   <div class="shell">
     <p class="code">404</p>
