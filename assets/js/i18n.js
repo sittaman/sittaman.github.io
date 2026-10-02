@@ -8,21 +8,19 @@
  * directly in the HTML, so a visitor without JS still gets a complete page.
  * `check-i18n.mjs` fails the build when the two languages disagree.
  *
- * `exp.<slug>.summary` does two jobs. For the three employers on the home timeline it is the
- * two-line brief, sized to wrap to exactly two lines at that width — measured, not guessed, and
- * a longer edit quietly becomes a third line that no check will catch. For the projects that
- * exist only as /work cards (banco-bv, grupo-bemol) the same key is the card text, where the card
- * sets the width and the line count is free.
+ * `exp.<slug>.summary` does two jobs: the brief under the client's name on the home timeline, and
+ * the same text on that project's card in /work — one source, so the two cannot drift apart.
+ * Role and period (`exp.<slug>.role` / `.start` / `.end`) are read by the /work cards and the
+ * case pages; the home timeline shows only the name, the brief and the link.
  */
 window.SITE_I18N = {
 
   'pt-BR': {
-    'meta.title': 'Felipe Sitta — Desenvolvedor Sênior Flutter | Design Systems e IA',
-    'meta.description': 'Desenvolvedor Sênior Flutter com 14 anos de experiência em mobile. Design Systems, arquitetura modular e IA aplicada ao desenvolvimento, em projetos financeiros para milhões de usuários.',
+    'meta.title': 'Felipe Sitta — Engenheiro Mobile',
+    'meta.description': 'Engenheiro mobile com 14 anos de experiência em software. Desenvolvo aplicativos Android e iOS e transformo requisitos e expectativas em soluções.',
 
     'a11y.skip': 'Pular para o conteúdo',
     'a11y.navLabel': 'Seções',
-    'a11y.socialLabel': 'Perfis',
     'a11y.langLegend': 'Idioma da página',
     'a11y.brand': 'Felipe Sitta — início',
     'a11y.themeToggle': 'Alternar tema',
@@ -38,16 +36,14 @@ window.SITE_I18N = {
     'nav.contact': 'Contato',
 
     'hero.name': 'Felipe Sitta',
-    'hero.tagline': 'Desenvolvedor Sênior Flutter — Design Systems e IA aplicada',
-    'hero.lede': '14 anos de experiência em desenvolvimento de software, especialista em Flutter desde 2020. Atuação em projetos de alta complexidade nos setores financeiro e bancário — Carteira Digital, PIX e Cartões — para milhões de usuários.',
-    'hero.availability': 'Aberto a posições sênior — remoto, híbrido ou presencial, Brasil',
+    'hero.tagline': 'Engenheiro mobile',
+    'hero.lede': 'Desenvolvo aplicativos Android e iOS. Transformo requisitos e expectativas em soluções.',
     'hero.cvPt': 'Currículo <span class="btn-note">PDF · PT</span>',
     'hero.cvEn': 'Resume <span class="btn-note">PDF · EN</span>',
     'hero.ctaContact': 'Entrar em contato',
 
     'about.title': 'Sobre',
     'about.p1': 'Desenvolvedor com 14 anos de experiência em software e especialista Flutter desde 2020, atuando em projetos de alta complexidade nos setores financeiro e bancário. Perfil hands-on: estruturo requisitos, backlogs e roadmaps com governança cross-squad, lidero a adoção de tecnologias e atuo como referência técnica.',
-    'about.p2': 'Meu trabalho se concentra em três frentes: arquitetura modular de aplicativos de grande porte, Design Systems com tokens e governança entre times, e a aplicação de IA ao próprio processo de desenvolvimento — skills customizados e integrações como o Figma MCP. Também sou responsável por cultura de testes, acessibilidade e pipelines de entrega contínua.',
 
     'skills.title': 'Competências',
     'skills.mobile': 'Mobile & Flutter',
@@ -64,25 +60,20 @@ window.SITE_I18N = {
     'experience.title': 'Experiência',
     'experience.seeAll': 'Ver todos',
 
-    'exp.spread.role': 'Desenvolvedor Sênior Flutter',
-    'exp.spread.start': 'Jun 2025',
-    'exp.spread.end': 'Jun 2026',
-    'exp.spread.summary': 'Banco digital com 150+ módulos Flutter — Carteira Digital, PIX e Cartões — para milhões de usuários. Design System, WCAG e skills de IA.',
-
     'exp.grupo-bemol.role': 'Desenvolvedor Sênior Flutter',
     'exp.grupo-bemol.start': 'Jan 2026',
     'exp.grupo-bemol.end': 'Jul 2026',
-    'exp.grupo-bemol.summary': 'Carteira Digital e cadastro de cartões dentro do app existente do cliente, com integração Cielo e encapsulamento das exigências do fornecedor.',
+    'exp.grupo-bemol.summary': 'Feature de carteira digital e pagamentos para milhões de usuários.',
 
     'exp.banco-bv.role': 'Desenvolvedor Sênior Flutter',
     'exp.banco-bv.start': 'Jun 2025',
     'exp.banco-bv.end': 'Dez 2025',
-    'exp.banco-bv.summary': 'Flutter com 150+ módulos: Design System sob controle rígido de qualidade e acessibilidade, e uma biblioteca de front-end que gera telas e formulários dinâmicos.',
+    'exp.banco-bv.summary': 'Desenvolvimento e governança de design system para mais de 200 colaboradores.',
 
     'exp.digio.role': 'Desenvolvedor Sênior Flutter',
     'exp.digio.start': 'Mar 2024',
     'exp.digio.end': 'Fev 2025',
-    'exp.digio.summary': 'Monólito Flutter Web sem testes transformado em sistema modularizado, com cobertura de 0 a 70%+ e TDD. Design System com Widgetbook.',
+    'exp.digio.summary': 'Modularização de monolito em Flutter Web. Sistema bancário de backoffice crítico para operação.',
 
     'exp.mobyan.role': 'Desenvolvedor Sênior Mobile',
     'exp.mobyan.start': 'Mai 2023',
@@ -108,7 +99,6 @@ window.SITE_I18N = {
     'case.banco-bv.meta.title': 'Banco BV — estudo de caso — Felipe Sitta',
     'case.banco-bv.meta.description': 'Estudo de caso: Banco BV, de junho a dezembro de 2025 — Design System e arquitetura modular em Flutter.',
 
-    'case.linkAll': 'Ver estudos de caso',
     'case.context': 'Contexto',
     'case.scope': 'Escopo técnico',
     'case.contrib': 'Contribuições destacadas',
@@ -195,27 +185,22 @@ window.SITE_I18N = {
     ],
 
     'projects.title': 'Projetos',
-    'projects.companyTitle': 'Trabalhos em empresas',
-    'projects.companyEmpty': 'Seleção de projetos profissionais em preparação.',
-    'projects.personalTitle': 'Projetos pessoais',
-    'projects.personalEmpty': 'Projetos pessoais em preparação. Enquanto isso, veja os repositórios no <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
+    'projects.empty': 'Em breve. Enquanto isso, veja os repositórios no <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
 
     'contact.title': 'Contato',
     'contact.lede': 'Aberto a conversas sobre posições sênior em mobile e Flutter, no Brasil ou remotas.',
     'contact.emailLabel': 'E-mail',
-    'contact.email': 'E-mail',
 
     'footer.rights': '© 2026 Felipe Sitta',
     'footer.built': 'Feito à mão em HTML, CSS e JavaScript'
   },
 
   'en': {
-    'meta.title': 'Felipe Sitta — Senior Flutter Developer | Design Systems & AI',
-    'meta.description': 'Senior Flutter Developer with 14 years of mobile experience. Design Systems, modular architecture and AI applied to development, on financial projects serving millions of users.',
+    'meta.title': 'Felipe Sitta — Mobile Engineer',
+    'meta.description': 'Mobile engineer with 14 years of software experience. I develop Android and iOS apps and turn requirements and expectations into solutions.',
 
     'a11y.skip': 'Skip to content',
     'a11y.navLabel': 'Sections',
-    'a11y.socialLabel': 'Profiles',
     'a11y.langLegend': 'Page language',
     'a11y.brand': 'Felipe Sitta — home',
     'a11y.themeToggle': 'Toggle theme',
@@ -231,16 +216,14 @@ window.SITE_I18N = {
     'nav.contact': 'Contact',
 
     'hero.name': 'Felipe Sitta',
-    'hero.tagline': 'Senior Flutter Developer — Design Systems and AI applied',
-    'hero.lede': '14 years of software development experience and a Flutter specialist since 2020, working on highly complex projects in the financial and banking sectors — Digital Wallet, PIX and Cards — for millions of users.',
-    'hero.availability': 'Open to senior roles — remote, hybrid or on-site, Brazil',
+    'hero.tagline': 'Mobile Engineer',
+    'hero.lede': 'I develop Android and iOS apps. I turn requirements and expectations into solutions.',
     'hero.cvPt': 'Resume in Portuguese <span class="btn-note">PDF · PT</span>',
     'hero.cvEn': 'Resume in English <span class="btn-note">PDF · EN</span>',
     'hero.ctaContact': 'Get in touch',
 
     'about.title': 'About',
     'about.p1': 'Software developer with 14 years of experience and a Flutter specialist since 2020, working on highly complex projects in the financial and banking sectors. Hands-on profile: I structure requirements, backlogs and roadmaps with cross-squad governance, lead technology adoption and act as a technical reference.',
-    'about.p2': 'My work focuses on three fronts: modular architecture for large-scale applications, Design Systems with tokens and cross-team governance, and applying AI to the development process itself — custom skills and integrations such as Figma MCP. I am also responsible for testing culture, accessibility and continuous delivery pipelines.',
 
     'skills.title': 'Skills',
     'skills.mobile': 'Mobile & Flutter',
@@ -257,32 +240,27 @@ window.SITE_I18N = {
     'experience.title': 'Experience',
     'experience.seeAll': 'View all',
 
-    'exp.spread.role': 'Senior Flutter Developer',
-    'exp.spread.start': 'Jun 2025',
-    'exp.spread.end': 'Jun 2026',
-    'exp.spread.summary': 'Digital banking across 150+ Flutter modules — Digital Wallet, PIX and Cards — for millions of users. Design System, WCAG and AI skills.',
-
     'exp.grupo-bemol.role': 'Senior Flutter Developer',
     'exp.grupo-bemol.start': 'Jan 2026',
     'exp.grupo-bemol.end': 'Jul 2026',
-    'exp.grupo-bemol.summary': 'Digital Wallet and credit-card registration inside the client’s existing app, with Cielo integration and the vendor’s requirements encapsulated.',
+    'exp.grupo-bemol.summary': 'Digital wallet and payments feature for millions of customers.',
 
     'exp.banco-bv.role': 'Senior Flutter Developer',
     'exp.banco-bv.start': 'Jun 2025',
     'exp.banco-bv.end': 'Dec 2025',
-    'exp.banco-bv.summary': 'Flutter at 150+ modules: a Design System under strict quality and accessibility control, and a front-end library that generates dynamic screens and forms.',
+    'exp.banco-bv.summary': 'Design system development and governance for over 200 employees',
 
     'exp.digio.role': 'Senior Flutter Developer',
     'exp.digio.start': 'Mar 2024',
     'exp.digio.end': 'Feb 2025',
-    'exp.digio.summary': 'Untested Flutter Web monolith turned into a modularized, testable system — coverage 0 → 70%+ with TDD. Design System in Widgetbook.',
+    'exp.digio.summary': 'Modularization of a Flutter Web monolith. Mission-critical back-office banking system.',
 
     'exp.mobyan.role': 'Senior Mobile Developer',
     'exp.mobyan.start': 'May 2023',
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Offline-first Flutter and Kotlin apps for field POS maintenance. R$ 300K+/year in savings and 2,000+ technicians migrated.',
 
-    'case.link': 'Read the case study',
+    'case.link': 'Read case study',
     'case.eyebrow': 'Case study',
     'case.back': 'Back',
     'case.allCases': 'See all case studies',
@@ -301,7 +279,6 @@ window.SITE_I18N = {
     'case.banco-bv.meta.title': 'Banco BV — case study — Felipe Sitta',
     'case.banco-bv.meta.description': 'Case study: Banco BV, June to December 2025 — Design System and modular architecture in Flutter.',
 
-    'case.linkAll': 'See case studies',
     'case.context': 'Context',
     'case.scope': 'Technical scope',
     'case.contrib': 'Key contributions',
@@ -388,15 +365,11 @@ window.SITE_I18N = {
     ],
 
     'projects.title': 'Projects',
-    'projects.companyTitle': 'Company work',
-    'projects.companyEmpty': 'A selection of professional projects is being prepared.',
-    'projects.personalTitle': 'Personal projects',
-    'projects.personalEmpty': 'Personal projects are being prepared. In the meantime, see the repositories on <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
+    'projects.empty': 'Coming soon. In the meantime, see the repositories on <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
 
     'contact.title': 'Contact',
     'contact.lede': 'Open to conversations about senior mobile and Flutter roles, in Brazil or remote.',
     'contact.emailLabel': 'Email',
-    'contact.email': 'Email',
 
     'footer.rights': '© 2026 Felipe Sitta',
     'footer.built': 'Hand-built with HTML, CSS and JavaScript'

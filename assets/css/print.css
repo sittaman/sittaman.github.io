@@ -47,12 +47,6 @@ h2::after,
 .timeline > li::before,
 .timeline > li::after { display: none; }
 
-.availability .dot {
-  display: inline-block;
-  box-shadow: none;
-  background: #000;
-}
-
 /* A CV reads linearly — collapse every grid to one column. */
 .skills-grid, .cards, .contact-list { display: block; }
 .skills-grid > *, .cards > * { margin-bottom: 0.8rem; break-inside: avoid; }

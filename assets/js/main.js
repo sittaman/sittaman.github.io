@@ -201,7 +201,7 @@
 
   /* ---------- project cards ---------- */
 
-  var DATA = window.PROJECTS || { company: [], personal: [] };
+  var DATA = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
 
   function pick(obj, lang) {
     if (obj == null) return '';
@@ -216,23 +216,22 @@
     return node;
   }
 
+  /* One list, no grouping — the section carries personal projects only. While the array is
+     empty the grid hides itself (:empty) and the "coming soon" note stands in for it. */
   function renderProjects(lang) {
-    ['company', 'personal'].forEach(function (group) {
-      var grid = document.querySelector('[data-projects="' + group + '"]');
-      var note = document.querySelector('[data-empty-note="' + group + '"]');
-      if (!grid) return;
-      var items = Array.isArray(DATA[group]) ? DATA[group] : [];
-      grid.textContent = '';
-      if (!items.length) {
-        if (note) note.hidden = false;
-        return;
-      }
-      if (note) note.hidden = true;
-      items.forEach(function (item) { grid.appendChild(buildCard(item, group, lang)); });
-    });
+    var grid = document.querySelector('[data-projects]');
+    var note = document.querySelector('[data-empty-note]');
+    if (!grid) return;
+    grid.textContent = '';
+    if (!DATA.length) {
+      if (note) note.hidden = false;
+      return;
+    }
+    if (note) note.hidden = true;
+    DATA.forEach(function (item) { grid.appendChild(buildCard(item, lang)); });
   }
 
-  function buildCard(item, group, lang) {
+  function buildCard(item, lang) {
     var card = el('article', 'card');
     card.appendChild(el('h4', null, pick(item.title, lang)));
 

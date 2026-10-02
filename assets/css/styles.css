@@ -248,18 +248,6 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .lede { max-width: 62ch; margin-top: var(--space-4); font-size: var(--step-1); line-height: 1.55; }
 
-.availability {
-  display: flex; align-items: flex-start; gap: var(--space-2);
-  margin-top: var(--space-5);
-  font-size: var(--step--1); color: var(--muted);
-}
-/* Sits on the first line rather than centring against a wrapped block. */
-.availability .dot {
-  flex: none; width: 8px; height: 8px; margin-top: 0.5em; border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 22%, transparent);
-}
-
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
 
 .btn {
@@ -279,15 +267,11 @@ a:hover { text-decoration-thickness: 2px; }
   opacity: 0.85;
 }
 
-.social { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-top: var(--space-5); font-size: var(--step--1); font-weight: 600; }
-
 @media (prefers-reduced-motion: no-preference) {
   .hero .shell > * { animation: rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both; }
   .hero .shell > *:nth-child(2) { animation-delay: 60ms; }
   .hero .shell > *:nth-child(3) { animation-delay: 110ms; }
   .hero .shell > *:nth-child(4) { animation-delay: 155ms; }
-  .hero .shell > *:nth-child(5) { animation-delay: 200ms; }
-  .hero .shell > *:nth-child(6) { animation-delay: 240ms; }
   @keyframes rise {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: none; }
@@ -309,9 +293,9 @@ h2::after {
 .section > .shell > h2 + *,
 .section > .shell > .page-title + * { margin-top: var(--space-5); }
 
-.subsection-title { margin-top: var(--space-6); margin-bottom: var(--space-3); font-size: var(--step-1); font-weight: 650; }
-.section > .shell > h2 + .cards,
-.section > .shell > h2 + .subsection-title { margin-top: var(--space-4); }
+/* The cards grid follows the section heading directly now that the section has no
+   subsections, so it tightens the generic `h2 + *` gap a step. */
+.section > .shell > h2 + .cards { margin-top: var(--space-4); }
 
 .prose { max-width: 68ch; }
 .prose p + p { margin-top: var(--space-3); }
@@ -348,16 +332,9 @@ h2::after {
 }
 .timeline > li:last-child::after { display: none; }
 
-.job-head {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  justify-content: space-between; gap: var(--space-1) var(--space-4);
-}
-.job-head h3 { font-size: var(--step-1); font-weight: 650; }
+/* The timeline entry is the client's name alone — no role, no dates. */
+.job h3 { font-size: var(--step-1); font-weight: 650; }
 .org { color: var(--accent-strong); }
-.period {
-  font-size: var(--step--1); color: var(--muted);
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-}
 
 .bullets { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3); }
 .bullets li { position: relative; padding-left: var(--space-5); }
@@ -366,8 +343,8 @@ h2::after {
   width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
 }
 
-/* The two-line summary and its case-study link belong to .job, not to the timeline: they sit
-   inside the same <article>, so .job's break-inside rule already covers printing them. */
+/* The summary and its case-study link belong to .job, not to the timeline: they sit inside the
+   same <article>, so .job's break-inside rule already covers printing them. */
 .job-summary { max-width: 68ch; margin-top: var(--space-3); }
 .job-link { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
 
@@ -390,7 +367,9 @@ h2::after {
 .card-meta { margin-top: var(--space-1); font-size: var(--step--1); color: var(--muted); }
 .card-summary { margin-top: var(--space-2); }
 .card-links { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
-.empty-note { color: var(--muted); font-size: var(--step--1); }
+/* Carries its own top gap: the empty grid it follows is display:none, so it is what the
+   heading's spacing lands on. */
+.empty-note { margin-top: var(--space-4); color: var(--muted); font-size: var(--step--1); }
 
 /* ---------- subpages (/work and the case studies) ---------- */
 

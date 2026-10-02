@@ -109,8 +109,8 @@ const og = page(
   `<div class="card">
      <div class="rule"></div>
      <p class="name">Felipe Sitta</p>
-     <h1>Desenvolvedor Sênior<br>Flutter</h1>
-     <p class="sub">Design Systems &nbsp;·&nbsp; Arquitetura modular &nbsp;·&nbsp; IA aplicada ao desenvolvimento</p>
+     <h1>Engenheiro Mobile</h1>
+     <p class="sub">Android &nbsp;·&nbsp; iOS &nbsp;·&nbsp; Flutter</p>
      <p class="url">sittaman.github.io</p>
    </div>`,
   `body{background:${BRAND.bg};color:#e8edf2;display:flex;align-items:center;padding:72px}
