@@ -63,10 +63,11 @@ example is in the comments at the top of that file.
 
 ### Adding a case study
 
-**A case study is a project, not a job.** The home page's timeline is the employment history —
-employers, three of them — while `/work/` holds one page per *project*. The two do not have to
-line up: Spread Tecnologia is one timeline entry covering two projects, `work/banco-bv.html` and
-`work/grupo-bemol.html`, and its `.job-link` points at `/work/` rather than at either one.
+**The home page's timeline lists projects, not jobs.** Each entry is the client's name, a short
+brief and a link to the full write-up; role and period appear on the `/work` cards and the case
+pages instead. The timeline carries the three most recent (`work/grupo-bemol.html`,
+`work/banco-bv.html`, `work/digio.html`); older projects live on `/work/` only —
+`work/mobyan.html` is that case today.
 
 The write-ups are transcribed from `~/Documents/cv/Project showcase PT.md` and
 `Project showcase EN.md` — the two files are the source of truth for this content, and they are
@@ -82,14 +83,17 @@ A case study lives in four places:
    `.prose` with `data-i18n-html` where it uses paragraphs, and do not add a section the source
    does not have — an honest short page beats a padded one.
 2. **`work/index.html`** — add a `<li class="card">`, newest first.
-3. **`index.html`** — only if the project's **employer** is new: add a `<li>` to the experience
-   `<ol class="timeline">`, keeping the three most recent.
+3. **`index.html`** — if the project belongs on the home timeline: add a `<li>` to the experience
+   `<ol class="timeline">`, newest first, keeping the three most recent. Its `<h3 class="org">` is
+   the client's name, its `.job-summary` carries `exp.<slug>.summary`, and its `.job-link` points
+   at the case page.
 4. **`assets/js/i18n.js`** — add the `case.<slug>.*` body keys and `case.<slug>.meta.title` /
    `.meta.description` to **both** dictionaries, plus `exp.<slug>.role` / `.start` / `.end` /
    `.summary` if the project also appears as a card.
 
-Role and period are defined once (`exp.<slug>.*`) and read by both the card and the case page, so
-they cannot drift apart. `sitemap.xml` is the fifth place: add the new URL there too.
+Role and period are defined once (`exp.<slug>.role` / `.start` / `.end`) and read by both the
+`/work` card and the case page, so they cannot drift apart. `exp.<slug>.summary` is likewise
+shared by the home timeline and the card. `sitemap.xml` is the fifth place: add the new URL there too.
 
 ## Deployment
 

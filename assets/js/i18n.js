@@ -8,11 +8,10 @@
  * directly in the HTML, so a visitor without JS still gets a complete page.
  * `check-i18n.mjs` fails the build when the two languages disagree.
  *
- * `exp.<slug>.summary` does two jobs. For the three employers on the home timeline it is the
- * two-line brief, sized to wrap to exactly two lines at that width — measured, not guessed, and
- * a longer edit quietly becomes a third line that no check will catch. For the projects that
- * exist only as /work cards (banco-bv, grupo-bemol) the same key is the card text, where the card
- * sets the width and the line count is free.
+ * `exp.<slug>.summary` does two jobs: the brief under the client's name on the home timeline, and
+ * the same text on that project's card in /work — one source, so the two cannot drift apart.
+ * Role and period (`exp.<slug>.role` / `.start` / `.end`) are read by the /work cards and the
+ * case pages; the home timeline shows only the name, the brief and the link.
  */
 window.SITE_I18N = {
 
@@ -64,32 +63,27 @@ window.SITE_I18N = {
     'experience.title': 'Experiência',
     'experience.seeAll': 'Ver todos',
 
-    'exp.spread.role': 'Desenvolvedor Sênior Flutter',
-    'exp.spread.start': 'Jun 2025',
-    'exp.spread.end': 'Jun 2026',
-    'exp.spread.summary': 'Banco digital com 150+ módulos Flutter — Carteira Digital, PIX e Cartões — para milhões de usuários. Design System, WCAG e skills de IA.',
-
     'exp.grupo-bemol.role': 'Desenvolvedor Sênior Flutter',
     'exp.grupo-bemol.start': 'Jan 2026',
     'exp.grupo-bemol.end': 'Jul 2026',
-    'exp.grupo-bemol.summary': 'Carteira Digital e cadastro de cartões dentro do app existente do cliente, com integração Cielo e encapsulamento das exigências do fornecedor.',
+    'exp.grupo-bemol.summary': 'Feature de carteira digital e pagamentos para milhões de usuários.',
 
     'exp.banco-bv.role': 'Desenvolvedor Sênior Flutter',
     'exp.banco-bv.start': 'Jun 2025',
     'exp.banco-bv.end': 'Dez 2025',
-    'exp.banco-bv.summary': 'Flutter com 150+ módulos: Design System sob controle rígido de qualidade e acessibilidade, e uma biblioteca de front-end que gera telas e formulários dinâmicos.',
+    'exp.banco-bv.summary': 'Desenvolvimento e governança de design system para mais de 200 colaboradores.',
 
     'exp.digio.role': 'Desenvolvedor Sênior Flutter',
     'exp.digio.start': 'Mar 2024',
     'exp.digio.end': 'Fev 2025',
-    'exp.digio.summary': 'Monólito Flutter Web sem testes transformado em sistema modularizado, com cobertura de 0 a 70%+ e TDD. Design System com Widgetbook.',
+    'exp.digio.summary': 'Modularização de monolito em Flutter Web. Sistema bancário de backoffice crítico para operação.',
 
     'exp.mobyan.role': 'Desenvolvedor Sênior Mobile',
     'exp.mobyan.start': 'Mai 2023',
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Apps Flutter e Kotlin offline-first para manutenção de POS em campo. R$ 300K+/ano de economia e 2.000+ técnicos migrados.',
 
-    'case.link': 'Leia o estudo de caso',
+    'case.link': 'Leia o estudo de caso completo',
     'case.eyebrow': 'Estudo de caso',
     'case.back': 'Voltar',
     'case.allCases': 'Ver todos os estudos de caso',
@@ -108,7 +102,6 @@ window.SITE_I18N = {
     'case.banco-bv.meta.title': 'Banco BV — estudo de caso — Felipe Sitta',
     'case.banco-bv.meta.description': 'Estudo de caso: Banco BV, de junho a dezembro de 2025 — Design System e arquitetura modular em Flutter.',
 
-    'case.linkAll': 'Ver estudos de caso',
     'case.context': 'Contexto',
     'case.scope': 'Escopo técnico',
     'case.contrib': 'Contribuições destacadas',
@@ -257,32 +250,27 @@ window.SITE_I18N = {
     'experience.title': 'Experience',
     'experience.seeAll': 'View all',
 
-    'exp.spread.role': 'Senior Flutter Developer',
-    'exp.spread.start': 'Jun 2025',
-    'exp.spread.end': 'Jun 2026',
-    'exp.spread.summary': 'Digital banking across 150+ Flutter modules — Digital Wallet, PIX and Cards — for millions of users. Design System, WCAG and AI skills.',
-
     'exp.grupo-bemol.role': 'Senior Flutter Developer',
     'exp.grupo-bemol.start': 'Jan 2026',
     'exp.grupo-bemol.end': 'Jul 2026',
-    'exp.grupo-bemol.summary': 'Digital Wallet and credit-card registration inside the client’s existing app, with Cielo integration and the vendor’s requirements encapsulated.',
+    'exp.grupo-bemol.summary': 'Digital wallet and payments feature for millions of customers.',
 
     'exp.banco-bv.role': 'Senior Flutter Developer',
     'exp.banco-bv.start': 'Jun 2025',
     'exp.banco-bv.end': 'Dec 2025',
-    'exp.banco-bv.summary': 'Flutter at 150+ modules: a Design System under strict quality and accessibility control, and a front-end library that generates dynamic screens and forms.',
+    'exp.banco-bv.summary': 'Design system development and governance for over 200 employees',
 
     'exp.digio.role': 'Senior Flutter Developer',
     'exp.digio.start': 'Mar 2024',
     'exp.digio.end': 'Feb 2025',
-    'exp.digio.summary': 'Untested Flutter Web monolith turned into a modularized, testable system — coverage 0 → 70%+ with TDD. Design System in Widgetbook.',
+    'exp.digio.summary': 'Modularization of a Flutter Web monolith. Mission-critical back-office banking system.',
 
     'exp.mobyan.role': 'Senior Mobile Developer',
     'exp.mobyan.start': 'May 2023',
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Offline-first Flutter and Kotlin apps for field POS maintenance. R$ 300K+/year in savings and 2,000+ technicians migrated.',
 
-    'case.link': 'Read the case study',
+    'case.link': 'Read the full case study',
     'case.eyebrow': 'Case study',
     'case.back': 'Back',
     'case.allCases': 'See all case studies',
@@ -301,7 +289,6 @@ window.SITE_I18N = {
     'case.banco-bv.meta.title': 'Banco BV — case study — Felipe Sitta',
     'case.banco-bv.meta.description': 'Case study: Banco BV, June to December 2025 — Design System and modular architecture in Flutter.',
 
-    'case.linkAll': 'See case studies',
     'case.context': 'Context',
     'case.scope': 'Technical scope',
     'case.contrib': 'Key contributions',

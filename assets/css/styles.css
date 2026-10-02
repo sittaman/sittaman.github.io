@@ -348,16 +348,9 @@ h2::after {
 }
 .timeline > li:last-child::after { display: none; }
 
-.job-head {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  justify-content: space-between; gap: var(--space-1) var(--space-4);
-}
-.job-head h3 { font-size: var(--step-1); font-weight: 650; }
+/* The timeline entry is the client's name alone — no role, no dates. */
+.job h3 { font-size: var(--step-1); font-weight: 650; }
 .org { color: var(--accent-strong); }
-.period {
-  font-size: var(--step--1); color: var(--muted);
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-}
 
 .bullets { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3); }
 .bullets li { position: relative; padding-left: var(--space-5); }
@@ -366,8 +359,8 @@ h2::after {
   width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
 }
 
-/* The two-line summary and its case-study link belong to .job, not to the timeline: they sit
-   inside the same <article>, so .job's break-inside rule already covers printing them. */
+/* The summary and its case-study link belong to .job, not to the timeline: they sit inside the
+   same <article>, so .job's break-inside rule already covers printing them. */
 .job-summary { max-width: 68ch; margin-top: var(--space-3); }
 .job-link { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
 
