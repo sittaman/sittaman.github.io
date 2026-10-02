@@ -260,7 +260,7 @@ window.SITE_I18N = {
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Offline-first Flutter and Kotlin apps for field POS maintenance. R$ 300K+/year in savings and 2,000+ technicians migrated.',
 
-    'case.link': 'Read the case study',
+    'case.link': 'Read case study',
     'case.eyebrow': 'Case study',
     'case.back': 'Back',
     'case.allCases': 'See all case studies',
