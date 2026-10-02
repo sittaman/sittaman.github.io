@@ -56,10 +56,10 @@ what keeps the site working from a `file://` origin. Do not introduce root-absol
 
 ### Adding a project
 
-Open `assets/data/projects.js` and push an entry into `company` or `personal`. Both languages
-sit side by side in one entry. The section renders its headings and a localized "coming soon"
-line while the arrays are empty; add an entry and the cards appear. Full schema with a worked
-example is in the comments at the top of that file.
+Open `assets/data/projects.js` and push an entry into the array. Both languages sit side by
+side in one entry. The section renders its heading and a localized "coming soon" line while
+the list is empty; add an entry and the cards appear. Full schema with a worked example is in
+the comments at the top of that file.
 
 ### Adding a case study
 

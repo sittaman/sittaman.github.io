@@ -309,9 +309,9 @@ h2::after {
 .section > .shell > h2 + *,
 .section > .shell > .page-title + * { margin-top: var(--space-5); }
 
-.subsection-title { margin-top: var(--space-6); margin-bottom: var(--space-3); font-size: var(--step-1); font-weight: 650; }
-.section > .shell > h2 + .cards,
-.section > .shell > h2 + .subsection-title { margin-top: var(--space-4); }
+/* The cards grid follows the section heading directly now that the section has no
+   subsections, so it tightens the generic `h2 + *` gap a step. */
+.section > .shell > h2 + .cards { margin-top: var(--space-4); }
 
 .prose { max-width: 68ch; }
 .prose p + p { margin-top: var(--space-3); }
@@ -383,7 +383,9 @@ h2::after {
 .card-meta { margin-top: var(--space-1); font-size: var(--step--1); color: var(--muted); }
 .card-summary { margin-top: var(--space-2); }
 .card-links { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
-.empty-note { color: var(--muted); font-size: var(--step--1); }
+/* Carries its own top gap: the empty grid it follows is display:none, so it is what the
+   heading's spacing lands on. */
+.empty-note { margin-top: var(--space-4); color: var(--muted); font-size: var(--step--1); }
 
 /* ---------- subpages (/work and the case studies) ---------- */
 

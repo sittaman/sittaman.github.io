@@ -188,10 +188,7 @@ window.SITE_I18N = {
     ],
 
     'projects.title': 'Projetos',
-    'projects.companyTitle': 'Trabalhos em empresas',
-    'projects.companyEmpty': 'Seleção de projetos profissionais em preparação.',
-    'projects.personalTitle': 'Projetos pessoais',
-    'projects.personalEmpty': 'Projetos pessoais em preparação. Enquanto isso, veja os repositórios no <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
+    'projects.empty': 'Em breve. Enquanto isso, veja os repositórios no <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
 
     'contact.title': 'Contato',
     'contact.lede': 'Aberto a conversas sobre posições sênior em mobile e Flutter, no Brasil ou remotas.',
@@ -375,10 +372,7 @@ window.SITE_I18N = {
     ],
 
     'projects.title': 'Projects',
-    'projects.companyTitle': 'Company work',
-    'projects.companyEmpty': 'A selection of professional projects is being prepared.',
-    'projects.personalTitle': 'Personal projects',
-    'projects.personalEmpty': 'Personal projects are being prepared. In the meantime, see the repositories on <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
+    'projects.empty': 'Coming soon. In the meantime, see the repositories on <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
 
     'contact.title': 'Contact',
     'contact.lede': 'Open to conversations about senior mobile and Flutter roles, in Brazil or remote.',
