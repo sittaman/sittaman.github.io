@@ -19,7 +19,10 @@ const IMG = resolve(new URL('../../assets/img', import.meta.url).pathname);
 // favicon.ico and apple-touch-icon.png belong at the site root: browsers request /favicon.ico
 // unprompted, and iOS looks for /apple-touch-icon.png.
 const ROOT = resolve(new URL('../../', import.meta.url).pathname);
-const BRAND = { teal: '#158e80', purple: '#7a2fc9', bg: '#0b0f14' };
+/* Straight from the CSS tokens: accent hsl(187 74% 32%) and secondary hsl(270 70% 45%), both
+   light-dark()'s light arm. The icon sits next to the header's .brand-mark, so it has to be the
+   same gradient — the previous hexes here (#158e80/#7a2fc9) had drifted from the stylesheet. */
+const BRAND = { teal: '#15808e', purple: '#7322c3', bg: '#0b0f14' };
 
 function chromeShot(htmlFile, width, height, outPath, background = 'ffffffff') {
   const profile = mkdtempSync(join(tmpdir(), 'pf-icon-'));
@@ -55,13 +58,20 @@ function page(bodyHtml, css) {
 
 /* ---------- 1. favicon.ico (32x32, full-bleed square) ---------- */
 
+/* The header's ">_" mark as geometry, not text: an icon must not depend on a monospace font
+   being installed, and <text> would re-flow on every machine that renders it. Proportions are
+   measured off a rendered .brand-mark — see the note in assets/img/favicon.svg, which carries
+   the same glyph with the rounded tile. Full-bleed here because iOS masks the touch icon into
+   its own squircle; rounded corners would leave white notches inside that mask. */
+const MARK = `<g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+<path d="M19.6 25.4 L28.9 30.3 L19.6 35.2" stroke-width="3.2"/>
+<path d="M33.3 40.9 H45.7" stroke-width="2.8"/></g>`;
+
 const squareSvg = (size) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${size}" height="${size}">
 <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="${BRAND.teal}"/><stop offset="1" stop-color="${BRAND.purple}"/></linearGradient></defs>
 <rect width="64" height="64" fill="url(#g)"/>
-<text x="32" y="34" fill="#fff" text-anchor="middle" dominant-baseline="central"
- font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif"
- font-size="30" font-weight="700" letter-spacing="-0.5">FS</text></svg>`;
+${MARK}</svg>`;
 
 const iconHtml = (size) =>
   page(squareSvg(size), `body{background:transparent}svg{display:block;width:100%;height:100%}`);
