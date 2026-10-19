@@ -80,6 +80,11 @@ window.SITE_I18N = {
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Apps Flutter e Kotlin offline-first para manutenção de POS em campo. R$ 300K+/ano de economia e 2.000+ técnicos migrados.',
 
+    'exp.oruspay.role': 'Desenvolvedor Full Stack',
+    'exp.oruspay.start': 'Jul 2016',
+    'exp.oruspay.end': 'Ago 2022',
+    'exp.oruspay.summary': 'Plataforma SaaS whitelabel de banco digital com portais e apps para mais de 50 clientes.',
+
     'case.link': 'Leia o estudo de caso',
     'case.eyebrow': 'Estudo de caso',
     'case.back': 'Voltar',
@@ -98,6 +103,8 @@ window.SITE_I18N = {
     'case.grupo-bemol.meta.description': 'Estudo de caso: Grupo Bemol, de janeiro a julho de 2026 — Carteira Digital em Flutter.',
     'case.banco-bv.meta.title': 'Banco BV — estudo de caso — Felipe Sitta',
     'case.banco-bv.meta.description': 'Estudo de caso: Banco BV, de junho a dezembro de 2025 — Design System e arquitetura modular em Flutter.',
+    'case.oruspay.meta.title': 'Oruspay — estudo de caso — Felipe Sitta',
+    'case.oruspay.meta.description': 'Estudo de caso: Oruspay, de julho de 2016 a agosto de 2022 — plataforma SaaS whitelabel de banco digital.',
 
     'case.context': 'Contexto',
     'case.scope': 'Escopo técnico',
@@ -139,6 +146,28 @@ window.SITE_I18N = {
     'case.banco-bv.impact': [
       'Elaboração de uma biblioteca de front-end que atuava como uma API para a criação de telas e formulários dinâmicos.',
       'O uso do contrato definido por essa biblioteca eliminava problemas de roteamento e dependências transversais entre módulos.'
+    ],
+
+    'case.oruspay.context': [
+      'Plataforma SaaS de Banco Digital.',
+      'Projeto longo: vários desenvolvimentos ao longo do tempo.'
+    ],
+    'case.oruspay.scope': [
+      'O projeto tinha o objetivo de ser uma plataforma completa de banco digital em formato whitelabel.',
+      'Front-end cliente (Web e mobile), front-end backoffice (somente Web), aplicativo POS.',
+      'Todos os portais e aplicativos eram personalizáveis.',
+      'Pipeline de deploy parametrizado para os vários clientes.',
+      'Integração de serviços externos no backend.',
+      'Monitoramento de desempenho com Sentry.',
+      'Portais web: Angular; Apps: Angular, Flutter; Backend: Java; CI/CD: NodeJS (scripts), Fastlane.'
+    ],
+    'case.oruspay.results': [
+      'Lançamento de produtos: Pix, Cartão, Conta Digital, Pagamentos (contas de consumo, boleto), Vale-Refeição.',
+      'Constante evolução do projeto: o portal cliente (web) não existia na primeira versão.',
+      'O portal backoffice passou por 2 reformulações completas.',
+      'Aplicativo cliente (Android, iOS) lançado em 2018, com nova versão em Flutter começando em 2020.',
+      'Inclusão de novas integrações e serviços nos portais já existentes conforme cada lançamento.',
+      'Automação dos deploys para mais de 50 clientes (pico) em Android, iOS e Web.'
     ],
 
     'case.digio.context': [
@@ -260,6 +289,11 @@ window.SITE_I18N = {
     'exp.mobyan.end': 'Mar 2024',
     'exp.mobyan.summary': 'Offline-first Flutter and Kotlin apps for field POS maintenance. R$ 300K+/year in savings and 2,000+ technicians migrated.',
 
+    'exp.oruspay.role': 'Full Stack Developer',
+    'exp.oruspay.start': 'Jul 2016',
+    'exp.oruspay.end': 'Aug 2022',
+    'exp.oruspay.summary': 'White-label digital banking SaaS platform with portals and apps for more than 50 clients.',
+
     'case.link': 'Read case study',
     'case.eyebrow': 'Case study',
     'case.back': 'Back',
@@ -278,6 +312,8 @@ window.SITE_I18N = {
     'case.grupo-bemol.meta.description': 'Case study: Grupo Bemol, January to July 2026 — a Digital Wallet built in Flutter.',
     'case.banco-bv.meta.title': 'Banco BV — case study — Felipe Sitta',
     'case.banco-bv.meta.description': 'Case study: Banco BV, June to December 2025 — Design System and modular architecture in Flutter.',
+    'case.oruspay.meta.title': 'Oruspay — case study — Felipe Sitta',
+    'case.oruspay.meta.description': 'Case study: Oruspay, July 2016 to August 2022 — a white-label digital banking SaaS platform.',
 
     'case.context': 'Context',
     'case.scope': 'Technical scope',
@@ -319,6 +355,28 @@ window.SITE_I18N = {
     'case.banco-bv.impact': [
       'Development of a front-end library that acted as an API for building dynamic screens and forms.',
       'The contract defined by this library eliminated routing issues and cross-module dependency problems.'
+    ],
+
+    'case.oruspay.context': [
+      'Digital banking SaaS platform.',
+      'Long-running project with multiple developments over time.'
+    ],
+    'case.oruspay.scope': [
+      'The goal was a complete white-label digital banking platform.',
+      'Customer front end (web and mobile), back-office front end (web only), and a POS app.',
+      'Every portal and app was customizable.',
+      'Deploy pipeline parameterized for each client.',
+      'Integration of external services in the backend.',
+      'Performance monitoring with Sentry.',
+      'Web portals: Angular; apps: Angular, Flutter; backend: Java; CI/CD: Node.js (scripts), Fastlane.'
+    ],
+    'case.oruspay.results': [
+      'Product launches: Pix, Card, Digital Account, Payments (utility bills, boleto), Meal Voucher.',
+      'Continuous evolution of the project: the customer portal (web) did not exist in the first version.',
+      'The back-office portal went through 2 complete redesigns.',
+      'Customer app (Android, iOS) launched in 2018, with a new Flutter version starting in 2020.',
+      'New integrations and services added to existing portals as products launched.',
+      'Automated deploys for more than 50 clients (peak) on Android, iOS, and Web.'
     ],
 
     'case.digio.context': [
