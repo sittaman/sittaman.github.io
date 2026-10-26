@@ -220,8 +220,7 @@ window.SITE_I18N = {
     'contact.lede': 'Aberto a conversas sobre posições sênior em mobile e Flutter, no Brasil ou remotas.',
     'contact.emailLabel': 'E-mail',
 
-    'footer.rights': '© 2026 Felipe Sitta',
-    'footer.built': 'Feito à mão em HTML, CSS e JavaScript'
+    'footer.rights': '© 2026 Felipe Sitta'
   },
 
   'en': {
@@ -429,7 +428,6 @@ window.SITE_I18N = {
     'contact.lede': 'Open to conversations about senior mobile and Flutter roles, in Brazil or remote.',
     'contact.emailLabel': 'Email',
 
-    'footer.rights': '© 2026 Felipe Sitta',
-    'footer.built': 'Hand-built with HTML, CSS and JavaScript'
+    'footer.rights': '© 2026 Felipe Sitta'
   }
 };
