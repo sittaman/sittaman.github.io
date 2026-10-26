@@ -4,9 +4,9 @@
  *   python3 -m http.server 8080 --bind 127.0.0.1   # in the repo root
  *   node .github/scripts/shots.mjs
  *
- * Playwright is used for one decisive reason: newContext({ locale, colorScheme }) sets
- * navigator.language and prefers-color-scheme BEFORE the first navigation, so this exercises
- * the real detection path rather than the ?lang= / ?theme= escape hatches.
+ * Playwright is used for one decisive reason: newContext({ locale }) sets
+ * navigator.language BEFORE the first navigation, so this exercises the real detection path
+ * rather than the ?lang= escape hatch.
  *
  * This is a DEV tool, not part of CI — it is deliberately not referenced by the workflow, so
  * the deploy pipeline needs no browser download. Point PW at your install if it is not in the
@@ -32,7 +32,6 @@ function loadPlaywright() {
 const URL_ = process.argv[2] || 'http://127.0.0.1:8080/';
 const OUT = 'shots';
 const LOCALES = ['pt-BR', 'en-US'];
-const SCHEMES = ['light', 'dark'];
 const VIEWPORTS = [
   ['desktop', { width: 1440, height: 900 }],
   ['mobile', { width: 390, height: 844 }]
@@ -45,40 +44,37 @@ const browser = await chromium.launch();
 const rows = [];
 
 for (const locale of LOCALES) {
-  for (const colorScheme of SCHEMES) {
-    for (const [name, viewport] of VIEWPORTS) {
-      const context = await browser.newContext({ locale, colorScheme, viewport, deviceScaleFactor: 1 });
-      const page = await context.newPage();
-      const response = await page.goto(URL_, { waitUntil: 'networkidle' });
-      const tag = `${name}-${locale.slice(0, 2)}-${colorScheme}`;
+  for (const [name, viewport] of VIEWPORTS) {
+    const context = await browser.newContext({ locale, viewport, deviceScaleFactor: 1 });
+    const page = await context.newPage();
+    const response = await page.goto(URL_, { waitUntil: 'networkidle' });
+    const tag = `${name}-${locale.slice(0, 2)}`;
 
-      // Full page and above-the-fold separately: in a full-page capture every section is
-      // "in view" at once, so nav highlighting read from one would be misleading.
-      await page.screenshot({ path: `${OUT}/${tag}-full.png`, fullPage: true });
-      await page.screenshot({ path: `${OUT}/${tag}-fold.png` });
+    // Full page and above-the-fold separately: in a full-page capture every section is
+    // "in view" at once, so nav highlighting read from one would be misleading.
+    await page.screenshot({ path: `${OUT}/${tag}-full.png`, fullPage: true });
+    await page.screenshot({ path: `${OUT}/${tag}-fold.png` });
 
-      const info = await page.evaluate(() => ({
-        lang: document.documentElement.lang,
-        theme: document.documentElement.dataset.theme || '(system)',
-        title: document.title,
-        pending: document.documentElement.hasAttribute('data-i18n-pending'),
-        navCurrent: document.querySelector('.site-nav a[aria-current="true"]')?.textContent || '—',
-        heroRole: document.querySelector('#hero-title')?.textContent?.trim() || 'MISSING',
-        cards: document.querySelectorAll('.card').length,
-        emptyNotes: Array.from(document.querySelectorAll('.empty-note')).filter((n) => !n.hidden).length,
-        docWidth: document.documentElement.scrollWidth,
-        winWidth: window.innerWidth
-      }));
+    const info = await page.evaluate(() => ({
+      lang: document.documentElement.lang,
+      title: document.title,
+      pending: document.documentElement.hasAttribute('data-i18n-pending'),
+      navCurrent: document.querySelector('.site-nav a[aria-current="true"]')?.textContent || '—',
+      heroRole: document.querySelector('#hero-title')?.textContent?.trim() || 'MISSING',
+      cards: document.querySelectorAll('.card').length,
+      emptyNotes: Array.from(document.querySelectorAll('.empty-note')).filter((n) => !n.hidden).length,
+      docWidth: document.documentElement.scrollWidth,
+      winWidth: window.innerWidth
+    }));
 
-      rows.push({ tag, status: response?.status(), ...info });
-      console.log(
-        `${tag.padEnd(22)} ${info.status ?? ''} lang=${info.lang.padEnd(5)} theme=${info.theme.padEnd(8)}` +
-        ` hero="${info.heroRole}" nav=${info.navCurrent} cards=${info.cards} notes=${info.emptyNotes}` +
-        ` overflow=${info.docWidth > info.winWidth ? 'YES' : 'no'}` +
-        `${info.pending ? ' PENDING-FLAG-LEFT-ON' : ''}`
-      );
-      await context.close();
-    }
+    rows.push({ tag, status: response?.status(), ...info });
+    console.log(
+      `${tag.padEnd(22)} ${response?.status() ?? ''} lang=${info.lang.padEnd(5)}` +
+      ` hero="${info.heroRole}" nav=${info.navCurrent} cards=${info.cards} notes=${info.emptyNotes}` +
+      ` overflow=${info.docWidth > info.winWidth ? 'YES' : 'no'}` +
+      `${info.pending ? ' PENDING-FLAG-LEFT-ON' : ''}`
+    );
+    await context.close();
   }
 }
 

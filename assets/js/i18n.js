@@ -23,9 +23,6 @@ window.SITE_I18N = {
     'a11y.navLabel': 'Seções',
     'a11y.langLegend': 'Idioma da página',
     'a11y.brand': 'Felipe Sitta — início',
-    'a11y.themeToggle': 'Alternar tema',
-    'a11y.themeToDark': 'Alternar para tema escuro',
-    'a11y.themeToLight': 'Alternar para tema claro',
     'a11y.langChanged': 'Idioma alterado para português.',
     'a11y.newTab': 'abre em nova aba',
 
@@ -231,9 +228,6 @@ window.SITE_I18N = {
     'a11y.navLabel': 'Sections',
     'a11y.langLegend': 'Page language',
     'a11y.brand': 'Felipe Sitta — home',
-    'a11y.themeToggle': 'Toggle theme',
-    'a11y.themeToDark': 'Switch to dark theme',
-    'a11y.themeToLight': 'Switch to light theme',
     'a11y.langChanged': 'Language changed to English.',
     'a11y.newTab': 'opens in a new tab',
 

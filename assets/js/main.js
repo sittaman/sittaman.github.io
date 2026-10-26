@@ -1,8 +1,8 @@
-/* Portfolio behaviour: language, theme, project cards, nav highlighting.
+/* Portfolio behaviour: language, project cards, nav highlighting.
  *
  * One IIFE, one deliberate global (window.SITE_I18N, defined in i18n.js). No dependencies.
- * The inline <head> script resolves language + theme before first paint; everything here
- * runs after the DOM is parsed and refines it.
+ * The inline <head> script resolves language before first paint; everything here runs after
+ * the DOM is parsed and refines it.
  *
  * NOTE: `data-i18n-html` and `data-i18n-list-html` inject strings from SITE_I18N, which is
  * author-controlled content. If that dictionary ever carries anything user-supplied, those
@@ -12,7 +12,6 @@
   'use strict';
 
   var LANG_KEY = 'site.lang';
-  var THEME_KEY = 'site.theme';
   var root = document.documentElement;
   var DICT = window.SITE_I18N || {};
 
@@ -86,7 +85,6 @@
       input.checked = input.value === lang;
     });
 
-    updateThemeButton();
     // Must run after the innerHTML updates above, which wipe any hint already inside a link.
     addNewTabHints(lang);
   }
@@ -169,34 +167,6 @@
 
       a.setAttribute('href', base + hash);
     });
-  }
-
-  /* ---------- theme ---------- */
-
-  function systemTheme() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
-  function resolvedTheme() {
-    var explicit = root.getAttribute('data-theme');
-    return explicit === 'light' || explicit === 'dark' ? explicit : systemTheme();
-  }
-
-  function updateThemeButton() {
-    var btn = document.querySelector('[data-action="set-theme"]');
-    if (!btn) return;
-    var isDark = resolvedTheme() === 'dark';
-    btn.setAttribute('aria-pressed', String(isDark));
-    var key = isDark ? 'a11y.themeToLight' : 'a11y.themeToDark';
-    var label = get(root.lang, key);
-    if (label) btn.setAttribute('aria-label', label);
-    else btn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
-  }
-
-  function setTheme(theme) {
-    root.setAttribute('data-theme', theme);
-    try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* private mode */ }
-    updateThemeButton();
   }
 
   /* ---------- project cards ---------- */
@@ -316,8 +286,6 @@
     if (!action) return;
     var name = action.getAttribute('data-action');
 
-    if (name === 'set-theme') setTheme(resolvedTheme() === 'dark' ? 'light' : 'dark');
-
     if (name === 'nav-link') {
       var href = action.getAttribute('href');
       if (href && href.charAt(0) === '#') {
@@ -333,13 +301,6 @@
       setLanguage(input.value, true);
     }
   });
-
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(prefers-color-scheme: dark)');
-    var onChange = function () { if (!root.getAttribute('data-theme')) updateThemeButton(); };
-    if (mq.addEventListener) mq.addEventListener('change', onChange);
-    else if (mq.addListener) mq.addListener(onChange);
-  }
 
   /* ---------- boot ---------- */
 

@@ -138,17 +138,16 @@ node .github/scripts/shots.mjs                           # screenshot matrix (ne
 These are the same three commands CI runs, and both `.mjs` checks discover their pages rather
 than listing them — a new case study is covered the moment the file exists.
 
-`shots.mjs` writes desktop/mobile × light/dark × pt/en captures to `shots/` (gitignored) and
+`shots.mjs` writes desktop/mobile × pt/en captures to `shots/` (gitignored) and
 fails if a page overflows horizontally or the no-flash flag is left on. It uses Playwright's
-`locale` and `colorScheme` context options, so it exercises the real detection path rather than
-a URL parameter. It is a dev tool and is deliberately not part of CI.
+`locale` context option, so it exercises the real detection path rather than a URL parameter.
+It is a dev tool and is deliberately not part of CI.
 
-### QA-only URL parameters
+### QA-only URL parameter
 
-Both are read before first paint and are not part of the public contract:
+Read before first paint and not part of the public contract:
 
-- `?lang=en` — force a language (this one *is* shareable; it is what the toggle writes)
-- `?theme=dark` — force a theme, which makes screenshots deterministic
+- `?lang=en` — force a language (this one *is* shareable; it is what the language switch writes)
 
 Precedence for language on load: `?lang=` → `localStorage` → `navigator.languages` → `pt-BR`.
 The URL wins over storage on purpose, so a link someone shares shows the language they sent
@@ -166,8 +165,8 @@ rather than the one the recipient last picked.
   otherwise), refuses a path that climbs out of the repo, and checks that a `#fragment` exists in
   the document the link lands in — so `../../#experience` from a case page is verified against the
   home page's ids, not just against the path.
-- **Storage keys are namespaced** (`site.lang`, `site.theme`). Every project page hosted under
-  `sittaman.github.io` shares one origin, so unprefixed keys would collide.
+- **The storage key is namespaced** (`site.lang`). Every project page hosted under
+  `sittaman.github.io` shares one origin, so an unprefixed key would collide.
 - **Cache-busting is manual.** GitHub Pages hard-codes `Cache-Control: max-age=600` and gives
   you no header control and no content hashes without a build. When you edit a CSS or JS file,
   bump the `?v=` on its `<link>`/`<script>` in **every** page that loads it — seven files today
@@ -175,5 +174,6 @@ rather than the one the recipient last picked.
   were editing, or some pages keep serving the old file.
 - **Never run `npm install` in this repo.** `upload-pages-artifact` drops dotfiles but *not*
   `node_modules`, so it would be published. The checks use `npx` and dependency-free `.mjs`.
-- The `<html>` element carries no `data-theme` attribute by default; its **absence** means
-  "follow the operating system". The theme button writes an explicit `light`/`dark` override.
+- **The site is light-only.** There is no theme toggle and no `data-theme` attribute;
+  `color-scheme: light` in `styles.css` keeps form controls and scrollbars light regardless of
+  the operating system preference. Tune contrast in the token block at the top of the sheet.

@@ -19,9 +19,9 @@ const IMG = resolve(new URL('../../assets/img', import.meta.url).pathname);
 // favicon.ico and apple-touch-icon.png belong at the site root: browsers request /favicon.ico
 // unprompted, and iOS looks for /apple-touch-icon.png.
 const ROOT = resolve(new URL('../../', import.meta.url).pathname);
-/* Straight from the CSS tokens: accent hsl(187 74% 32%) and secondary hsl(270 70% 45%), both
-   light-dark()'s light arm. The icon sits next to the header's .brand-mark, so it has to be the
-   same gradient — the previous hexes here (#158e80/#7a2fc9) had drifted from the stylesheet. */
+/* Straight from the CSS tokens: accent hsl(187 74% 32%) and secondary hsl(270 70% 45%).
+   The icon sits next to the header's .brand-mark, so it has to be the same gradient — the
+   previous hexes here (#158e80/#7a2fc9) had drifted from the stylesheet. */
 const BRAND = { teal: '#15808e', purple: '#7322c3', bg: '#0b0f14' };
 
 function chromeShot(htmlFile, width, height, outPath, background = 'ffffffff') {

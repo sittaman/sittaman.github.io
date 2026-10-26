@@ -1,14 +1,11 @@
 /* Print: the page doubles as a paper CV. Loaded with media="print" so it costs nothing
-   on screen. The important rule is forcing the light palette — without it, a visitor in
-   dark mode prints a black slab. */
+   on screen. The rules below swap the screen palette for pure black on white. */
 
 @page { margin: 12mm; }
 
-/* Override the tokens that styles.css defines with light-dark(), for every theme state.
-   Matching [data-theme] specificity and loading later is what makes these win. */
-:root,
-:root[data-theme="dark"],
-:root[data-theme="light"] {
+/* Override the screen tokens for paper: maximum contrast, no tinted surfaces, no accent
+   fills. `:root` alone is enough now that the site has a single light theme. */
+:root {
   color-scheme: light;
 
   --bg: #ffffff;

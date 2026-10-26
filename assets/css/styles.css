@@ -5,30 +5,30 @@
    ========================================================================== */
 
 :root {
-  /* Colour scheme is the entire theme state. `light-dark()` resolves against it, so a token
-     is declared once instead of three times (root / data-theme / media query). The ABSENCE
-     of [data-theme] means "follow the system". */
-  color-scheme: light dark;
+  /* Single light theme. Every value below is tuned for text on white: the muted and border
+     tokens are a step darker than the usual light palette so secondary copy and card edges
+     stay legible instead of fading out. */
+  color-scheme: light;
 
-  --bg: light-dark(#ffffff, #0b0f14);
-  --surface: light-dark(#f6f8f9, #131a22);
-  --fg: light-dark(#14181d, #e8edf2);
-  --muted: light-dark(#4a5560, #a9b4c0);          /* 7.6:1 / 9.2:1 — AA at body size */
-  --border: light-dark(#d8dee6, #2a333d);
+  --bg: #ffffff;
+  --surface: #f3f6f8;
+  --fg: #14181d;
+  --muted: #3f4b57;                              /* 8.9:1 on white — AA at body size */
+  --border: #b9c5d1;                             /* visible hairline on white and surface */
 
   /* Brand: teal accent + purple secondary, inherited from the CV template so the site and
      the printed CV read as one identity. */
-  --accent: light-dark(hsl(187 74% 32%), hsl(187 70% 62%));          /* decorative, >=3:1 */
-  --accent-strong: light-dark(hsl(187 74% 25%), hsl(187 70% 70%));   /* text, >=4.5:1 */
-  --secondary: light-dark(hsl(270 70% 45%), hsl(270 70% 72%));
-  --focus: light-dark(hsl(187 74% 25%), hsl(187 70% 62%));
+  --accent: hsl(187 74% 32%);                    /* decorative, >=3:1 */
+  --accent-strong: hsl(187 74% 23%);             /* text, 7.5:1 on white */
+  --secondary: hsl(270 70% 45%);
+  --focus: hsl(187 74% 23%);
 
-  --btn-bg: light-dark(hsl(187 74% 26%), hsl(187 70% 62%));  /* 6.0:1 / 10.4:1 on --btn-fg */
-  --btn-fg: light-dark(#ffffff, #06231f);
+  --btn-bg: hsl(187 74% 24%);                    /* 7.2:1 on --btn-fg */
+  --btn-fg: #ffffff;
 
-  --chip-bg: light-dark(hsl(187 40% 95%), hsl(187 30% 18%));
-  --chip-border: light-dark(hsl(187 40% 88%), hsl(187 25% 28%));
-  --chip-fg: light-dark(hsl(187 74% 23%), hsl(187 60% 78%));
+  --chip-bg: hsl(187 40% 94%);
+  --chip-border: hsl(187 32% 74%);
+  --chip-fg: hsl(187 74% 23%);
 
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
@@ -54,9 +54,6 @@
   --transition: 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-:root[data-theme="light"] { color-scheme: light; }
-:root[data-theme="dark"] { color-scheme: dark; }
-
 /* ---------- base ---------- */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -77,7 +74,6 @@ body {
   line-height: 1.65;
   color: var(--fg);
   background: var(--bg);
-  -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -152,8 +148,8 @@ a:hover { text-decoration-thickness: 2px; }
   display: inline-grid; place-items: center;
   width: 2rem; height: 2rem; border-radius: 8px;
   background: linear-gradient(135deg, var(--accent), var(--secondary));
-  /* --btn-fg, not a hard-coded white: the dark theme's gradient is light, and white on it
-     lands near 1.7:1. This token is already the "text on an accent fill" colour. */
+  /* --btn-fg, not a hard-coded white: it is already the "text on an accent fill" colour,
+     so the mark stays readable if the gradient ever changes. */
   color: var(--btn-fg);
   font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0;
   /* The underscore sits on the baseline; nudging the pair up centres the ink, not the
@@ -204,25 +200,6 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .lang-opt input:checked + span { background: var(--btn-bg); color: var(--btn-fg); }
 .lang-opt input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
-
-.icon-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 2.6rem; height: 2.6rem;
-  border: 1px solid var(--border); border-radius: 999px;
-  background: var(--surface); cursor: pointer;
-  transition: border-color var(--transition), color var(--transition);
-}
-.icon-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
-.icon-btn svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
-.icon-btn .ico-moon { display: none; }
-:root[data-theme="dark"] .icon-btn .ico-sun { display: none; }
-:root[data-theme="dark"] .icon-btn .ico-moon { display: block; }
-:root[data-theme="light"] .icon-btn .ico-sun { display: block; }
-:root[data-theme="light"] .icon-btn .ico-moon { display: none; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .icon-btn .ico-sun { display: none; }
-  :root:not([data-theme="light"]) .icon-btn .ico-moon { display: block; }
-}
 
 @media (min-width: 48rem) {
   .site-nav { order: 0; width: auto; }
@@ -310,7 +287,7 @@ h2::after {
 
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
 .chips li {
-  padding: 0.22rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border: 1px solid var(--chip-border); border-radius: 999px;
   background: var(--chip-bg); color: var(--chip-fg);
   font-size: var(--step--1); line-height: 1.5;
@@ -359,6 +336,7 @@ h2::after {
   padding: var(--space-4);
   border: 1px solid var(--border); border-radius: var(--radius);
   background: var(--surface);
+  box-shadow: 0 1px 2px rgb(16 24 32 / 0.05);
 }
 /* h2 as well as h4: /work nests its cards under a page-level h1, so the card heading there is
    an h2 — which would otherwise inherit the section heading's size AND its gradient rule. */
@@ -428,6 +406,6 @@ h2::after {
 /* ---------- forced colours ---------- */
 
 @media (forced-colors: active) {
-  .btn, .chips li, .card, .icon-btn, .lang-switch { border: 1px solid CanvasText; }
+  .btn, .chips li, .card, .lang-switch { border: 1px solid CanvasText; }
   .brand-mark { background: CanvasText; color: Canvas; }
 }
