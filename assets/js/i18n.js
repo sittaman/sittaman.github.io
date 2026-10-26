@@ -26,7 +26,6 @@ window.SITE_I18N = {
     'a11y.langChanged': 'Idioma alterado para português.',
     'a11y.newTab': 'abre em nova aba',
 
-    'nav.about': 'Sobre',
     'nav.skills': 'Skills',
     'nav.experience': 'Experiência',
     'nav.projects': 'Projetos',
@@ -34,13 +33,10 @@ window.SITE_I18N = {
 
     'hero.name': 'Felipe Sitta',
     'hero.tagline': 'Engenheiro mobile',
-    'hero.lede': 'Desenvolvo aplicativos Android e iOS. Transformo requisitos e expectativas em soluções.',
+    'hero.lede': 'Desenvolvedor com 14 anos de experiência em software e especialista Flutter desde 2020, atuando em projetos de alta complexidade nos setores financeiro e bancário. Perfil hands-on: estruturo requisitos, backlogs e roadmaps com governança cross-squad, lidero a adoção de tecnologias e atuo como referência técnica. Localizado em Santo André, SP.',
     'hero.cvPt': 'Currículo <span class="btn-note">PDF · PT</span>',
     'hero.cvEn': 'Resume <span class="btn-note">PDF · EN</span>',
     'hero.ctaContact': 'Entrar em contato',
-
-    'about.title': 'Sobre',
-    'about.p1': 'Desenvolvedor com 14 anos de experiência em software e especialista Flutter desde 2020, atuando em projetos de alta complexidade nos setores financeiro e bancário. Perfil hands-on: estruturo requisitos, backlogs e roadmaps com governança cross-squad, lidero a adoção de tecnologias e atuo como referência técnica.',
 
     'skills.title': 'Competências',
     'skills.mobile': 'Mobile & Flutter',
@@ -231,7 +227,6 @@ window.SITE_I18N = {
     'a11y.langChanged': 'Language changed to English.',
     'a11y.newTab': 'opens in a new tab',
 
-    'nav.about': 'About',
     'nav.skills': 'Skills',
     'nav.experience': 'Experience',
     'nav.projects': 'Projects',
@@ -239,13 +234,10 @@ window.SITE_I18N = {
 
     'hero.name': 'Felipe Sitta',
     'hero.tagline': 'Mobile Engineer',
-    'hero.lede': 'I develop Android and iOS apps. I turn requirements and expectations into solutions.',
+    'hero.lede': 'Software developer with 14 years of experience and a Flutter specialist since 2020, working on highly complex projects in the financial and banking sectors. Hands-on profile: I structure requirements, backlogs and roadmaps with cross-squad governance, lead technology adoption and act as a technical reference. Based in Santo André, SP, Brazil.',
     'hero.cvPt': 'Resume in Portuguese <span class="btn-note">PDF · PT</span>',
     'hero.cvEn': 'Resume in English <span class="btn-note">PDF · EN</span>',
     'hero.ctaContact': 'Get in touch',
-
-    'about.title': 'About',
-    'about.p1': 'Software developer with 14 years of experience and a Flutter specialist since 2020, working on highly complex projects in the financial and banking sectors. Hands-on profile: I structure requirements, backlogs and roadmaps with cross-squad governance, lead technology adoption and act as a technical reference.',
 
     'skills.title': 'Skills',
     'skills.mobile': 'Mobile & Flutter',
