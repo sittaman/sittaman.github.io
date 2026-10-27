@@ -1,15 +1,3 @@
-<!--
-Sync Impact Report
-==================
-Version change: (unversioned template) → 1.0.0
-Modified principles: n/a (initial ratification; template placeholders replaced)
-Added sections: Core Principles (I–V), Technical Constraints, Development Workflow & Quality Gates, Governance
-Removed sections: none (template example sections reused as concrete sections)
-Deferred TODOs:
-  - TODO(CV_ASSETS): assets/cv/*.pdf ainda não existem no repo; check-site.mjs só avisa.
-Follow-up: remover este comentário antes do commit do constitution.
--->
-
 # sittaman.github.io Constitution
 
 ## Core Principles
