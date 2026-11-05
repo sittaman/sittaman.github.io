@@ -13,9 +13,9 @@
   --fg: #000000;
   --muted: #333333;
   --border: #999999;
-  --accent: #0b6b61;
-  --accent-strong: #0b5a52;
-  --secondary: #4b2f9e;
+  --accent: #000000;
+  --accent-strong: #000000;
+  --secondary: #000000;
   --chip-bg: #ffffff;
   --chip-border: #999999;
   --chip-fg: #000000;
@@ -42,7 +42,24 @@ body { background: #fff; display: block; }
 h2::after,
 .page-title::after,
 .timeline > li::before,
-.timeline > li::after { display: none; }
+.timeline > li::after,
+.case-study h2::before,
+.site-footer p::before,
+main > .section:not(.case-study) > .shell > h2::before { display: none; }
+
+/* Paper is not a poster: drop every offset shadow, heavy border and inverted fill. */
+.card, .skill-group, .org, .hero-sub, .eyebrow, .btn {
+  box-shadow: none !important;
+  border-width: 1px !important;
+}
+.card, .skill-group { border: 1px solid #999; }
+.org, .hero-sub, .eyebrow { background: #fff; color: #000; }
+.skill-group h3 { margin: 0 0 0.4rem; padding: 0; background: #fff; color: #000; }
+.card:hover { transform: none; }
+
+.contact-list { border-top: 1px solid #999; }
+.contact-list li { border-bottom: 1px solid #999; }
+.site-footer { background: #fff; color: #000; border-top: 1px solid #999; padding-block: 0.25rem; break-inside: avoid; }
 
 /* A CV reads linearly — collapse every grid to one column. */
 .skills-grid, .cards, .contact-list { display: block; }
@@ -66,10 +83,9 @@ h1, h2, h3, h4 { break-after: avoid; }
 }
 .contact-list .label { min-width: 0; }
 
-/* A paper copy should still reach the online version. */
-.site-footer::after {
-  content: "sittaman.github.io";
-  display: block;
-  margin-top: 0.4rem;
+/* A paper copy should still reach the online version. Appended to the rights line so the
+   footer stays a single row and cannot spill a URL onto a page of its own. */
+.site-footer p::after {
+  content: " · sittaman.github.io";
   color: #333;
 }

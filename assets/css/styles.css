@@ -1,45 +1,47 @@
 /* ============================================================================
-   Felipe Sitta — portfolio stylesheet
+   Felipe Sitta — portfolio stylesheet (brutalist)
    Single sheet: tokens → base → layout → components → preferences.
    No preprocessor, no framework, no web fonts (system stack only).
+
+   The rules are deliberately hard: black 3px borders, offset shadows with no
+   blur, squared corners, uppercase display type and a single acid accent.
    ========================================================================== */
 
 :root {
-  /* Single light theme. Every value below is tuned for text on white: the muted and border
-     tokens are a step darker than the usual light palette so secondary copy and card edges
-     stay legible instead of fading out. */
+  /* Single light theme: warm paper, black ink, one acid accent. */
   color-scheme: light;
 
-  --bg: #ffffff;
-  --surface: #f3f6f8;
-  --fg: #14181d;
-  --muted: #3f4b57;                              /* 8.9:1 on white — AA at body size */
-  --border: #b9c5d1;                             /* visible hairline on white and surface */
+  --bg: #f4f1ea;                                 /* warm paper */
+  --surface: #ffffff;                            /* cards sit on top of the paper */
+  --fg: #0a0a0a;                                 /* ink */
+  --muted: #333333;                              /* 12.6:1 on paper — AA at body size */
+  --border: #0a0a0a;                             /* every edge is a hard black rule */
 
-  /* Brand: teal accent + purple secondary, inherited from the CV template so the site and
-     the printed CV read as one identity. */
-  --accent: hsl(187 74% 32%);                    /* decorative, >=3:1 */
-  --accent-strong: hsl(187 74% 23%);             /* text, 7.5:1 on white */
-  --secondary: hsl(270 70% 45%);
-  --focus: hsl(187 74% 23%);
+  /* One accent, used as a fill only — never as text on paper. Black text on it
+     clears 14:1, so the accent can carry labels and hover states safely. */
+  --accent: #c6f018;                             /* acid lime */
+  --accent-strong: #0a0a0a;
+  --secondary: #0a0a0a;
+  --focus: #0a0a0a;
 
-  --btn-bg: hsl(187 74% 24%);                    /* 7.2:1 on --btn-fg */
+  --btn-bg: #0a0a0a;
   --btn-fg: #ffffff;
 
-  --chip-bg: hsl(187 40% 94%);
-  --chip-border: hsl(187 32% 74%);
-  --chip-fg: hsl(187 74% 23%);
+  --chip-bg: #ffffff;
+  --chip-border: #0a0a0a;
+  --chip-fg: #0a0a0a;
 
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Fluid type: no type media queries anywhere in this sheet. */
-  --step--1: 0.875rem;
-  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
-  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
-  --step-2: clamp(1.5rem, 1.35rem + 0.75vw, 1.85rem);
-  --step-3: clamp(1.9rem, 1.6rem + 1.5vw, 2.6rem);
-  --step-4: clamp(2.3rem, 1.75rem + 2.6vw, 3.4rem);
+  /* Fluid type: no type media queries anywhere in this sheet. Headings are
+     display-sized and set tight; body copy stays on a readable measure. */
+  --step--1: 0.8125rem;
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  --step-3: clamp(2.1rem, 1.4rem + 2.8vw, 3.75rem);
+  --step-4: clamp(3.25rem, 1.5rem + 8vw, 8rem);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -48,10 +50,15 @@
   --space-5: 1.5rem;
   --space-6: 2rem;
   --space-7: 3rem;
-  --radius: 10px;
-  --shell: 1120px;
+
+  --radius: 0;
+  --border-w: 3px;
+  --shadow: 6px 6px 0 var(--fg);
+  --shadow-sm: 4px 4px 0 var(--fg);
+
+  --shell: 1180px;
   --header-h: 4.5rem;
-  --transition: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: 120ms linear;
 }
 
 /* ---------- base ---------- */
@@ -71,7 +78,7 @@ html {
 body {
   font-family: var(--font-sans);
   font-size: var(--step-0);
-  line-height: 1.65;
+  line-height: 1.55;
   color: var(--fg);
   background: var(--bg);
   min-height: 100dvh;
@@ -81,7 +88,13 @@ body {
 
 main { flex: 1 0 auto; }
 
-h1, h2, h3, h4 { line-height: 1.15; letter-spacing: -0.02em; text-wrap: balance; }
+h1, h2, h3, h4 {
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  font-weight: 900;
+  text-wrap: balance;
+}
 p { text-wrap: pretty; }
 ul, ol { list-style: none; }
 img, svg { max-width: 100%; }
@@ -89,10 +102,21 @@ button { font: inherit; color: inherit; }
 fieldset { border: 0; }
 [hidden] { display: none !important; }
 
-a { color: var(--accent-strong); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { text-decoration-thickness: 2px; }
+::selection { background: #c6f018; color: var(--fg); }
 
-:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  background: var(--accent);
+  color: var(--fg);
+  text-decoration-thickness: 3px;
+}
+
+:focus-visible { outline: var(--border-w) solid var(--focus); outline-offset: 3px; border-radius: 0; }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px;
@@ -109,26 +133,24 @@ a:hover { text-decoration-thickness: 2px; }
 
 .skip-link {
   position: absolute; left: var(--space-4); top: -100%; z-index: 60;
-  background: var(--btn-bg); color: var(--btn-fg);
+  background: var(--fg); color: var(--accent);
+  border: var(--border-w) solid var(--fg);
   padding: var(--space-3) var(--space-5);
-  border-radius: 0 0 var(--radius) var(--radius);
-  font-weight: 600; text-decoration: none;
+  font-family: var(--font-mono); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none;
 }
-.skip-link:focus-visible { top: 0; }
+.skip-link:focus-visible { top: var(--space-2); }
 
 /* ---------- header ---------- */
 
+/* The header is the one solid black block on the page: it anchors the layout and
+   gives the nav a surface to invert against. */
 .site-header {
   position: sticky; top: 0; z-index: 20;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
+  background: var(--fg); color: #ffffff;
+  border-bottom: var(--border-w) solid var(--fg);
 }
-@supports (backdrop-filter: blur(8px)) {
-  .site-header {
-    background: color-mix(in oklab, var(--bg) 86%, transparent);
-    backdrop-filter: blur(10px);
-  }
-}
+.site-header :focus-visible { outline-color: var(--accent); }
 
 .header-inner {
   display: flex; flex-wrap: wrap; align-items: center;
@@ -138,53 +160,56 @@ a:hover { text-decoration-thickness: 2px; }
 
 .brand {
   display: inline-flex; align-items: center; gap: var(--space-2);
-  color: var(--fg); text-decoration: none; font-weight: 650;
-  letter-spacing: -0.01em;
+  color: #ffffff; text-decoration: none; font-weight: 900;
 }
+.brand:hover { background: transparent; }
+.brand:hover .brand-mark { background: var(--fg); color: var(--accent); border-color: var(--accent); }
 /* Terminal prompt, not initials: the mark is a monospace ">_" so it reads as a shell
-   cursor rather than a monogram. Monospace keeps the two glyphs locked to the same
-   advance width, which is what makes the pair look deliberate at this size. */
+   cursor rather than a monogram. The tile is a flat accent square — no gradient. */
 .brand-mark {
   display: inline-grid; place-items: center;
-  width: 2rem; height: 2rem; border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--secondary));
-  /* --btn-fg, not a hard-coded white: it is already the "text on an accent fill" colour,
-     so the mark stays readable if the gradient ever changes. */
-  color: var(--btn-fg);
-  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0;
+  width: 2.25rem; height: 2.25rem;
+  background: var(--accent); color: var(--fg);
+  border: 2px solid var(--accent);
+  font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 0;
   /* The underscore sits on the baseline; nudging the pair up centres the ink, not the
      line box, so the prompt looks optically centred in the tile. */
-  padding-bottom: 0.1rem;
+  padding-bottom: 0.15rem;
 }
 
 .controls { display: flex; align-items: center; gap: var(--space-3); margin-left: auto; }
 
-/* Nav: a chip strip that scrolls horizontally on narrow screens. Chosen over a hamburger
+/* Nav: a strip that scrolls horizontally on narrow screens. Chosen over a hamburger
    deliberately — no focus trap, no scroll lock, no aria-expanded to get wrong. */
 .site-nav { order: 3; width: 100%; }
 .site-nav ul {
-  display: flex; gap: var(--space-1);
+  display: flex; gap: 0;
   overflow-x: auto; scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
 }
 .site-nav ul::-webkit-scrollbar { display: none; }
 .site-nav a {
-  display: inline-block; padding: 0.35rem 0.65rem; border-radius: 999px;
-  color: var(--muted); text-decoration: none;
-  font-size: var(--step--1); font-weight: 600; white-space: nowrap;
-  transition: color var(--transition), background var(--transition);
+  display: inline-block; padding: 0.45rem 0.7rem;
+  color: #ffffff; text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: var(--step--1); font-weight: 700; white-space: nowrap;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  transition: background-color var(--transition), color var(--transition);
 }
-.site-nav a:hover { color: var(--fg); background: var(--surface); }
+.site-nav a:hover { background: var(--accent); color: var(--fg); }
 .site-nav a[aria-current="true"] {
-  color: var(--accent-strong); background: var(--surface);
-  text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px;
+  background: var(--accent); color: var(--fg);
 }
 
+/* The back link shares the header, so it needs the header's colours. */
+.site-header .back-link { color: #ffffff; }
+.site-header .back-link:hover { background: var(--accent); color: var(--fg); }
+
 .lang-switch {
-  display: inline-flex; gap: 2px; padding: 2px;
-  border: 1px solid var(--border); border-radius: 999px;
-  background: var(--surface);
+  display: inline-flex; gap: 0; padding: 0;
+  border: 2px solid #ffffff;
+  background: var(--fg);
 }
 .lang-opt { position: relative; display: inline-flex; }
 .lang-opt input {
@@ -193,86 +218,137 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .lang-opt span {
   display: inline-flex; align-items: center; justify-content: center;
-  min-width: 2.4rem; min-height: 2.4rem; padding: 0 0.5rem;
-  border-radius: 999px; font-size: var(--step--1); font-weight: 650;
-  color: var(--muted);
-  transition: background var(--transition), color var(--transition);
+  min-width: 2.6rem; min-height: 2.6rem; padding: 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1); font-weight: 700;
+  color: #ffffff;
+  transition: background-color var(--transition), color var(--transition);
 }
-.lang-opt input:checked + span { background: var(--btn-bg); color: var(--btn-fg); }
-.lang-opt input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.lang-opt + .lang-opt span { border-left: 2px solid #ffffff; }
+.lang-opt input:not(:checked):hover + span { background: #ffffff; color: var(--fg); }
+.lang-opt input:checked + span { background: var(--accent); color: var(--fg); }
+.lang-opt input:focus-visible + span { outline: var(--border-w) solid var(--accent); outline-offset: 3px; }
 
 @media (min-width: 48rem) {
   .site-nav { order: 0; width: auto; }
   .site-nav ul { mask-image: none; overflow: visible; }
 }
 
+/* The nav drops to a second row on narrow screens, so the sticky header is taller
+   than --header-h. Anchor offsets have to follow it or a jumped-to heading lands
+   underneath the bar. */
+@media (max-width: 47.999rem) {
+  :root { --header-h: 7.25rem; }
+}
+
 /* ---------- hero ---------- */
 
 .hero {
   position: relative;
-  padding-block: clamp(2.75rem, 7vw, 5.5rem) clamp(2rem, 5vw, 3.5rem);
+  padding-block: clamp(3rem, 8vw, 7rem) clamp(2.5rem, 6vw, 5rem);
 }
+/* A single 8px rule closes the hero — heavier than the 3px section rules, so the
+   opening statement reads as a block rather than another section. */
 .hero::after {
-  content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 2px;
-  background: linear-gradient(to right, var(--accent), var(--secondary));
+  content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 8px;
+  background: var(--fg);
 }
 
-.hero h1 { font-size: var(--step-4); font-weight: 700; }
+.hero h1 { font-size: var(--step-4); line-height: 0.84; letter-spacing: -0.055em; }
+
+/* The tagline is a sticker: accent fill, hard border, hard shadow. */
 .hero-sub {
-  margin-top: var(--space-2);
-  font-size: var(--step-2); font-weight: 600; color: var(--accent-strong);
-  letter-spacing: -0.015em;
+  display: inline-block;
+  margin-top: var(--space-5);
+  padding: 0.35rem 0.7rem;
+  background: var(--accent); color: var(--fg);
+  border: var(--border-w) solid var(--fg);
+  box-shadow: var(--shadow);
+  font-family: var(--font-mono);
+  font-size: var(--step-1); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.02em;
+  line-height: 1.2;
 }
-.lede { max-width: 62ch; margin-top: var(--space-4); font-size: var(--step-1); line-height: 1.55; }
 
-.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+.lede {
+  max-width: 62ch; margin-top: var(--space-5);
+  padding-left: var(--space-5);
+  border-left: 8px solid var(--fg);
+  font-size: var(--step-0); line-height: 1.6;
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-6); }
 
 .btn {
   display: inline-flex; align-items: center; gap: var(--space-2);
-  padding: 0.7rem 1.2rem; min-height: 2.75rem;
-  border: 1px solid transparent; border-radius: var(--radius);
-  font-weight: 600; font-size: var(--step-0); text-decoration: none;
-  transition: background var(--transition), border-color var(--transition), color var(--transition);
+  padding: 0.65rem 1.15rem; min-height: 3rem;
+  border: var(--border-w) solid var(--fg);
+  font-family: var(--font-mono);
+  font-weight: 700; font-size: var(--step--1);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition),
+              background-color var(--transition), color var(--transition);
 }
-.btn-primary { background: var(--btn-bg); color: var(--btn-fg); border-color: var(--btn-bg); }
-.btn-primary:hover { filter: brightness(1.08); }
-.btn-ghost { color: var(--fg); border-color: var(--border); background: var(--surface); }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent-strong); }
+.btn:hover,
+.btn:focus-visible {
+  background: var(--accent); color: var(--fg);
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--fg);
+}
+.btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--fg); }
+.btn-primary { background: var(--btn-bg); color: var(--btn-fg); }
+.btn-primary:hover { background: var(--accent); color: var(--fg); }
+.btn-ghost { background: var(--surface); color: var(--fg); }
 .btn-note {
-  font-size: 0.75em; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 0.85em; font-weight: 700;
   opacity: 0.85;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero .shell > * { animation: rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both; }
-  .hero .shell > *:nth-child(2) { animation-delay: 60ms; }
-  .hero .shell > *:nth-child(3) { animation-delay: 110ms; }
-  .hero .shell > *:nth-child(4) { animation-delay: 155ms; }
+  .hero .shell > * { animation: rise 360ms linear both; }
+  .hero .shell > *:nth-child(2) { animation-delay: 50ms; }
+  .hero .shell > *:nth-child(3) { animation-delay: 90ms; }
+  .hero .shell > *:nth-child(4) { animation-delay: 130ms; }
   @keyframes rise {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: none; }
   }
 }
 
 /* ---------- sections ---------- */
 
-main > .section { padding-block: clamp(2.5rem, 6vw, 4.5rem); border-top: 1px solid var(--border); }
-main > .section:first-of-type { border-top: 0; }
-
-h2 { font-size: var(--step-3); font-weight: 700; }
-h2::after {
-  content: ""; display: block; width: 2.5rem; height: 2px; margin-top: var(--space-3);
-  background: linear-gradient(to right, var(--accent), var(--secondary));
+main { counter-reset: section; }
+main > .section {
+  padding-block: clamp(2.75rem, 6vw, 5rem);
+  border-top: var(--border-w) solid var(--border);
 }
-/* Whatever follows a section or page heading gets the same breathing room — the page-title's
-   gradient rule makes the default gap look cramped. */
+/* The hero already ends in an 8px rule, so the first section adds none. */
+main > .hero + .section { border-top: 0; }
+/* Numbered section labels: "01 / COMPETÊNCIAS". Case pages are excluded so their
+   subsections do not all inherit the same number. */
+main > .section:not(.case-study) { counter-increment: section; }
+main > .section:not(.case-study) > .shell > h2::before {
+  content: counter(section, decimal-leading-zero) " / ";
+  font-family: var(--font-mono);
+  font-size: 0.42em; letter-spacing: 0.08em; font-weight: 700;
+  vertical-align: 0.35em;
+}
+
+h2 { font-size: var(--step-3); font-weight: 900; }
+h2::after {
+  content: ""; display: block; width: 100%; height: 5px; margin-top: var(--space-3);
+  background: var(--fg);
+}
+/* Whatever follows a section or page heading gets the same breathing room — the
+   heavy rule under the heading makes the default gap look cramped. */
 .section > .shell > h2 + *,
 .section > .shell > .page-title + * { margin-top: var(--space-5); }
 
-/* The cards grid follows the section heading directly now that the section has no
-   subsections, so it tightens the generic `h2 + *` gap a step. */
-.section > .shell > h2 + .cards { margin-top: var(--space-4); }
+/* The cards grid follows the section heading directly, so it tightens the
+   generic `h2 + *` gap a step. */
+.section > .shell > h2 + .cards { margin-top: var(--space-5); }
 
 .prose { max-width: 68ch; }
 .prose p + p { margin-top: var(--space-3); }
@@ -280,132 +356,217 @@ h2::after {
 /* ---------- skills ---------- */
 
 .skills-grid {
-  display: grid; gap: var(--space-5);
+  display: grid; gap: 1.75rem;
   grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
 }
-.skill-group h3 { font-size: var(--step-0); font-weight: 650; }
+/* Each group is its own boxed panel; the heading is a full-bleed black bar. */
+.skill-group {
+  background: var(--surface);
+  border: var(--border-w) solid var(--fg);
+  box-shadow: var(--shadow);
+  padding: var(--space-5);
+}
+.skill-group h3 {
+  margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) var(--space-4);
+  padding: 0.5rem var(--space-5);
+  background: var(--fg); color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: var(--step--1); font-weight: 700;
+  letter-spacing: 0.06em; line-height: 1.3;
+}
 
-.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: 0; }
 .chips li {
-  padding: 0.25rem 0.65rem;
-  border: 1px solid var(--chip-border); border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  border: 2px solid var(--chip-border);
   background: var(--chip-bg); color: var(--chip-fg);
-  font-size: var(--step--1); line-height: 1.5;
+  font-family: var(--font-mono);
+  font-size: 0.75rem; line-height: 1.45;
+  text-transform: uppercase; letter-spacing: 0.02em;
 }
 
 /* ---------- experience ---------- */
 
-.timeline { display: flex; flex-direction: column; gap: var(--space-6); }
+.timeline { display: flex; flex-direction: column; gap: 2.75rem; }
 .timeline > li { position: relative; padding-left: var(--space-6); }
 .timeline > li::before {
-  content: ""; position: absolute; left: 0; top: 0.5rem;
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+  content: ""; position: absolute; left: 0; top: 0.45rem;
+  width: 14px; height: 14px;
+  background: var(--fg);
 }
 .timeline > li::after {
-  content: ""; position: absolute; left: 4px; top: 1.6rem;
-  bottom: calc(-1 * var(--space-6)); width: 1px; background: var(--border);
+  content: ""; position: absolute; left: 6px; top: 1.9rem;
+  bottom: calc(-1 * 2.75rem); width: 2px; background: var(--fg);
 }
 .timeline > li:last-child::after { display: none; }
 
 /* The timeline entry is the client's name alone — no role, no dates. */
-.job h3 { font-size: var(--step-1); font-weight: 650; }
-.org { color: var(--accent-strong); }
+.job h3 { font-size: var(--step-2); font-weight: 900; }
+.org {
+  display: inline-block;
+  background: var(--accent); color: var(--fg);
+  border: var(--border-w) solid var(--fg);
+  box-shadow: var(--shadow-sm);
+  padding: 0 0.25em;
+}
 
 .bullets { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3); }
 .bullets li { position: relative; padding-left: var(--space-5); }
 .bullets li::before {
-  content: ""; position: absolute; left: var(--space-1); top: 0.62em;
-  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  content: ""; position: absolute; left: var(--space-1); top: 0.55em;
+  width: 8px; height: 8px; background: var(--fg);
 }
 
 /* The summary and its case-study link belong to .job, not to the timeline: they sit inside the
    same <article>, so .job's break-inside rule already covers printing them. */
 .job-summary { max-width: 68ch; margin-top: var(--space-3); }
-.job-link { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
+.job-link {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono); font-size: var(--step--1);
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+}
 
 /* ---------- cards (projects) ---------- */
 
 .cards {
-  display: grid; gap: var(--space-4);
+  display: grid; gap: 1.75rem;
   grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
 }
 .cards:empty { display: none; }
 .card {
-  padding: var(--space-4);
-  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: var(--space-5);
+  border: var(--border-w) solid var(--fg);
   background: var(--surface);
-  box-shadow: 0 1px 2px rgb(16 24 32 / 0.05);
+  box-shadow: var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.card:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--fg);
 }
 /* h2 as well as h4: /work nests its cards under a page-level h1, so the card heading there is
-   an h2 — which would otherwise inherit the section heading's size AND its gradient rule. */
-.card h2, .card h4 { font-size: var(--step-0); font-weight: 650; }
-.card h2::after { display: none; }
-.card-meta { margin-top: var(--space-1); font-size: var(--step--1); color: var(--muted); }
-.card-summary { margin-top: var(--space-2); }
-.card-links { margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; }
+   an h2 — which would otherwise inherit the section heading's size AND its heavy rule. */
+.card h2, .card h4 { font-size: var(--step-1); font-weight: 900; line-height: 1.05; }
+.card h2::after, .card h4::after { display: none; }
+.card-meta {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono); font-size: 0.75rem;
+  text-transform: uppercase; letter-spacing: 0.03em;
+  color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.card-summary { margin-top: var(--space-3); }
+.card-links {
+  margin-top: var(--space-4);
+  font-family: var(--font-mono); font-size: var(--step--1);
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+}
 /* Carries its own top gap: the empty grid it follows is display:none, so it is what the
    heading's spacing lands on. */
-.empty-note { margin-top: var(--space-4); color: var(--muted); font-size: var(--step--1); }
+.empty-note {
+  margin-top: var(--space-4);
+  color: var(--muted); font-size: var(--step--1);
+}
 
 /* ---------- subpages (/work and the case studies) ---------- */
 
 /* The <h1> of a standalone page — sized and ruled like the section headings, so a subpage
    reads as the same site without an <h2> that has no parent <h1>. */
-.page-title { font-size: var(--step-3); font-weight: 700; }
+.page-title { font-size: var(--step-3); font-weight: 900; }
 .page-title::after {
-  content: ""; display: block; width: 2.5rem; height: 2px; margin-top: var(--space-3);
-  background: linear-gradient(to right, var(--accent), var(--secondary));
+  content: ""; display: block; width: 100%; height: 6px; margin-top: var(--space-3);
+  background: var(--fg);
 }
 
 .eyebrow {
-  margin-bottom: var(--space-2);
-  font-size: var(--step--1); font-weight: 650;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--accent-strong);
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  padding: 0.15rem 0.5rem;
+  background: var(--accent); color: var(--fg);
+  border: 2px solid var(--fg);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-mono);
+  font-size: var(--step--1); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
 }
 
 /* Spacing after the page title comes from the `+ *` rule above, not from here. */
-.case-meta { color: var(--muted); font-variant-numeric: tabular-nums; }
+.case-meta {
+  color: var(--muted);
+  font-family: var(--font-mono); font-size: var(--step--1);
+  text-transform: uppercase; letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}
 
-/* Section headings inside a write-up. The page title above them already carries the gradient
-   rule; repeating it under every section turns the page into a stack of underlines, so these
-   are sized as subsections and left unruled. Space below each comes from the `h2 + *` rule. */
-.case-study h2 { margin-top: var(--space-6); font-size: var(--step-1); font-weight: 650; }
+/* Section headings inside a write-up. The page title above them already carries the heavy
+   rule; repeating it under every section turns the page into a stack of bars, so these are
+   sized as subsections with a square marker instead. Space below each comes from the
+   `h2 + *` rule. */
+.case-study h2 {
+  display: flex; align-items: center; gap: var(--space-3);
+  margin-top: var(--space-6);
+  font-size: var(--step-1); font-weight: 900;
+}
+.case-study h2::before {
+  content: ""; flex: 0 0 auto;
+  width: 0.7rem; height: 0.7rem;
+  background: var(--accent);
+  border: var(--border-w) solid var(--fg);
+}
 .case-study h2::after { display: none; }
 
 .back-link {
   display: inline-flex; align-items: center; gap: var(--space-2);
-  color: var(--fg); font-size: var(--step--1); font-weight: 650;
+  color: #ffffff; font-family: var(--font-mono);
+  font-size: var(--step--1); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
   text-decoration: none;
 }
-.back-link:hover { color: var(--accent-strong); }
 
 /* ---------- contact ---------- */
 
-.section-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+.section-actions { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-5); }
 
-.contact-list { display: grid; gap: var(--space-3); margin-top: var(--space-5); }
-.contact-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-4); }
-.contact-list .label {
-  min-width: 5rem;
-  font-size: var(--step--1); font-weight: 650;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--muted);
+.contact-list { display: grid; gap: 0; margin-top: var(--space-5); border-top: var(--border-w) solid var(--fg); }
+.contact-list li {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-4);
+  padding-block: var(--space-4);
+  border-bottom: var(--border-w) solid var(--fg);
 }
+.contact-list .label {
+  min-width: 6rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--fg);
+}
+.contact-list a { font-size: var(--step-1); font-weight: 700; }
 
 /* ---------- footer ---------- */
 
 .site-footer {
   padding-block: var(--space-5);
-  border-top: 1px solid var(--border);
-  color: var(--muted); font-size: var(--step--1);
+  background: var(--fg);
+  border-top: var(--border-w) solid var(--fg);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.site-footer p { display: flex; align-items: center; gap: var(--space-2); }
+.site-footer p::before {
+  content: ""; width: 0.6rem; height: 0.6rem;
+  background: var(--accent);
 }
 
 /* ---------- forced colours ---------- */
 
 @media (forced-colors: active) {
-  .btn, .chips li, .card, .lang-switch { border: 1px solid CanvasText; }
+  .btn, .chips li, .card, .skill-group, .lang-switch { border: 2px solid CanvasText; }
   .brand-mark { background: CanvasText; color: Canvas; }
+  .org, .hero-sub, .eyebrow { border: 2px solid CanvasText; }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover, .btn:hover, .btn:focus-visible, .btn:active { transform: none; }
 }
