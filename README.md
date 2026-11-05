@@ -26,7 +26,7 @@ dictionaries are inlined JavaScript rather than fetched JSON, and why scripts ar
 | I want to change… | Edit |
 |---|---|
 | Any visible text in either language | `assets/js/i18n.js` — the two dictionaries |
-| Structure, sections, markup | the page itself (`index.html`, `work/index.html`, `work/<slug>.html`) |
+| Structure, sections, markup | the page itself (`index.html`, `work/index.html`, `work/case.html`) |
 | Colours, spacing, type | `assets/css/styles.css` (all tokens are at the top) |
 | The printed/PDF layout | `assets/css/print.css` |
 | Projects | `assets/data/projects.js` (schema documented in the file) |
@@ -42,17 +42,20 @@ dictionaries disagree, so a forgotten translation can't reach production.
 Every page is its own file — no directory ever exists just to hold one `index.html`:
 
 ```
-index.html          /                  home — hero, about, skills, experience, projects, …
-work/index.html     /work/             every case study, as cards
-work/<slug>.html    /work/<slug>.html  one page per case study
+index.html          /                    home — hero, about, skills, experience, projects, …
+work/index.html     /work/               every case study, as cards
+work/case.html      /work/case.html      the case studies; ?case=<slug> selects one
 ```
 
-`work/` is a directory because it holds `index.html` **and** the case pages beside it; a case page
-is flat, so `work/digio.html` is reachable at `/work/digio.html`. If one of them ever needs its own
-images, that is the moment to give it a directory — not before.
+`work/` is a directory because it holds `index.html` **and** the consolidated case page beside it.
+There is no file per case study: each case is a section inside `work/case.html`, and the page uses
+`?case=<slug>` to show one at a time. Without JavaScript every section stays visible, so the page
+remains readable from `file://` and with scripts disabled. If the page ever needs its own images,
+that is the moment to give it a directory — not before.
 
-Links between pages are **relative** (`../assets/…`, `../#experience`, `work/digio.html`), which is
-what keeps the site working from a `file://` origin. Do not introduce root-absolute paths.
+Links between pages are **relative** (`../assets/…`, `../#experience`,
+`work/case.html?case=digio`), which is what keeps the site working from a `file://` origin. Do not
+introduce root-absolute paths.
 
 ### Adding a project
 
@@ -65,9 +68,10 @@ the comments at the top of that file.
 
 **The home page's timeline lists projects, not jobs.** Each entry is the client's name, a short
 brief and a link to the full write-up; role and period appear on the `/work` cards and the case
-pages instead. The timeline carries the three most recent (`work/grupo-bemol.html`,
-`work/banco-bv.html`, `work/digio.html`); older projects live on `/work/` only —
-`work/mobyan.html` is that case today.
+page instead. The timeline carries the three most recent
+(`work/case.html?case=grupo-bemol`, `work/case.html?case=banco-bv`,
+`work/case.html?case=digio`); older projects live on `/work/` only —
+`work/case.html?case=mobyan` is that case today.
 
 The write-ups are transcribed from `~/Documents/cv/Project showcase PT.md` and
 `Project showcase EN.md` — the two files are the source of truth for this content, and they are
@@ -76,24 +80,28 @@ that reversal when you add one.
 
 A case study lives in four places:
 
-1. **`work/<slug>.html`** — copy an existing one (`work/digio.html` is the plainest) and swap the
-   slug, the project name, the `<slug>` in every key and the two absolute URLs (`canonical`,
-   `og:url`). Section headings (`case.context`, `case.scope`, …) are shared by every case page;
-   only the body keys carry the slug. Use `<ul class="bullets">` where the source uses bullets and
-   `.prose` with `data-i18n-html` where it uses paragraphs, and do not add a section the source
-   does not have — an honest short page beats a padded one.
-2. **`work/index.html`** — add a `<li class="card">`, newest first.
+1. **`work/case.html`** — add one `<section class="section case-study" data-case-study
+   data-slug="<slug>" data-i18n-meta-title="case.<slug>.meta.title"
+   data-i18n-meta-description="case.<slug>.meta.description" aria-labelledby="case-title-<slug>">`
+   with a unique `<h1 id="case-title-<slug>">`. Copy the section shape from an existing case and
+   swap the slug, the project name and every key. Section headings (`case.context`, `case.scope`,
+   …) are shared by every case; only the body keys carry the slug. Use `<ul class="bullets">` where
+   the source uses bullets and `.prose` with `data-i18n-html` where it uses paragraphs, and do not
+   add a section the source does not have — an honest short page beats a padded one.
+2. **`work/index.html`** — add a `<li class="card">`, newest first; its link is
+   `case.html?case=<slug>`.
 3. **`index.html`** — if the project belongs on the home timeline: add a `<li>` to the experience
    `<ol class="timeline">`, newest first, keeping the three most recent. Its `<h3 class="org">` is
    the client's name, its `.job-summary` carries `exp.<slug>.summary`, and its `.job-link` points
-   at the case page.
+   at `work/case.html?case=<slug>`.
 4. **`assets/js/i18n.js`** — add the `case.<slug>.*` body keys and `case.<slug>.meta.title` /
    `.meta.description` to **both** dictionaries, plus `exp.<slug>.role` / `.start` / `.end` /
    `.summary` if the project also appears as a card.
 
 Role and period are defined once (`exp.<slug>.role` / `.start` / `.end`) and read by both the
 `/work` card and the case page, so they cannot drift apart. `exp.<slug>.summary` is likewise
-shared by the home timeline and the card. `sitemap.xml` is the fifth place: add the new URL there too.
+shared by the home timeline and the card. `sitemap.xml` is the fifth place: add
+`https://sittaman.github.io/work/case.html?case=<slug>` there too.
 
 ## Deployment
 
@@ -132,22 +140,29 @@ node .github/scripts/check-site.mjs --root . --allow-missing assets/cv/
 npx --yes html-validate@9 $(find . -name '*.html' -not -path './node_modules/*' -not -path './shots/*')
 
 python3 -m http.server 8080 --bind 127.0.0.1 &
-node .github/scripts/shots.mjs                           # screenshot matrix (needs Playwright)
+node .github/scripts/shots.mjs                           # home matrix (needs Playwright)
+node .github/scripts/shots.mjs http://127.0.0.1:8080/work/case.html  # 5 cases × pt/en × desktop/mobile
 ```
 
 These are the same three commands CI runs, and both `.mjs` checks discover their pages rather
-than listing them — a new case study is covered the moment the file exists.
+than listing them — a new case study is covered the moment its section exists.
 
-`shots.mjs` writes desktop/mobile × pt/en captures to `shots/` (gitignored) and
-fails if a page overflows horizontally or the no-flash flag is left on. It uses Playwright's
-`locale` context option, so it exercises the real detection path rather than a URL parameter.
-It is a dev tool and is deliberately not part of CI.
+`shots.mjs` writes desktop/mobile × pt/en captures to `shots/` (gitignored) and fails if a page
+overflows horizontally, the no-flash flag is left on, or a case page shows anything other than
+exactly the requested case. It uses Playwright's `locale` context option, so it exercises the
+real detection path rather than a URL parameter. It is a dev tool and is deliberately not part of
+CI.
 
-### QA-only URL parameter
+### Public URL parameters
 
-Read before first paint and not part of the public contract:
+Read before first paint:
 
-- `?lang=en` — force a language (this one *is* shareable; it is what the language switch writes)
+- `?lang=en` — force a language (shareable; it is what the language switch writes)
+- `?case=<slug>` — select a case on `work/case.html` (shareable; it is the public case URL)
+
+On `work/case.html`, an absent or unknown `case` redirects to `404.html` when JavaScript is
+available. Without JavaScript the page shows all cases and ignores the parameter. There are no
+redirects from the old `work/<slug>.html` URLs; they no longer exist.
 
 Precedence for language on load: `?lang=` → `localStorage` → `navigator.languages` → `pt-BR`.
 The URL wins over storage on purpose, so a link someone shares shows the language they sent
@@ -169,8 +184,8 @@ rather than the one the recipient last picked.
   `sittaman.github.io` shares one origin, so an unprefixed key would collide.
 - **Cache-busting is manual.** GitHub Pages hard-codes `Cache-Control: max-age=600` and gives
   you no header control and no content hashes without a build. When you edit a CSS or JS file,
-  bump the `?v=` on its `<link>`/`<script>` in **every** page that loads it — seven files today
-  (`index.html`, `404.html`, `work/index.html` and the four case pages) — not just the one you
+  bump the `?v=` on its `<link>`/`<script>` in **every** page that loads it — four files today
+  (`index.html`, `404.html`, `work/index.html` and `work/case.html`) — not just the one you
   were editing, or some pages keep serving the old file.
 - **Never run `npm install` in this repo.** `upload-pages-artifact` drops dotfiles but *not*
   `node_modules`, so it would be published. The checks use `npx` and dependency-free `.mjs`.

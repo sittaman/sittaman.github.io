@@ -514,6 +514,13 @@ h2::after {
 }
 .case-study h2::after { display: none; }
 
+/* The head script adds data-case-pending before first paint; main.js clears it once the selected
+   case is known. Without JS the attribute never exists, so every case stays visible. */
+html[data-case-pending] .case-study { display: none; }
+
+/* The shared "all case studies" action sits after the sections, not inside each one. */
+.case-actions { padding-block: var(--space-5) var(--space-7); }
+
 .back-link {
   display: inline-flex; align-items: center; gap: var(--space-2);
   color: #ffffff; font-family: var(--font-mono);

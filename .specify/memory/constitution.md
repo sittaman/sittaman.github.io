@@ -22,7 +22,7 @@ portuguesa completa.
 
 ### III. Funciona Sem JavaScript e a Partir de file:// (NON-NEGOTIABLE)
 
-Links entre páginas são relativos (`../assets/…`, `work/digio.html`); caminhos absolutos a partir
+Links entre páginas são relativos (`../assets/…`, `work/case.html?case=digio`); caminhos absolutos a partir
 da raiz são proibidos. Scripts são clássicos (`<script src>`), não módulos ES, e os dicionários são
 JavaScript inline, não JSON buscado em runtime. O conteúdo principal MUST permanecer legível com
 JavaScript desabilitado e ao abrir `index.html` por `file://`. Aprimoramentos dependem de JS apenas
@@ -55,7 +55,8 @@ quebrado ou uma tradução faltando e produção.
 - `Cache-Control` é fixado em `max-age=600` pela Pages e não há hash de conteúdo: ao editar CSS ou
   JS, o `?v=` MUST ser incrementado em **todas** as páginas que carregam o arquivo, não só na
   editada.
-- `sitemap.xml` é parte da entrega: uma URL nova (case study) MUST ser adicionada lá.
+- `sitemap.xml` é parte da entrega: uma URL nova (case study em
+  `work/case.html?case=<slug>`) MUST ser adicionada lá.
 - O site é light-only por decisão de design; não existe `data-theme` nem toggle.
 - A chave de idioma no `localStorage` é namespaced (`site.lang`), porque todo projeto sob
   `sittaman.github.io` compartilha uma origem.
@@ -63,9 +64,9 @@ quebrado ou uma tradução faltando e produção.
   assets próprios.
 - `.htmlvalidate.json` desabilita `no-redundant-role` de propósito (Safari perde semântica de lista
   com `list-style: none`). Desabilitar outras regras exige justificativa documentada no README.
-- Adicionar um case study toca cinco lugares: `work/<slug>.html`, `work/index.html`,
+- Adicionar um case study toca cinco lugares: uma seção em `work/case.html`, `work/index.html`,
   `index.html` (só se entrar na timeline da home), `assets/js/i18n.js` (ambos os dicionários) e
-  `sitemap.xml`.
+  `sitemap.xml`. Nenhuma página completa nova é criada.
 
 ## Development Workflow & Quality Gates
 
@@ -88,4 +89,4 @@ seção nova, PATCH para esclarecimento sem mudança de sentido. Toda revisão d
 verificar conformidade com os princípios; complexidade que viole o Princípio I é rejeitada mesmo que
 funcione. Datas em ISO `YYYY-MM-DD`.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-27 | **Last Amended**: 2026-10-27
+**Version**: 1.0.1 | **Ratified**: 2026-10-27 | **Last Amended**: 2026-11-05

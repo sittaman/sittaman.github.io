@@ -101,10 +101,72 @@
     el.appendChild(frag);
   }
 
+  /* ---------- case studies ---------- */
+
+  var caseSections = Array.prototype.slice.call(document.querySelectorAll('[data-case-study]'));
+
+  function currentCaseSlug() {
+    try { return new URLSearchParams(location.search).get('case'); } catch (e) { return null; }
+  }
+
+  function findCase(slug) {
+    for (var i = 0; i < caseSections.length; i++) {
+      if (caseSections[i].getAttribute('data-slug') === slug) return caseSections[i];
+    }
+    return null;
+  }
+
+  function setMetaContent(property, value) {
+    if (typeof value !== 'string') return;
+    var meta = document.querySelector('meta[property="' + property + '"]');
+    if (meta) meta.setAttribute('content', value);
+  }
+
+  function updateCaseMetadata(lang, slug, section) {
+    var title = get(lang, section.getAttribute('data-i18n-meta-title'));
+    var description = get(lang, section.getAttribute('data-i18n-meta-description'));
+
+    if (typeof title === 'string') document.title = title;
+    var descriptionTag = document.querySelector('meta[name="description"]');
+    if (descriptionTag && typeof description === 'string') descriptionTag.setAttribute('content', description);
+
+    var url = 'https://sittaman.github.io/work/case.html?case=' + encodeURIComponent(slug);
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', url);
+    setMetaContent('og:url', url);
+    setMetaContent('og:title', title);
+    setMetaContent('og:description', description);
+
+    var locale = document.querySelector('meta[property="og:locale"]');
+    if (locale) locale.setAttribute('content', lang === 'en' ? 'en_US' : 'pt_BR');
+    var alternate = document.querySelector('meta[property="og:locale:alternate"]');
+    if (alternate) alternate.setAttribute('content', lang === 'en' ? 'pt_BR' : 'en_US');
+  }
+
+  /* One document holds every case; the query string selects one. Without JS nothing here runs and
+     all sections stay visible, which is what keeps the page readable without scripts. */
+  function applyCase(lang) {
+    if (!caseSections.length) return;
+
+    var slug = currentCaseSlug();
+    var selected = slug ? findCase(slug) : null;
+    if (!selected) {
+      try { location.replace('../404.html'); } catch (e) { location.href = '../404.html'; }
+      return;
+    }
+
+    caseSections.forEach(function (section) { section.hidden = section !== selected; });
+    selected.hidden = false;
+    root.setAttribute('data-case', slug);
+    root.removeAttribute('data-case-pending');
+    updateCaseMetadata(lang, slug, selected);
+  }
+
   function setLanguage(lang, announce) {
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* private mode */ }
     applyLanguage(lang);
     syncUrl(lang);
+    applyCase(lang);
     renderProjects(lang);
     // After syncUrl (so the URL carries the new lang) and after renderProjects (so the links it
     // just created are rewritten too). Running it inside applyLanguage would be too early on the
@@ -307,6 +369,7 @@
   function init() {
     var lang = /^en/i.test(root.lang) ? 'en' : 'pt-BR';
     applyLanguage(lang);
+    applyCase(lang);
     renderProjects(lang);
     propagateLang(lang);
     initActiveSection();
