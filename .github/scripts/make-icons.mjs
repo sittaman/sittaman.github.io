@@ -19,10 +19,9 @@ const IMG = resolve(new URL('../../assets/img', import.meta.url).pathname);
 // favicon.ico and apple-touch-icon.png belong at the site root: browsers request /favicon.ico
 // unprompted, and iOS looks for /apple-touch-icon.png.
 const ROOT = resolve(new URL('../../', import.meta.url).pathname);
-/* Straight from the CSS tokens: accent hsl(187 74% 32%) and secondary hsl(270 70% 45%).
-   The icon sits next to the header's .brand-mark, so it has to be the same gradient — the
-   previous hexes here (#158e80/#7a2fc9) had drifted from the stylesheet. */
-const BRAND = { teal: '#15808e', purple: '#7322c3', bg: '#0b0f14' };
+/* Straight from the brutalist CSS tokens: acid lime accent #c6f018 and ink #0a0a0a.
+   The icon sits next to the header's .brand-mark, so it uses the same flat fill. */
+const BRAND = { accent: '#c6f018', ink: '#0a0a0a', paper: '#f4f1ea' };
 
 function chromeShot(htmlFile, width, height, outPath, background = 'ffffffff') {
   const profile = mkdtempSync(join(tmpdir(), 'pf-icon-'));
@@ -60,17 +59,16 @@ function page(bodyHtml, css) {
 
 /* The header's ">_" mark as geometry, not text: an icon must not depend on a monospace font
    being installed, and <text> would re-flow on every machine that renders it. Proportions are
-   measured off a rendered .brand-mark — see the note in assets/img/favicon.svg, which carries
-   the same glyph with the rounded tile. Full-bleed here because iOS masks the touch icon into
-   its own squircle; rounded corners would leave white notches inside that mask. */
-const MARK = `<g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
-<path d="M19.6 25.4 L28.9 30.3 L19.6 35.2" stroke-width="3.2"/>
-<path d="M33.3 40.9 H45.7" stroke-width="2.8"/></g>`;
+   measured off a rendered .brand-mark — see the note in assets/img/favicon.svg. Full-bleed
+   here because iOS masks the touch icon into its own squircle; rounded corners would leave
+   white notches inside that mask. */
+const MARK = `<g fill="none" stroke="${BRAND.ink}" stroke-linecap="round" stroke-linejoin="round">
+<path d="M19.6 25.4 L28.9 30.3 L19.6 35.2" stroke-width="3.8"/>
+<path d="M33.3 40.9 H45.7" stroke-width="3.4"/></g>`;
 
 const squareSvg = (size) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${size}" height="${size}">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="${BRAND.teal}"/><stop offset="1" stop-color="${BRAND.purple}"/></linearGradient></defs>
-<rect width="64" height="64" fill="url(#g)"/>
+<rect width="64" height="64" fill="${BRAND.accent}"/>
+<rect x="3" y="3" width="58" height="58" fill="none" stroke="${BRAND.ink}" stroke-width="6"/>
 ${MARK}</svg>`;
 
 const iconHtml = (size) =>
@@ -107,19 +105,22 @@ console.log('apple-touch-icon.png  180x180');
 
 const og = page(
   `<div class="card">
-     <div class="rule"></div>
      <p class="name">Felipe Sitta</p>
      <h1>Engenheiro Mobile</h1>
      <p class="sub">Android &nbsp;·&nbsp; iOS &nbsp;·&nbsp; Flutter</p>
      <p class="url">sittaman.github.io</p>
    </div>`,
-  `body{background:${BRAND.bg};color:#e8edf2;display:flex;align-items:center;padding:72px}
-   .card{width:100%}
-   .rule{width:104px;height:6px;border-radius:3px;background:linear-gradient(to right,${BRAND.teal},${BRAND.purple});margin-bottom:40px}
-   .name{font-size:26px;font-weight:650;letter-spacing:.16em;text-transform:uppercase;color:#8fd8d0;margin-bottom:22px}
-   h1{font-size:74px;line-height:1.06;font-weight:700;letter-spacing:-.03em;margin-bottom:28px}
-   .sub{font-size:27px;color:#a9b4c0;line-height:1.4}
-   .url{position:absolute;left:72px;bottom:56px;font-size:23px;color:#7f8b98;letter-spacing:.02em}`);
+  `body{background:${BRAND.accent};color:${BRAND.ink};display:flex;align-items:center;padding:72px;
+        font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+   .card{position:relative;width:100%;height:100%;display:flex;flex-direction:column;
+         justify-content:center;border-left:16px solid ${BRAND.ink};padding-left:48px}
+   .name{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:24px;
+         font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:26px}
+   h1{font-size:92px;line-height:.88;font-weight:900;letter-spacing:-.045em;text-transform:uppercase}
+   .sub{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:25px;
+        margin-top:30px;letter-spacing:.02em}
+   .url{position:absolute;right:0;bottom:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+        font-size:22px;font-weight:700;border:3px solid ${BRAND.ink};padding:6px 12px}`);
 
-chromeShot(writeTemp('og.html', og), 1200, 630, join(IMG, 'og-cover.png'), '0b0f14ff');
+chromeShot(writeTemp('og.html', og), 1200, 630, join(IMG, 'og-cover.png'), 'c6f018ff');
 console.log('og-cover.png      1200x630');
