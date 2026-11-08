@@ -1,11 +1,48 @@
 /* ============================================================================
    Felipe Sitta — portfolio stylesheet (brutalist)
    Single sheet: tokens → base → layout → components → preferences.
-   No preprocessor, no framework, no web fonts (system stack only).
+   No preprocessor, no framework. Fonts are self-hosted, no third-party requests.
 
    The rules are deliberately hard: black 3px borders, offset shadows with no
    blur, squared corners, uppercase display type and a single acid accent.
    ========================================================================== */
+
+/* ---------- fonts ---------- */
+
+/* Latin subset only: the site ships pt-BR/en copy, both covered by U+0000-00FF.
+   Licences live next to the files (assets/fonts/OFL-*.txt). */
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("../fonts/space-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/space-mono-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/space-mono-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 :root {
   /* Single light theme: warm paper, black ink, one acid accent. */
@@ -31,8 +68,8 @@
   --chip-border: #0a0a0a;
   --chip-fg: #0a0a0a;
 
-  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-sans: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   /* Fluid type: no type media queries anywhere in this sheet. Headings are
      display-sized and set tight; body copy stays on a readable measure. */
@@ -92,7 +129,7 @@ h1, h2, h3, h4 {
   line-height: 0.95;
   letter-spacing: -0.04em;
   text-transform: uppercase;
-  font-weight: 900;
+  font-weight: 700;
   text-wrap: balance;
 }
 p { text-wrap: pretty; }
@@ -160,7 +197,7 @@ a:hover {
 
 .brand {
   display: inline-flex; align-items: center; gap: var(--space-2);
-  color: #ffffff; text-decoration: none; font-weight: 900;
+  color: #ffffff; text-decoration: none; font-weight: 700;
 }
 .brand:hover { background: transparent; }
 .brand:hover .brand-mark { background: var(--fg); color: var(--accent); border-color: var(--accent); }
@@ -336,7 +373,7 @@ main > .section:not(.case-study) > .shell > h2::before {
   vertical-align: 0.35em;
 }
 
-h2 { font-size: var(--step-3); font-weight: 900; }
+h2 { font-size: var(--step-3); font-weight: 700; }
 h2::after {
   content: ""; display: block; width: 100%; height: 5px; margin-top: var(--space-3);
   background: var(--fg);
@@ -404,7 +441,7 @@ h2::after {
 .timeline > li:last-child::after { display: none; }
 
 /* The timeline entry is the client's name alone — no role, no dates. */
-.job h3 { font-size: var(--step-2); font-weight: 900; }
+.job h3 { font-size: var(--step-2); font-weight: 700; }
 .org {
   display: inline-block;
   background: var(--accent); color: var(--fg);
@@ -449,7 +486,7 @@ h2::after {
 }
 /* h2 as well as h4: /work nests its cards under a page-level h1, so the card heading there is
    an h2 — which would otherwise inherit the section heading's size AND its heavy rule. */
-.card h2, .card h4 { font-size: var(--step-1); font-weight: 900; line-height: 1.05; }
+.card h2, .card h4 { font-size: var(--step-1); font-weight: 700; line-height: 1.05; }
 .card h2::after, .card h4::after { display: none; }
 .card-meta {
   margin-top: var(--space-2);
@@ -474,7 +511,7 @@ h2::after {
 
 /* The <h1> of a standalone page — sized and ruled like the section headings, so a subpage
    reads as the same site without an <h2> that has no parent <h1>. */
-.page-title { font-size: var(--step-3); font-weight: 900; }
+.page-title { font-size: var(--step-3); font-weight: 700; }
 .page-title::after {
   content: ""; display: block; width: 100%; height: 6px; margin-top: var(--space-3);
   background: var(--fg);
@@ -507,7 +544,7 @@ h2::after {
 .case-study h2 {
   display: flex; align-items: center; gap: var(--space-3);
   margin-top: var(--space-6);
-  font-size: var(--step-1); font-weight: 900;
+  font-size: var(--step-1); font-weight: 700;
 }
 .case-study h2::before {
   content: ""; flex: 0 0 auto;
