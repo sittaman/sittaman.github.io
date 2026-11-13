@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Speedometer — Racing Game</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0a0f;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 20px;
+    padding: 20px;
+    user-select: none;
+  }
+  h1 { font-size: 18px; font-weight: 400; letter-spacing: 3px; color: #666; text-transform: uppercase; }
+
+  .painel { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; justify-content: center; }
+
+  .gauge-wrap { position: relative; width: 340px; height: 340px; }
+  svg { width: 100%; height: 100%; overflow: visible; }
+
+  .info {
+    display: flex; flex-direction: column; gap: 14px;
+    background: #12121a; padding: 24px; border-radius: 12px;
+    border: 1px solid #222; min-width: 200px;
+  }
+  .info .linha { display: flex; justify-content: space-between; font-size: 14px; }
+  .info .label { color: #666; }
+  .info .valor { color: #0ff; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .info .valor.grande { font-size: 28px; color: #fff; }
+  .marcha-badge {
+    display: inline-block; background: #1a1a2e; border: 1px solid #0ff;
+    color: #0ff; padding: 2px 10px; border-radius: 6px; font-weight: 700;
+  }
+  .marcha-badge.trocando { background: #ff3b3b; border-color: #ff3b3b; color: #fff; }
+
+  .controles { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  button {
+    background: #1a1a2e; border: 1px solid #333; color: #ccc;
+    padding: 12px 22px; border-radius: 8px; cursor: pointer;
+    font-size: 14px; letter-spacing: 1px; transition: all 0.1s;
+  }
+  button:hover { border-color: #0ff; color: #0ff; }
+  button.ativo { background: #0ff; color: #000; border-color: #0ff; }
+
+  .sliders { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #666; margin-top: 10px; }
+  .sliders label { display: flex; align-items: center; gap: 10px; }
+  .sliders input { flex: 1; }
+  .dica { font-size: 12px; color: #444; text-align: center; max-width: 500px; line-height: 1.6; }
+  .dica kbd { background: #1a1a2e; padding: 2px 6px; border-radius: 4px; border: 1px solid #333; color: #888; }
+</style>
+</head>
+<body>
+
+<h1>Speedometer — Engine Sim</h1>
+
+<div class="painel">
+  <div class="gauge-wrap">
+    <svg viewBox="0 0 340 340">
+      <!-- fundo do arco -->
+      <path d="M 60 260 A 140 140 0 1 1 280 260" fill="none" stroke="#1a1a2e" stroke-width="14" stroke-linecap="round"/>
+      <!-- arco de RPM (preenchido dinamicamente) -->
+      <path id="arcoRpm" d="M 60 260 A 140 140 0 1 1 280 260" fill="none" stroke="url(#gradRpm)" stroke-width="14" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="gradRpm" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#0ff"/>
+          <stop offset="65%" stop-color="#ffd000"/>
+          <stop offset="85%" stop-color="#ff6a00"/>
+          <stop offset="100%" stop-color="#ff2b2b"/>
+        </linearGradient>
+      </defs>
+
+      <!-- marcas -->
+      <g id="marcas"></g>
+
+      <!-- números -->
+      <g id="numeros" font-size="16" fill="#888" text-anchor="middle" font-family="monospace"></g>
+
+      <!-- ponteiro -->
+      <g id="ponteiro" transform="rotate(-135, 170, 170)">
+        <line x1="170" y1="170" x2="170" y2="55" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+        <line x1="170" y1="170" x2="170" y2="80" stroke="#ff3b3b" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <!-- eixo central -->
+      <circle cx="170" cy="170" r="10" fill="#1a1a2e" stroke="#444" stroke-width="2"/>
+      <circle cx="170" cy="170" r="4" fill="#0ff"/>
+    </svg>
+  </div>
+
+  <div class="info">
+    <div class="linha"><span class="label">Speed</span><span class="valor grande"><span id="velNum">0</span> <small style="font-size:14px;color:#666">km/h</small></span></div>
+    <div class="linha"><span class="label">RPM</span><span class="valor"><span id="rpmNum">800</span></span></div>
+    <div class="linha"><span class="label">Gear</span><span class="valor"><span id="marchaBadge" class="marcha-badge">1</span></span></div>
+    <div class="linha"><span class="label">Torque</span><span class="valor" id="torqueNum">0%</span></div>
+    <div class="sliders">
+      <label>Redline <input type="range" id="sRedline" min="5000" max="10000" step="500" value="8000"><span id="vRedline">8000</span></label>
+      <label>Shift RPM <input type="range" id="sTroca" min="4000" max="9000" step="250" value="6800"><span id="vTroca">6800</span></label>
+      <label>Inertia <input type="range" id="sInercia" min="0" max="100" value="35"><span id="vInercia">35</span></label>
+    </div>
+  </div>
+</div>
+
+<div class="controles">
+  <button id="btnAcel">ACCELERATE <kbd>W</kbd></button>
+  <button id="btnFreio">BRAKE <kbd>S</kbd></button>
+  <button id="btnSom">SOUND: OFF</button>
+  <button id="btnReset">RESET</button>
+</div>
+
+<div class="dica">
+  Hold <kbd>W</kbd> to accelerate, <kbd>S</kbd> to brake. Shifting is automatic at the configured RPM.
+  The needle uses a spring-damper system (inertia). The sound uses WebAudio with 3 layers + a dynamic lowpass filter.
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const CONFIG = {
+  ratios: [3.5, 2.1, 1.4, 1.0, 0.8, 0.65],
+  finalDrive: 3.9,
+  raioRoda: 0.3,
+  rpmIdle: 800,
+  rpmMax: 8000,
+  rpmTroca: 6800,
+  aceleracao: 55,   // m/s² base (escala arcade)
+  freio: 80,
+  arrasto: 0.35,
+  minAngle: -135,
+  maxAngle: 135,
+  duracaoTroca: 0.28,
+};
+
+// ============================================================
+// ESTADO
+// ============================================================
+const carro = {
+  velocidade: 0,   // m/s
+  rpm: CONFIG.rpmIdle,
+  rpmVisual: CONFIG.rpmIdle,
+  marcha: 1,
+  acelerando: false,
+  freando: false,
+  trocando: false,
+  timerTroca: 0,
+  torque: 0,
+};
+
+// mola-amortecedor do ponteiro
+let anguloAtual = CONFIG.minAngle;
+let velAngular = 0;
+const RIGIDEZ = 180, AMORTEC = 22;
+
+// ============================================================
+// DOM
+// ============================================================
+const ponteiro = document.getElementById('ponteiro');
+const arcoRpm = document.getElementById('arcoRpm');
+const velNum = document.getElementById('velNum');
+const rpmNum = document.getElementById('rpmNum');
+const marchaBadge = document.getElementById('marchaBadge');
+const torqueNum = document.getElementById('torqueNum');
+const btnAcel = document.getElementById('btnAcel');
+const btnFreio = document.getElementById('btnFreio');
+const btnSom = document.getElementById('btnSom');
+const btnReset = document.getElementById('btnReset');
+
+// ============================================================
+// DESENHAR MARCAS E NÚMEROS
+// ============================================================
+(function desenharMarcas() {
+  const gMarcas = document.getElementById('marcas');
+  const gNums = document.getElementById('numeros');
+  const cx = 170, cy = 170, rOut = 140, rIn = 120, rNum = 100;
+  const total = CONFIG.maxAngle - CONFIG.minAngle; // 270°
+
+  for (let i = 0; i <= 8000; i += 500) {
+    const t = i / 8000;
+    const ang = CONFIG.minAngle + t * total;
+    const rad = (ang - 90) * Math.PI / 180;
+    const principal = i % 1000 === 0;
+    const r1 = principal ? rOut : rIn;
+    const x1 = cx + Math.cos(rad) * r1;
+    const y1 = cy + Math.sin(rad) * r1;
+    const x2 = cx + Math.cos(rad) * rOut;
+    const y2 = cy + Math.sin(rad) * rOut;
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.setAttribute('stroke', i >= 7000 ? '#ff3b3b' : (principal ? '#888' : '#444'));
+    line.setAttribute('stroke-width', principal ? 2 : 1);
+    gMarcas.appendChild(line);
+
+    if (principal) {
+      const xN = cx + Math.cos(rad) * rNum;
+      const yN = cy + Math.sin(rad) * rNum;
+      const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      txt.setAttribute('x', xN); txt.setAttribute('y', yN + 5);
+      txt.textContent = i / 1000;
+      if (i >= 7000) txt.setAttribute('fill', '#ff3b3b');
+      gNums.appendChild(txt);
+    }
+  }
+})();
+
+// ============================================================
+// FÍSICA
+// ============================================================
+function torquePorRPM(rpm) {
+  const pico = 5000;
+  const x = (rpm - pico) / 4500;
+  return Math.max(0, 1 - x * x);
+}
+
+function rpmDaMarcha(v, marcha) {
+  const ratio = CONFIG.ratios[marcha - 1];
+  const rpm = (v * ratio * CONFIG.finalDrive * 60) / (2 * Math.PI * CONFIG.raioRoda);
+  return Math.max(CONFIG.rpmIdle, Math.min(rpm, CONFIG.rpmMax + 500));
+}
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+// ============================================================
+// ÁUDIO (WebAudio)
+// ============================================================
+let audioCtx = null;
+let camadas = [];
+let filtroGlobal = null;
+let ganhoMaster = null;
+let somLigado = false;
+
+function criarLoopMotor(ctx, freqBase, tipo) {
+  const bufferSize = 2 * ctx.sampleRate;
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    const t = i / ctx.sampleRate;
+    let s = 0;
+    if (tipo === 'saw') {
+      s = 2 * (t * freqBase - Math.floor(t * freqBase + 0.5));
+    } else if (tipo === 'square') {
+      s = Math.sign(Math.sin(2 * Math.PI * freqBase * t));
+    } else {
+      s = Math.sin(2 * Math.PI * freqBase * t);
+    }
+    // ruído pra dar textura
+    s += (Math.random() - 0.5) * 0.15;
+    data[i] = s * 0.4;
+  }
+  const src = ctx.createBufferSource();
+  src.buffer = buffer;
+  src.loop = true;
+  return src;
+}
+
+function iniciarAudio() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  ganhoMaster = audioCtx.createGain();
+  ganhoMaster.gain.value = 0.0;
+  ganhoMaster.connect(audioCtx.destination);
+
+  filtroGlobal = audioCtx.createBiquadFilter();
+  filtroGlobal.type = 'lowpass';
+  filtroGlobal.frequency.value = 800;
+  filtroGlobal.Q.value = 1.2;
+  filtroGlobal.connect(ganhoMaster);
+
+  // 3 camadas: idle (60Hz), médio (110Hz), alto (180Hz)
+  const defs = [
+    { freq: 60,  tipo: 'saw',    vol: 0 },
+    { freq: 110, tipo: 'square', vol: 0 },
+    { freq: 180, tipo: 'saw',    vol: 0 },
+  ];
+  camadas = defs.map(d => {
+    const src = criarLoopMotor(audioCtx, d.freq, d.tipo);
+    const g = audioCtx.createGain();
+    g.gain.value = d.vol;
+    src.connect(g);
+    g.connect(filtroGlobal);
+    src.start();
+    return { src, gain: g, freqBase: d.freq };
+  });
+}
+
+function atualizarAudio(rpm) {
+  if (!somLigado || !audioCtx) return;
+  const t = Math.min(1, rpm / CONFIG.rpmMax);
+
+  // crossfade das camadas
+  const pesos = [
+    Math.max(0, 1 - Math.abs(rpm - 1500) / 2000), // idle
+    Math.max(0, 1 - Math.abs(rpm - 4500) / 3000), // médio
+    Math.max(0, 1 - Math.abs(rpm - 7500) / 3000), // alto
+  ];
+  camadas.forEach((c, i) => {
+    c.gain.gain.setTargetAtTime(pesos[i] * 0.25, audioCtx.currentTime, 0.05);
+    c.src.playbackRate.setTargetAtTime(0.8 + t * 1.2, audioCtx.currentTime, 0.03);
+  });
+
+  // filtro lowpass dinâmico
+  filtroGlobal.frequency.setTargetAtTime(500 + t * 6500, audioCtx.currentTime, 0.05);
+  ganhoMaster.gain.setTargetAtTime(0.35, audioCtx.currentTime, 0.1);
+}
+
+function tocarPopTroca() {
+  if (!somLigado || !audioCtx) return;
+  const t = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(80 + Math.random() * 60, t);
+  osc.frequency.exponentialRampToValueAtTime(30, t + 0.12);
+  g.gain.setValueAtTime(0.15, t);
+  g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+  osc.connect(g); g.connect(ganhoMaster);
+  osc.start(t); osc.stop(t + 0.16);
+}
+
+// ============================================================
+// UPDATE
+// ============================================================
+function atualizarFisica(dt) {
+  // aceleração
+  if (carro.acelerando && !carro.trocando) {
+    carro.torque = torquePorRPM(carro.rpm);
+    carro.velocidade += carro.torque * CONFIG.aceleracao * dt;
+  } else {
+    carro.torque = 0;
+  }
+
+  // freio
+  if (carro.freando) {
+    carro.velocidade -= CONFIG.freio * dt;
+  }
+
+  // arrasto
+  carro.velocidade *= 1 - CONFIG.arrasto * dt;
+  carro.velocidade = Math.max(0, carro.velocidade);
+
+  // RPM físico
+  if (!carro.trocando) {
+    carro.rpm = rpmDaMarcha(carro.velocidade, carro.marcha);
+    carro.rpmVisual = lerp(carro.rpmVisual, carro.rpm, 1 - Math.pow(0.001, dt));
+  }
+
+  // troca automática
+  if (!carro.trocando && carro.rpm > CONFIG.rpmTroca && carro.marcha < 6) {
+    carro.trocando = true;
+    carro.timerTroca = CONFIG.duracaoTroca;
+    carro.marcha++;
+    tocarPopTroca();
+  }
+
+  // durante a troca
+  if (carro.trocando) {
+    carro.timerTroca -= dt;
+    carro.rpmVisual = lerp(carro.rpmVisual, 1200, 0.25);
+    if (carro.timerTroca <= 0) {
+      carro.trocando = false;
+      carro.rpmVisual = rpmDaMarcha(carro.velocidade, carro.marcha);
+    }
+  }
+
+  // downshift se muito devagar (opcional, só pra não travar)
+  if (!carro.trocando && carro.marcha > 1) {
+    const rpmNaMarchaAbaixo = rpmDaMarcha(carro.velocidade, carro.marcha - 1);
+    if (rpmNaMarchaAbaixo < 2200 && carro.marcha > 1) {
+      carro.marcha--;
+      carro.rpmVisual = rpmDaMarcha(carro.velocidade, carro.marcha);
+    }
+  }
+}
+
+function atualizarPonteiro(dt) {
+  const t = Math.min(1, carro.rpmVisual / CONFIG.rpmMax);
+  const alvo = CONFIG.minAngle + t * (CONFIG.maxAngle - CONFIG.minAngle);
+
+  const forca = (alvo - anguloAtual) * RIGIDEZ - velAngular * AMORTEC;
+  velAngular += forca * dt;
+  anguloAtual += velAngular * dt;
+
+  ponteiro.setAttribute('transform', `rotate(${anguloAtual}, 170, 170)`);
+}
+
+function atualizarArco() {
+  const t = Math.min(1, carro.rpmVisual / CONFIG.rpmMax);
+  // comprimento total do arco (r=140, 270°) = 2π * 140 * 0.75
+  const totalArco = 2 * Math.PI * 140 * 0.75;
+  arcoRpm.style.strokeDasharray = `${t * totalArco} ${totalArco}`;
+}
+
+function atualizarHUD() {
+  const kmh = carro.velocidade * 3.6;
+  velNum.textContent = Math.round(kmh);
+  rpmNum.textContent = Math.round(carro.rpmVisual);
+  torqueNum.textContent = Math.round(carro.torque * 100) + '%';
+
+  if (carro.trocando) {
+    marchaBadge.textContent = '↕';
+    marchaBadge.classList.add('trocando');
+  } else {
+    marchaBadge.textContent = carro.marcha;
+    marchaBadge.classList.remove('trocando');
+  }
+}
+
+// ============================================================
+// LOOP
+// ============================================================
+let ultimoTempo = performance.now();
+
+function loop(agora) {
+  let dt = (agora - ultimoTempo) / 1000;
+  ultimoTempo = agora;
+  if (dt > 0.05) dt = 0.05; // clamp pra não explodir em abas inativas
+
+  atualizarFisica(dt);
+  atualizarPonteiro(dt);
+  atualizarArco();
+  atualizarHUD();
+  atualizarAudio(carro.rpmVisual);
+
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+// ============================================================
+// CONTROLES
+// ============================================================
+function setAcelerando(v) {
+  carro.acelerando = v;
+  btnAcel.classList.toggle('ativo', v);
+}
+function setFreando(v) {
+  carro.freando = v;
+  btnFreio.classList.toggle('ativo', v);
+}
+
+btnAcel.addEventListener('mousedown', () => setAcelerando(true));
+btnAcel.addEventListener('mouseup', () => setAcelerando(false));
+btnAcel.addEventListener('mouseleave', () => setAcelerando(false));
+btnAcel.addEventListener('touchstart', e => { e.preventDefault(); setAcelerando(true); });
+btnAcel.addEventListener('touchend', () => setAcelerando(false));
+
+btnFreio.addEventListener('mousedown', () => setFreando(true));
+btnFreio.addEventListener('mouseup', () => setFreando(false));
+btnFreio.addEventListener('mouseleave', () => setFreando(false));
+btnFreio.addEventListener('touchstart', e => { e.preventDefault(); setFreando(true); });
+btnFreio.addEventListener('touchend', () => setFreando(false));
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') setAcelerando(true);
+  if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') setFreando(true);
+});
+window.addEventListener('keyup', e => {
+  if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') setAcelerando(false);
+  if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') setFreando(false);
+});
+
+btnSom.addEventListener('click', () => {
+  if (!audioCtx) iniciarAudio();
+  audioCtx.resume();
+  somLigado = !somLigado;
+  btnSom.textContent = 'SOUND: ' + (somLigado ? 'ON' : 'OFF');
+  btnSom.classList.toggle('ativo', somLigado);
+  if (!somLigado && ganhoMaster) {
+    ganhoMaster.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+  }
+});
+
+btnReset.addEventListener('click', () => {
+  carro.velocidade = 0;
+  carro.rpm = CONFIG.rpmIdle;
+  carro.rpmVisual = CONFIG.rpmIdle;
+  carro.marcha = 1;
+  carro.trocando = false;
+  anguloAtual = CONFIG.minAngle;
+  velAngular = 0;
+});
+
+// sliders
+const sRedline = document.getElementById('sRedline');
+const sTroca = document.getElementById('sTroca');
+const sInercia = document.getElementById('sInercia');
+const vRedline = document.getElementById('vRedline');
+const vTroca = document.getElementById('vTroca');
+const vInercia = document.getElementById('vInercia');
+
+sRedline.addEventListener('input', () => {
+  CONFIG.rpmMax = +sRedline.value;
+  vRedline.textContent = sRedline.value;
+  if (CONFIG.rpmTroca > CONFIG.rpmMax - 500) {
+    CONFIG.rpmTroca = CONFIG.rpmMax - 500;
+    sTroca.value = CONFIG.rpmTroca;
+    vTroca.textContent = CONFIG.rpmTroca;
+  }
+});
+sTroca.addEventListener('input', () => {
+  CONFIG.rpmTroca = Math.min(+sTroca.value, CONFIG.rpmMax - 300);
+  vTroca.textContent = CONFIG.rpmTroca;
+});
+sInercia.addEventListener('input', () => {
+  const v = +sInercia.value / 100;
+  // mapeia 0..1 pra amortecedor e rigidez
+  RIGIDEZ = 80 + (1 - v) * 300;
+  AMORTEC = 10 + v * 30;
+  vInercia.textContent = sInercia.value;
+});
+</script>
+</body>
+</html>
