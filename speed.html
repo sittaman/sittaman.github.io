@@ -54,6 +54,7 @@
   .sliders input { flex: 1; }
   .dica { font-size: 12px; color: #444; text-align: center; max-width: 500px; line-height: 1.6; }
   .dica kbd { background: #1a1a2e; padding: 2px 6px; border-radius: 4px; border: 1px solid #333; color: #888; }
+  .small { font-size:14px; color:#666; }
 </style>
 </head>
 <body>
@@ -94,7 +95,7 @@
   </div>
 
   <div class="info">
-    <div class="linha"><span class="label">Speed</span><span class="valor grande"><span id="velNum">0</span> <small style="font-size:14px;color:#666">km/h</small></span></div>
+    <div class="linha"><span class="label">Speed</span><span class="valor grande"><span id="velNum">0</span> <small class="small">km/h</small></span></div>
     <div class="linha"><span class="label">RPM</span><span class="valor"><span id="rpmNum">800</span></span></div>
     <div class="linha"><span class="label">Gear</span><span class="valor"><span id="marchaBadge" class="marcha-badge">1</span></span></div>
     <div class="linha"><span class="label">Torque</span><span class="valor" id="torqueNum">0%</span></div>
@@ -107,10 +108,10 @@
 </div>
 
 <div class="controles">
-  <button id="btnAcel">ACCELERATE <kbd>W</kbd></button>
-  <button id="btnFreio">BRAKE <kbd>S</kbd></button>
-  <button id="btnSom">SOUND: OFF</button>
-  <button id="btnReset">RESET</button>
+  <button id="btnAcel" type="button">ACCELERATE <kbd>W</kbd></button>
+  <button id="btnFreio" type="button">BRAKE <kbd>S</kbd></button>
+  <button id="btnSom" type="button">SOUND: OFF</button>
+  <button id="btnReset" type="button">RESET</button>
 </div>
 
 <div class="dica">
