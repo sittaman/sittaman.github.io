@@ -357,6 +357,104 @@
     }
   });
 
+  var s = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'], i = 0, a = null, b = null, h = null, f = 0, o = null, w = null;
+
+  function y() {
+    h = a.createBufferSource();
+    h.buffer = b;
+    h.loop = true;
+    h.connect(a.destination);
+    h.start();
+  }
+
+  function x() {
+    var C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return;
+    if (!a) a = new C();
+    if (a.state === 'suspended') a.resume();
+    if (h) { try { h.stop(); } catch (e) { } h = null; }
+    if (b) return y();
+    if (f) return;
+    f = 1;
+    fetch('assets/spin.mp3').then(function (r) { return r.arrayBuffer(); }).then(function (r) {
+      return a.decodeAudioData(r);
+    }).then(function (r) {
+      var q = r.numberOfChannels, m = r.length,
+        n = Math.min(Math.round(r.sampleRate * 0.04), m >> 3);
+      var B = a.createBuffer(q, m - n, r.sampleRate);
+      for (var u = 0; u < q; u++) {
+        var c = r.getChannelData(u), d = B.getChannelData(u);
+        d.set(c.subarray(0, m - n));
+        for (var e = 0; e < n; e++) {
+          var w = e / n;
+          d[e] = c[e] * w + c[m - n + e] * (1 - w);
+        }
+      }
+      b = B;
+      f = 0;
+      if (root.hasAttribute('data-t') && !h) y();
+    }).catch(function () { f = 0; });
+  }
+
+  function v() {
+    if (!w) {
+      w = document.createElement('div');
+      w.className = 'p';
+      w.style.cssText = 'display:flex;flex-direction:column;flex:1 0 auto;width:100%;min-height:100dvh';
+      while (document.body.firstChild) w.appendChild(document.body.firstChild);
+      document.body.appendChild(w);
+
+      var d = [
+        ['255,255,255', 280],
+        ['198,240,24', 480],
+        ['255,0,168', 720],
+        ['0,229,255', 1000]
+      ];
+      o = document.createElement('div');
+      o.style.cssText = 'position:fixed;inset:0;z-index:2147483647;pointer-events:none;overflow:hidden';
+      for (var j = 0; j < 2; j++) {
+        var c = document.createElement('div');
+        c.style.cssText = 'position:absolute;top:8px;' + (j ? 'right:8px' : 'left:8px') + ';width:clamp(100px,16.25vw,225px);aspect-ratio:1';
+        for (var n = 0; n < d.length; n++) {
+          var l = document.createElement('div');
+          l.style.cssText = 'position:absolute;left:50%;top:50%;width:' + d[n][1] + '%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(' + d[n][0] + ',.95),rgba(' + d[n][0] + ',0) 60%);opacity:0;animation:u .36s steps(1,end) infinite;animation-delay:' + ((j ? -0.18 : 0) - n * 0.09) + 's';
+          c.appendChild(l);
+        }
+        var g = document.createElement('img');
+        g.src = 'assets/disco.gif';
+        g.alt = '';
+        g.style.cssText = 'position:relative;display:block;width:100%;height:100%;object-fit:contain' + (j ? ';transform:scaleX(-1)' : '');
+        c.appendChild(g);
+        o.appendChild(c);
+      }
+      document.body.appendChild(o);
+    }
+    o.hidden = false;
+    root.setAttribute('data-t', '');
+    x();
+  }
+
+  function k(e) {
+    if (e.key === 'Escape') {
+      root.removeAttribute('data-t');
+      if (o) o.hidden = true;
+      if (h) { try { h.stop(); } catch (e) { } h = null; }
+      return;
+    }
+    var t = e.target;
+    if (t && (t.isContentEditable || t.tagName === 'TEXTAREA' ||
+      (t.tagName === 'INPUT' && !/^(radio|checkbox|button|submit|reset)$/i.test(t.type)))) return;
+    var c = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (c === s[i]) {
+      i++;
+      if (i === s.length) { i = 0; v(); }
+    } else {
+      i = c === s[0] ? 1 : 0;
+    }
+  }
+  if (document.querySelector('[data-projects]')) document.addEventListener('keydown', k);
+
   document.addEventListener('change', function (event) {
     var input = event.target;
     if (input && input.matches && input.matches('input[name="lang"]')) {
