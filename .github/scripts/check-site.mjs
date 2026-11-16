@@ -37,10 +37,16 @@ function allowMissingMatch(pathFromRoot) {
   return allowMissing.some((prefix) => pathFromRoot.startsWith(prefix));
 }
 
+function stripComments(html) {
+  // A commented-out link is not a live reference — the projects "See all" button ships
+  // disabled inside an HTML comment until its page exists.
+  return html.replace(/<!--[\s\S]*?-->/g, '');
+}
+
 function collectIds(html) {
   const set = new Set();
-  for (const m of html.matchAll(/\bid\s*=\s*"([^"]+)"/g)) set.add(m[1]);
-  for (const m of html.matchAll(/\bname\s*=\s*"([^"]+)"/g)) set.add(m[1]);
+  for (const m of stripComments(html).matchAll(/\bid\s*=\s*"([^"]+)"/g)) set.add(m[1]);
+  for (const m of stripComments(html).matchAll(/\bname\s*=\s*"([^"]+)"/g)) set.add(m[1]);
   return set;
 }
 
@@ -61,7 +67,7 @@ for (const page of PAGES) {
     errors.push(`${page}: file is missing`);
     continue;
   }
-  const html = readFileSync(file, 'utf8');
+  const html = stripComments(readFileSync(file, 'utf8'));
   idsCache.set(page, collectIds(html)); // already in hand
 
   // --- every href/src

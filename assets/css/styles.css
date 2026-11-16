@@ -470,7 +470,10 @@ h2::after {
 
 .cards {
   display: grid; gap: 1.75rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 47.999rem) {
+  .cards { grid-template-columns: 1fr; }
 }
 .cards:empty { display: none; }
 .card {

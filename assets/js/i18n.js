@@ -205,6 +205,7 @@ window.SITE_I18N = {
     ],
 
     'projects.title': 'Projetos',
+    'projects.seeAll': 'Ver todos',
     'projects.empty': 'Em breve. Enquanto isso, veja os repositórios no <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
 
     'contact.title': 'Contato',
@@ -404,6 +405,7 @@ window.SITE_I18N = {
     ],
 
     'projects.title': 'Projects',
+    'projects.seeAll': 'View all',
     'projects.empty': 'Coming soon. In the meantime, see the repositories on <a href="https://github.com/sittaman" rel="noopener" target="_blank">GitHub</a>.',
 
     'contact.title': 'Contact',

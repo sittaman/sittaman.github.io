@@ -27,4 +27,25 @@
  * Keep the list to the strongest handful — four to six. A card without a link is dead
  * weight, so every entry should have at least `repo`.
  */
-window.PROJECTS = [];
+window.PROJECTS = [
+  {
+    id: 'my-amazing-notebook',
+    title: { 'pt-BR': 'My Amazing Notebook', en: 'My Amazing Notebook' },
+    summary: {
+      'pt-BR': 'Aplicativo de notas em Kotlin e Jetpack Compose, projeto de estudo de Android nativo.',
+      en: 'Notes app built with Kotlin and Jetpack Compose, a native Android study project.'
+    },
+    stack: ['Kotlin', 'Jetpack Compose', 'Material 3', 'Navigation Compose'],
+    repo: 'https://github.com/sittaman/my-amazing-notebook'
+  },
+  {
+    id: 'canvas-websocket',
+    title: { 'pt-BR': 'Canvas WebSocket', en: 'Canvas WebSocket' },
+    summary: {
+      'pt-BR': 'Aplicativo Flutter de desenho colaborativo em tempo real entre dispositivos na mesma rede local.',
+      en: 'Flutter drawing app for real-time collaborative drawing between devices on the same local network.'
+    },
+    stack: ['Flutter', 'Dart'],
+    repo: 'https://github.com/sittaman/canvas_websocket'
+  }
+];
